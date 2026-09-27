@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "electro-hobby-3d-updater"
+version = "0.0.1"
+description = "Thin dispatcher over JuanenRac's (Electro Hobby 3D) three real, independent ecosystem updaters (hydra-umc-updater, urtc-updater, armor-updater) - pick an ecosystem, download and update its packages. Holds no discovery or install logic of its own."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [
+    { name = "JuanenRac (Electro Hobby 3D)", email = "electrohobby3d@gmail.com" },
+]
+keywords = ["hydra-umc", "urtc", "armor", "updater", "installer", "fleet-management"]
+# Each of the three real sub-updaters (see ecosystems.py) is a real, public,
+# pip-installable package already - depending on them here rather than
+# re-vendoring or re-implementing their discovery/install logic is
+# deliberate: this project has exactly one job, dispatch, and each
+# ecosystem's own updater remains the one place its own logic can drift.
+dependencies = [
+    "hydra-umc-updater @ git+https://github.com/JuanenRac/HYDRA-UMC-UPDATER.git@main",
+    "urtc-updater @ git+https://github.com/JuanenRac/URTC-UPDATER.git@main",
+    "armor-updater @ git+https://github.com/JuanenRac/ARMOR-UPDATER.git@main",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.urls]
+Homepage = "https://github.com/JuanenRac/ELECTRO-HOBBY-3D-UPDATER"
+
+[project.scripts]
+electro-hobby-3d-updater = "electro_hobby_3d_updater.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,39 @@
+# =============================================================================
+# ELECTRO-HOBBY-3D-UPDATER - CI baseline workflow
+# Copyright (C) 2026 JuanenRac (Electro Hobby 3D) <electrohobby3d@gmail.com>
+# GPL-3.0-or-later - see LICENSE
+# =============================================================================
+name: ELECTRO-HOBBY-3D-UPDATER CI baseline
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  baseline:
+    name: Validate manifest, docs and run the real test suite
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Validate manifest, version, changelog and README parity
+        run: python tools/ci_validate.py
+
+      # Installs this project plus its three real dependencies - hydra-umc-
+      # updater, urtc-updater and armor-updater - straight from GitHub, the
+      # same three real packages a developer's own build.sh/.bat pulls in.
+      - name: Install this project and its three real ecosystem updaters
+        run: python -m pip install -e ".[dev]"
+
+      - name: Compile every Python source and run the real test suite
+        run: python tools/build_test.py

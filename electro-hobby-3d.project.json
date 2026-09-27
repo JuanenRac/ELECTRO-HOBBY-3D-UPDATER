@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "ecosystem": "ELECTRO-HOBBY-3D",
+  "name": "ELECTRO-HOBBY-3D-UPDATER",
+  "version": "0.0.1",
+  "role": "tool",
+  "stack": "python",
+  "technologies": [
+    "Python 3.10+",
+    "hydra-umc-updater",
+    "urtc-updater",
+    "armor-updater"
+  ],
+  "deployment_target": "user-pc",
+  "maturity": "scaffolding",
+  "family": "Ecosystem Operations",
+  "parent": null,
+  "native_version": {
+    "file": "pyproject.toml",
+    "pattern": "^version\\s*=\\s*\"(\\d+)\\.(\\d+)\\.(\\d+)\""
+  },
+  "build": "python -m pytest tests -q",
+  "notes": "Does not belong to HYDRA-UMC, URTC or A.R.M.O.R. - it sits above all three, dispatching to whichever ecosystem's own updater the user picks via --ecosystem. No sub-updater discovers this manifest (none of the three matches ecosystem: \"ELECTRO-HOBBY-3D\"), by design; this repository is meant to be found the same way the JuanenRac profile dashboard finds every other top-level tool. Never run against a real machine end to end yet."
+}

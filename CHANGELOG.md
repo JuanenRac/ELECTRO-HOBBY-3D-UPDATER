@@ -5,6 +5,10 @@ version number follows this ecosystem's "odometer" scheme: PATCH +1 on
 every real build, rolling into MINOR past 9 (`0.0.9` -> `0.1.0`); MAJOR is
 bumped manually only.
 
+## [0.0.2] - run.bat/run.sh errored out when double-clicked with no arguments
+
+- **Real bug, reported by the user:** `action` is a required argparse subcommand, so running `run.bat`/`run.sh` with zero arguments - exactly what a double-click does - always failed immediately with a raw `the following arguments are required: action` error instead of doing anything useful. Both launchers now default to the tool's own first documented example, `status --ecosystem all` (a real, read-only check of all three ecosystems), when given no arguments; any real argument list, right or wrong, is still passed through unchanged, so a genuine CLI mistake still gets argparse's own real error. `main.py` itself is untouched - the default lives in the convenience launcher, not the CLI contract.
+
 ## [0.0.1] - First release: one updater for all three ecosystems
 
 - **New project.** ELECTRO-HOBBY-3D-UPDATER is a thin dispatcher over JuanenRac's (Electro Hobby 3D) three real, independent ecosystem updaters - hydra-umc-updater, urtc-updater and armor-updater - each installed as a real dependency straight from its own GitHub repository. `--ecosystem hydra-umc|urtc|armor` picks which one actually runs; `status --ecosystem all` runs all three in sequence and reports which one(s) failed without stopping at the first.

@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "ecosystem": "ELECTRO-HOBBY-3D",
   "name": "ELECTRO-HOBBY-3D-UPDATER",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "role": "tool",
   "stack": "python",
   "technologies": [

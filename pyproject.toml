@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "electro-hobby-3d-updater"
-version = "0.0.1"
+version = "0.0.2"
 description = "Thin dispatcher over JuanenRac's (Electro Hobby 3D) three real, independent ecosystem updaters (hydra-umc-updater, urtc-updater, armor-updater) - pick an ecosystem, download and update its packages. Holds no discovery or install logic of its own."
 readme = "README.md"
 requires-python = ">=3.10"

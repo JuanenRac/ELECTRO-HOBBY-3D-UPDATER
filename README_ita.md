@@ -43,12 +43,15 @@
 ELECTRO-HOBBY-3D-UPDATER/
 ├── src/electro_hobby_3d_updater/
 │   ├── ecosystems.py   # L'unico posto che nomina i tre ecosistemi reali e il loro modulo CLI
-│   └── main.py         # CLI argparse + dispatch() - costruisce ed esegue il comando di sottoprocesso corretto
-├── tests/               # 10 test contro un esecutore di sottoprocessi simulato
+│   ├── main.py         # CLI argparse + dispatch() - costruisce ed esegue il comando di sottoprocesso corretto
+│   ├── i18n.py         # I testi della finestra nelle sette lingue
+│   ├── qt_gui.py       # Finestra Qt Quick (una scheda per ecosistema, un registro) - apre l'aggiornatore di ogni ecosistema
+│   └── qml/Main.qml    # Il QML della finestra
+├── tests/               # 12 test contro un esecutore di sottoprocessi simulato
 ├── tools/               # ci_validate.py, build_test.py, _doc_policy.py, _readme_parity.py
 ├── build.sh / build.bat         # venv + installazione editabile (scarica le 3 dipendenze reali) + controllo di compilazione
 ├── build-test.sh / build-test.bat  # stessa installazione, poi la vera suite pytest
-└── run.sh / run.bat              # punto di ingresso della CLI
+└── run.sh / run.bat              # punto di ingresso della CLI (senza argomenti: la finestra)
 ```
 
 ## 🛠️ Ambiente di Sviluppo

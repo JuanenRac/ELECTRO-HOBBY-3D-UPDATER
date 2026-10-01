@@ -124,7 +124,21 @@ def dispatch(args: argparse.Namespace, *, runner=subprocess.run) -> int:
     return _run_one(args.ecosystem, args, runner=runner)
 
 
+def launch_window() -> int:
+    """The window (qt_gui.py), when the optional PySide6 is installed; otherwise a clear hint and the command-line help."""
+    try:
+        from .qt_gui import launch_qt_gui
+    except ImportError:
+        print("The window needs PySide6: pip install -e \".[gui]\"  (the command line works without it)", file=sys.stderr)
+        build_parser().print_help()
+        return 1
+    return launch_qt_gui(default_workspace_root())
+
+
 def main() -> int:
+    # Without arguments (a double click) the window opens; with arguments this is the command line, exactly as before.
+    if len(sys.argv) == 1:
+        return launch_window()
     parser = build_parser()
     args = parser.parse_args()
     return dispatch(args)

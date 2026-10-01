@@ -12,7 +12,7 @@ if not exist .venv (
 call .venv\Scripts\activate.bat
 if errorlevel 1 ( echo VENV ACTIVATION FAILED. & pause & exit /b 1 )
 
-python -m pip install -e ".[dev]"
+python -m pip install -e ".[dev,gui]"
 if errorlevel 1 ( echo DEPENDENCY INSTALL FAILED. & pause & exit /b 1 )
 
 python -m compileall -q src

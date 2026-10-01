@@ -43,12 +43,15 @@
 ELECTRO-HOBBY-3D-UPDATER/
 ├── src/electro_hobby_3d_updater/
 │   ├── ecosystems.py   # 3つの実在するエコシステムとその CLI モジュールを唯一名指しする場所
-│   └── main.py         # argparse CLI + dispatch() - 正しいサブプロセスコマンドを構築して実行する
-├── tests/               # 偽のサブプロセスランナーに対する10件のテスト
+│   ├── main.py         # argparse CLI + dispatch() - 正しいサブプロセスコマンドを構築して実行する
+│   ├── i18n.py         # ウィンドウの文言（7言語）
+│   ├── qt_gui.py       # Qt Quick ウィンドウ（エコシステムごとのカードとログ）- 各エコシステム専用のアップデーターを開く
+│   └── qml/Main.qml    # ウィンドウの QML
+├── tests/               # 偽のサブプロセスランナーに対する12件のテスト
 ├── tools/               # ci_validate.py, build_test.py, _doc_policy.py, _readme_parity.py
 ├── build.sh / build.bat         # venv + 編集可能インストール(3つの実際の依存関係を取得) + コンパイルチェック
 ├── build-test.sh / build-test.bat  # 同じインストールの後、実際の pytest スイート
-└── run.sh / run.bat              # CLI エントリーポイント
+└── run.sh / run.bat              # CLI エントリーポイント（引数なし: ウィンドウ）
 ```
 
 ## 🛠️ 開発環境

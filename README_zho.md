@@ -43,12 +43,15 @@
 ELECTRO-HOBBY-3D-UPDATER/
 ├── src/electro_hobby_3d_updater/
 │   ├── ecosystems.py   # 唯一命名三个真实生态系统及其 CLI 模块的地方
-│   └── main.py         # argparse CLI + dispatch() —— 构建并运行正确的子进程命令
-├── tests/               # 10 个测试，针对模拟的子进程执行器
+│   ├── main.py         # argparse CLI + dispatch() —— 构建并运行正确的子进程命令
+│   ├── i18n.py         # 窗口文字（七种语言）
+│   ├── qt_gui.py       # Qt Quick 窗口（每个生态系统一张卡片、一个日志）—— 打开各生态系统自己的更新器
+│   └── qml/Main.qml    # 窗口的 QML
+├── tests/               # 12 个测试，针对模拟的子进程执行器
 ├── tools/               # ci_validate.py, build_test.py, _doc_policy.py, _readme_parity.py
 ├── build.sh / build.bat         # 创建虚拟环境 + 可编辑安装（拉取 3 个真实依赖）+ 编译检查
 ├── build-test.sh / build-test.bat  # 相同的安装步骤，然后运行真实的 pytest 套件
-└── run.sh / run.bat              # CLI 入口点
+└── run.sh / run.bat              # CLI 入口点（无参数：打开窗口）
 ```
 
 ## 🛠️ 开发环境

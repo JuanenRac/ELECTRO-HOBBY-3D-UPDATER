@@ -143,3 +143,31 @@ def test_workspace_defaults_to_this_projects_own_parent_directory_when_not_given
     dispatch(args, runner=runner)
 
     assert runner.calls[0][-2:] == ["--workspace", str(default_workspace_root())]
+
+
+def test_the_window_texts_exist_in_all_seven_languages():
+    from electro_hobby_3d_updater import i18n
+
+    codes = [code for code, _name in i18n.LANGUAGES]
+    assert codes == ["en", "es", "de", "fr", "it", "ja", "zh"]
+    for key in i18n.keys():
+        for code in codes:
+            assert i18n.text(code, key).strip(), (key, code)
+    # an unknown language falls back to English, an unknown key to itself
+    assert i18n.text("xx", "open") == i18n.text("en", "open")
+    assert i18n.text("en", "no-such-key") == "no-such-key"
+    for ecosystem in ECOSYSTEMS:
+        assert f"tag_{ecosystem.key}" in i18n.keys()
+
+
+def test_without_arguments_the_window_is_opened_and_with_arguments_the_cli_is_used(monkeypatch):
+    from electro_hobby_3d_updater import main as main_module
+
+    opened = []
+    monkeypatch.setattr(main_module, "launch_window", lambda: opened.append(True) or 0)
+    monkeypatch.setattr(sys, "argv", ["electro-hobby-3d-updater"])
+    assert main_module.main() == 0 and opened == [True]
+    called = []
+    monkeypatch.setattr(main_module, "dispatch", lambda args: called.append(args.action) or 0)
+    monkeypatch.setattr(sys, "argv", ["electro-hobby-3d-updater", "status", "--ecosystem", "all"])
+    assert main_module.main() == 0 and called == ["status"]

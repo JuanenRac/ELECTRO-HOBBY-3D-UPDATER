@@ -1,6 +1,6 @@
 @echo off
 REM ELECTRO-HOBBY-3D-UPDATER - run.bat
-REM Runs the CLI. Build first (build.bat) at least once per checkout.
+REM Opens the window (no arguments) or runs the CLI. Build first (build.bat) at least once per checkout.
 REM
 REM Usage:
 REM   run.bat status --ecosystem all              - check every ecosystem
@@ -10,15 +10,9 @@ REM   run.bat update  --ecosystem hydra-umc <PROJECT> - pull + rebuild one proje
 REM GPL-3.0-or-later.
 cd /d "%~dp0"
 
-REM `action` is a required subcommand (see main.py's own argparse setup) -
-REM a bare double-click passes zero arguments, which used to fail with a
-REM raw "the following arguments are required: action" error instead of
-REM doing anything useful. Default to the tool's own first documented
-REM example (a read-only status check of all three ecosystems) instead;
-REM any real argument list, right or wrong, is still passed through
-REM unchanged so a real CLI mistake still gets argparse's own real error.
+REM No arguments (a double click) opens the window; with arguments this is the
+REM command line, exactly as before (a wrong command gets argparse's own error).
 set "ARGS=%*"
-if "%ARGS%"=="" set "ARGS=status --ecosystem all"
 
 if exist .venv\Scripts\python.exe (
     .venv\Scripts\python.exe -m electro_hobby_3d_updater.main %ARGS%

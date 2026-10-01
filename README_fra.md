@@ -43,12 +43,15 @@
 ELECTRO-HOBBY-3D-UPDATER/
 ├── src/electro_hobby_3d_updater/
 │   ├── ecosystems.py   # Le seul endroit qui nomme les trois ecosystemes reels et leur module CLI
-│   └── main.py         # CLI argparse + dispatch() - construit et execute la bonne commande de sous-processus
-├── tests/               # 10 tests contre un executeur de sous-processus simule
+│   ├── main.py         # CLI argparse + dispatch() - construit et execute la bonne commande de sous-processus
+│   ├── i18n.py         # Les textes de la fenetre dans les sept langues
+│   ├── qt_gui.py       # Fenetre Qt Quick (une carte par ecosysteme, un journal) - ouvre l'outil de chaque ecosysteme
+│   └── qml/Main.qml    # Le QML de la fenetre
+├── tests/               # 12 tests contre un executeur de sous-processus simule
 ├── tools/               # ci_validate.py, build_test.py, _doc_policy.py, _readme_parity.py
 ├── build.sh / build.bat         # venv + installation editable (recupere les 3 vraies dependances) + verification de compilation
 ├── build-test.sh / build-test.bat  # meme installation, puis la vraie suite pytest
-└── run.sh / run.bat              # point d'entree de la CLI
+└── run.sh / run.bat              # point d'entree de la CLI (sans argument : la fenetre)
 ```
 
 ## 🛠️ Environnement de Developpement

@@ -12,7 +12,7 @@ fi
 # shellcheck disable=SC1091
 source .venv/bin/activate
 
-python -m pip install -e ".[dev]"
+python -m pip install -e ".[dev,gui]"
 python -m compileall -q src
 
 echo "BUILD_RESULT=PASS"

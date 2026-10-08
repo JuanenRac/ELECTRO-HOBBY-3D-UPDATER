@@ -73,6 +73,17 @@ ApplicationWindow {
         RowLayout {
             Layout.fillWidth: true
             spacing: 16
+            Rectangle {
+                Layout.preferredWidth: 54; Layout.preferredHeight: 54; radius: 16
+                color: "#0e3045"; border.width: 1; border.color: "#2d7695"
+                Image {
+                    anchors.fill: parent; anchors.margins: 5
+                    source: "../../../images/ELECTRO_HOBBY_3D_ICON.svg"
+                    sourceSize.width: 128; sourceSize.height: 128
+                    fillMode: Image.PreserveAspectFit
+                    smooth: true
+                }
+            }
             ColumnLayout {
                 Layout.fillWidth: true
                 spacing: 4
@@ -131,9 +142,11 @@ ApplicationWindow {
             GameButton { text: ui("check_all"); accent: "#43db9b"; enabled: !backend.busy; onClicked: backend.check("all", window.offline) }
             CheckBox {
                 id: offlineBox
+                // The text belongs to the check box itself: without one it centres its box over the label.
+                text: ui("offline")
                 checked: window.offline
                 onToggled: window.offline = checked
-                contentItem: LabelText { text: ui("offline"); leftPadding: offlineBox.indicator.width + 8; verticalAlignment: Text.AlignVCenter }
+                contentItem: LabelText { text: offlineBox.text; leftPadding: offlineBox.indicator.width + offlineBox.spacing; verticalAlignment: Text.AlignVCenter }
             }
             LabelText { text: backend.busy ? ui("running") : ""; color: "#38d4e6" }
             Item { Layout.fillWidth: true }
@@ -177,7 +190,85 @@ ApplicationWindow {
             }
         }
 
-        LabelText { text: ui("about") + "  ·  v" + backend.version; color: window.textMuted; font.pixelSize: 11; Layout.fillWidth: true }
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 14
+            LabelText { text: ui("about") + "  ·  v" + backend.version; color: window.textMuted; font.pixelSize: 11; Layout.fillWidth: true }
+            GameButton { text: ui("menu_about"); accent: "#264966"; implicitHeight: 34; Layout.preferredWidth: 140; onClicked: aboutDialog.open() }
+        }
+    }
+
+    // A real Version/Author/Email/License row, the same as the About window of the three updaters.
+    component AboutInfoRow: Rectangle {
+        property string label: ""
+        property string value: ""
+        property color valueColor: window.textPrimary
+        Layout.fillWidth: true
+        implicitHeight: 34
+        radius: 8
+        color: "#07111e"
+        border.width: 1
+        border.color: window.border
+        RowLayout {
+            anchors.fill: parent
+            anchors.leftMargin: 12
+            anchors.rightMargin: 12
+            LabelText { text: label.toUpperCase(); color: window.textMuted; font.pixelSize: 9; font.bold: true; font.letterSpacing: 1 }
+            Item { Layout.fillWidth: true }
+            LabelText { text: value; color: valueColor; font.pixelSize: 11 }
+        }
+    }
+
+    Dialog {
+        id: aboutDialog
+        modal: true
+        anchors.centerIn: parent
+        width: 460
+        padding: 24
+        background: Rectangle { color: window.panel; radius: 16; border.color: window.border; border.width: 1 }
+        contentItem: ColumnLayout {
+            spacing: 8
+            RowLayout {
+                Layout.fillWidth: true
+                Item { Layout.fillWidth: true }
+                Rectangle {
+                    Layout.preferredWidth: 88; Layout.preferredHeight: 88; radius: 20
+                    color: "#0e3045"; border.width: 1; border.color: "#2d7695"
+                    Image {
+                        anchors.fill: parent; anchors.margins: 10
+                        source: "../../../images/ELECTRO_HOBBY_3D_ICON.svg"
+                        sourceSize.width: 256; sourceSize.height: 256
+                        fillMode: Image.PreserveAspectFit
+                        smooth: true
+                    }
+                }
+                Item { Layout.fillWidth: true }
+            }
+            LabelText { Layout.fillWidth: true; horizontalAlignment: Text.AlignHCenter; text: ui("title"); font.pixelSize: 20; font.bold: true }
+            LabelText { Layout.fillWidth: true; horizontalAlignment: Text.AlignHCenter; text: ui("about_tagline"); color: "#38d4e6"; font.pixelSize: 12; font.bold: true }
+            LabelText { Layout.fillWidth: true; horizontalAlignment: Text.AlignHCenter; text: ui("about_description"); color: window.textMuted; font.pixelSize: 11 }
+            ColumnLayout {
+                Layout.fillWidth: true
+                Layout.topMargin: 6
+                spacing: 4
+                AboutInfoRow { label: ui("about_version_label"); value: backend.version }
+                AboutInfoRow { label: ui("about_author_label"); value: "JuanenRac (Electro Hobby 3D)" }
+                AboutInfoRow {
+                    label: ui("about_email_label")
+                    valueColor: "#38d4e6"
+                    value: "electrohobby3d@gmail.com"
+                    MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: Qt.openUrlExternally("mailto:electrohobby3d@gmail.com") }
+                }
+                AboutInfoRow { label: ui("about_license_label"); value: ui("about_license") }
+            }
+            RowLayout {
+                Layout.fillWidth: true
+                Layout.topMargin: 8
+                GameButton { text: ui("open_github"); Layout.preferredWidth: 200; accent: "#264966"; onClicked: Qt.openUrlExternally("https://github.com/JuanenRac/ELECTRO-HOBBY-3D-UPDATER") }
+                Item { Layout.fillWidth: true }
+                GameButton { text: ui("close"); Layout.preferredWidth: 140; accent: "#38d4e6"; onClicked: aboutDialog.close() }
+            }
+        }
     }
 
     FolderDialog {

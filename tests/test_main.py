@@ -171,3 +171,16 @@ def test_without_arguments_the_window_is_opened_and_with_arguments_the_cli_is_us
     monkeypatch.setattr(main_module, "dispatch", lambda args: called.append(args.action) or 0)
     monkeypatch.setattr(sys, "argv", ["electro-hobby-3d-updater", "status", "--ecosystem", "all"])
     assert main_module.main() == 0 and called == ["status"]
+
+
+def test_the_window_has_its_icon_and_the_about_texts():
+    from pathlib import Path
+
+    from electro_hobby_3d_updater import i18n
+
+    images = Path(__file__).resolve().parents[1] / "images"
+    assert (images / "ELECTRO_HOBBY_3D_ICON.svg").is_file()
+    icon = (images / "ELECTRO_HOBBY_3D_ICON.ico").read_bytes()
+    assert icon[:4] == b"\x00\x00\x01\x00" and int.from_bytes(icon[4:6], "little") >= 4  # an .ico with several sizes
+    for key in ("menu_about", "about_tagline", "about_description", "about_version_label", "about_author_label", "about_email_label", "about_license_label", "about_license", "open_github", "close"):
+        assert key in i18n.keys(), key

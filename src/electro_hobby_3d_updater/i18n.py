@@ -33,6 +33,16 @@ _ROWS: dict[str, tuple[str, str, str, str, str, str, str]] = {
     "tag_hydra-umc": ("Robots, machines and their control", "Robots, máquinas y su control", "Roboter, Maschinen und ihre Steuerung", "Robots, machines et leur commande", "Robot, macchine e il loro controllo", "ロボット・機械とその制御", "机器人、机器及其控制"),
     "tag_urtc": ("Tools, firmware and the Smart Rack", "Herramientas, firmware y Smart Rack", "Werkzeuge, Firmware und Smart Rack", "Outils, firmware et Smart Rack", "Strumenti, firmware e Smart Rack", "ツール、ファームウェア、スマートラック", "工具、固件与智能机架"),
     "tag_armor": ("Perimeter security, solar and electrical", "Seguridad perimetral, solar y eléctrica", "Perimeterschutz, Solar und Elektrik", "Sécurité périmétrique, solaire et électrique", "Sicurezza perimetrale, solare ed elettrica", "境界警備・太陽光・電気", "周界安防、太阳能与电气"),
+    "menu_about": ("About", "Acerca de", "Info", "À propos", "Informazioni", "バージョン情報", "关于"),
+    "about_tagline": ("One window for the three ecosystems", "Una ventana para los tres ecosistemas", "Ein Fenster für die drei Ökosysteme", "Une fenêtre pour les trois écosystèmes", "Una finestra per i tre ecosistemi", "3つのエコシステムをひとつの画面で", "一个窗口管理三个生态系统"),
+    "about_description": ("Opens the updater of HYDRA-UMC, URTC or A.R.M.O.R. and asks each one for its status. It holds no discovery or installation logic of its own: each ecosystem keeps doing that with its own updater.", "Abre el actualizador de HYDRA-UMC, URTC o A.R.M.O.R. y le pide su estado. No tiene lógica propia de detección ni de instalación: cada ecosistema sigue haciéndolo con su propio actualizador.", "Öffnet den Updater von HYDRA-UMC, URTC oder A.R.M.O.R. und fragt dessen Status ab. Er enthält keine eigene Erkennungs- oder Installationslogik: Jedes Ökosystem erledigt das weiterhin mit seinem eigenen Updater.", "Ouvre l'outil de mise à jour de HYDRA-UMC, URTC ou A.R.M.O.R. et lui demande son état. Il n'a aucune logique propre de détection ni d'installation : chaque écosystème continue de s'en charger avec son propre outil.", "Apre l'aggiornatore di HYDRA-UMC, URTC o A.R.M.O.R. e ne chiede lo stato. Non ha una logica propria di rilevamento o installazione: ogni ecosistema continua a occuparsene con il proprio aggiornatore.", "HYDRA-UMC、URTC、A.R.M.O.R. のアップデーターを開き、それぞれの状態を問い合わせます。検出やインストールの処理は持たず、各エコシステムが自身のアップデーターで行います。", "打开 HYDRA-UMC、URTC 或 A.R.M.O.R. 的更新器并查询各自的状态。它本身不包含检测或安装逻辑：每个生态系统仍由自己的更新器负责。"),
+    "about_version_label": ("Version", "Versión", "Version", "Version", "Versione", "バージョン", "版本"),
+    "about_author_label": ("Author", "Autor", "Autor", "Auteur", "Autore", "作者", "作者"),
+    "about_email_label": ("Email", "Correo", "E-Mail", "E-mail", "Email", "メール", "邮箱"),
+    "about_license_label": ("License", "Licencia", "Lizenz", "Licence", "Licenza", "ライセンス", "许可证"),
+    "about_license": ("GNU General Public License v3.0 (GPL-3.0)", "Licencia Pública General de GNU v3.0 (GPL-3.0)", "GNU General Public License v3.0 (GPL-3.0)", "Licence publique générale GNU v3.0 (GPL-3.0)", "GNU General Public License v3.0 (GPL-3.0)", "GNU General Public License v3.0 (GPL-3.0)", "GNU 通用公共许可证 v3.0 (GPL-3.0)"),
+    "open_github": ("Open on GitHub", "Abrir en GitHub", "Auf GitHub öffnen", "Ouvrir sur GitHub", "Apri su GitHub", "GitHub で開く", "在 GitHub 上打开"),
+    "close": ("Close", "Cerrar", "Schließen", "Fermer", "Chiudi", "閉じる", "关闭"),
 }
 MISSING_LANGUAGE = "en"
 

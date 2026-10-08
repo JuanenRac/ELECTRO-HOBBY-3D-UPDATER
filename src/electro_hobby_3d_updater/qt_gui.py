@@ -12,6 +12,7 @@ PySide6 is imported only when the window is opened; the command line keeps needi
 """
 from __future__ import annotations
 
+import ctypes
 import subprocess
 import sys
 import threading
@@ -19,7 +20,7 @@ from importlib.util import find_spec
 from pathlib import Path
 
 from PySide6.QtCore import Property, QObject, QUrl, Signal, Slot
-from PySide6.QtGui import QGuiApplication
+from PySide6.QtGui import QGuiApplication, QIcon
 from PySide6.QtQml import QQmlApplicationEngine
 from PySide6.QtQuickControls2 import QQuickStyle
 
@@ -152,15 +153,34 @@ class Bridge(QObject):
         self.busyChanged.emit()
 
 
+def _set_windows_app_id() -> None:
+    """Gives the process its own identity on Windows, so the taskbar shows this window's icon and not the one of Python."""
+    if sys.platform == "win32":
+        try:
+            ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("ElectroHobby3D.Updater")
+        except (AttributeError, OSError):
+            pass
+
+
 def launch_qt_gui(workspace: Path) -> int:
+    _set_windows_app_id()
     QQuickStyle.setStyle("Basic")   # the window paints its own buttons; the native style refuses to be customised
     app = QGuiApplication.instance() or QGuiApplication(sys.argv)
     app.setApplicationName("ELECTRO-HOBBY-3D-UPDATER")
     app.setApplicationDisplayName("Electro Hobby 3D Updater")
+    # The window carries the icon of the Electro Hobby 3D emblem: the .ico (several sizes, made from the SVG) when it is there, the SVG otherwise.
+    images = Path(__file__).resolve().parents[2] / "images"
+    icon = images / "ELECTRO_HOBBY_3D_ICON.ico"
+    if not icon.is_file():
+        icon = images / "ELECTRO_HOBBY_3D_ICON.svg"
+    app.setWindowIcon(QIcon(str(icon)))
     engine = QQmlApplicationEngine()
     bridge = Bridge(workspace)
     engine.rootContext().setContextProperty("backend", bridge)
     engine.load(QUrl.fromLocalFile(str(Path(__file__).with_name("qml") / "Main.qml")))
     if not engine.rootObjects():
         return 1
+    for window in engine.rootObjects():
+        if hasattr(window, "setIcon"):
+            window.setIcon(app.windowIcon())
     return app.exec()

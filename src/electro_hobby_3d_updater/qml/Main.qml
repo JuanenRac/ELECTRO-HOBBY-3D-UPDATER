@@ -78,7 +78,7 @@ ApplicationWindow {
                 color: "#0e3045"; border.width: 1; border.color: "#2d7695"
                 Image {
                     anchors.fill: parent; anchors.margins: 5
-                    source: "../../../images/ELECTRO_HOBBY_3D_ICON.svg"
+                    source: "../assets/ELECTRO_HOBBY_3D_ICON.svg"
                     sourceSize.width: 128; sourceSize.height: 128
                     fillMode: Image.PreserveAspectFit
                     smooth: true
@@ -236,7 +236,7 @@ ApplicationWindow {
                     color: "#0e3045"; border.width: 1; border.color: "#2d7695"
                     Image {
                         anchors.fill: parent; anchors.margins: 10
-                        source: "../../../images/ELECTRO_HOBBY_3D_ICON.svg"
+                        source: "../assets/ELECTRO_HOBBY_3D_ICON.svg"
                         sourceSize.width: 256; sourceSize.height: 256
                         fillMode: Image.PreserveAspectFit
                         smooth: true

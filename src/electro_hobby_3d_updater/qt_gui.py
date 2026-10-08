@@ -169,7 +169,7 @@ def launch_qt_gui(workspace: Path) -> int:
     app.setApplicationName("ELECTRO-HOBBY-3D-UPDATER")
     app.setApplicationDisplayName("Electro Hobby 3D Updater")
     # The window carries the icon of the Electro Hobby 3D emblem: the .ico (several sizes, made from the SVG) when it is there, the SVG otherwise.
-    images = Path(__file__).resolve().parents[2] / "images"
+    images = Path(__file__).with_name("assets")   # inside the package, so it is there also when the package is installed and not run from its folder
     icon = images / "ELECTRO_HOBBY_3D_ICON.ico"
     if not icon.is_file():
         icon = images / "ELECTRO_HOBBY_3D_ICON.svg"

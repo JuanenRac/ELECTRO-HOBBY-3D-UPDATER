@@ -5,6 +5,11 @@ version number follows this ecosystem's "odometer" scheme: PATCH +1 on
 every real build, rolling into MINOR past 9 (`0.0.9` -> `0.1.0`); MAJOR is
 bumped manually only.
 
+## [0.0.5] - The logo shows when the updater is opened from Electro Hobby 3D Updater
+
+- The window icon and the emblem at the top of the window are now looked for inside the package (`assets/`), so they also show when it is installed and not run from its own folder.
+
+
 ## [0.0.4] - The check box, an About window and the icon
 
 - **The check box *Without asking GitHub* no longer sits on top of its text:** it had no text of its own, so Qt centred its box over the label; the text now belongs to the check box.

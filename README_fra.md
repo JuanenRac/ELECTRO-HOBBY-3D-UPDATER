@@ -20,13 +20,13 @@
   <img src="https://img.shields.io/badge/License-GPL%203.0-blue.svg" alt="GPL 3.0">
   <img src="https://img.shields.io/badge/Language-Python%203.10%2B-3776ab.svg" alt="Language">
   <img src="https://img.shields.io/badge/Dependencies-3%20real%20sub--updaters-2ea44f.svg" alt="Dependencies">
-  <img src="https://img.shields.io/badge/Tests-10-00E5FF.svg" alt="Tests">
+  <img src="https://img.shields.io/badge/Tests-13-00E5FF.svg" alt="Tests">
   <img src="https://img.shields.io/badge/Maturity-scaffolding-ff9800.svg" alt="Maturity">
 </p>
 
 ---
 
-**Verification d'honnetete - ce qui fonctionne aujourd'hui:** **Maturite : echafaudage.** C'est un dispatcheur mince, pas une quatrieme implementation de la decouverte d'ecosysteme : il ne contient aucune logique propre d'analyse de manifeste, d'installation ou de mise a jour. `dispatch()` et la construction de ses commandes (10 tests, tous contre un executeur de sous-processus simule) sont reels et testes ; `status --ecosystem all` a ete execute pour de vrai contre un checkout reel des trois ecosystemes (55 depots HYDRA-UMC, 7 URTC et 15 A.R.M.O.R. correctement trouves) - `install`/`update` ne l'ont pas encore ete. Un vrai bug a ete trouve et corrige lors de cette premiere execution reelle : voir l'entree `--workspace` dans `CHANGELOG.md`.
+**Verification d'honnetete - ce qui fonctionne aujourd'hui:** **Maturite : echafaudage.** C'est un dispatcheur mince, pas une quatrieme implementation de la decouverte d'ecosysteme : il ne contient aucune logique propre d'analyse de manifeste, d'installation ou de mise a jour. `dispatch()` et la construction de ses commandes (13 tests, tous contre un executeur de sous-processus simule) sont reels et testes ; `status --ecosystem all` a ete execute pour de vrai contre un checkout reel des trois ecosystemes (55 depots HYDRA-UMC, 7 URTC et 15 A.R.M.O.R. correctement trouves) - `install`/`update` ne l'ont pas encore ete. Un vrai bug a ete trouve et corrige lors de cette premiere execution reelle : voir l'entree `--workspace` dans `CHANGELOG.md`.
 
 ---
 
@@ -58,7 +58,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 
 ```bash
 pip install -e ".[dev]"                 # installe aussi hydra-umc-updater, urtc-updater et armor-updater depuis GitHub
-python -m pytest tests -q               # 10 tests, sans reseau ni vrai sous-processus
+python -m pytest tests -q               # 13 tests, sans reseau ni vrai sous-processus
 electro-hobby-3d-updater status --ecosystem all               # verifie les trois ecosystemes en sequence
 electro-hobby-3d-updater status --ecosystem armor             # verifie un seul
 electro-hobby-3d-updater install --ecosystem urtc URTC-TESTER # clone et construit un projet pas encore installe

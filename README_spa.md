@@ -20,13 +20,13 @@
   <img src="https://img.shields.io/badge/License-GPL%203.0-blue.svg" alt="GPL 3.0">
   <img src="https://img.shields.io/badge/Language-Python%203.10%2B-3776ab.svg" alt="Language">
   <img src="https://img.shields.io/badge/Dependencies-3%20real%20sub--updaters-2ea44f.svg" alt="Dependencies">
-  <img src="https://img.shields.io/badge/Tests-10-00E5FF.svg" alt="Tests">
+  <img src="https://img.shields.io/badge/Tests-13-00E5FF.svg" alt="Tests">
   <img src="https://img.shields.io/badge/Maturity-scaffolding-ff9800.svg" alt="Maturity">
 </p>
 
 ---
 
-**Comprobacion de honestidad - que funciona hoy:** **Madurez: andamiaje.** Es un despachador delgado, no una cuarta implementacion del descubrimiento de ecosistemas: no tiene logica propia de lectura de manifiestos, instalacion o actualizacion. `dispatch()` y la construccion de sus comandos (10 pruebas, todas contra un ejecutor de subproceso simulado) estan probados de verdad; `status --ecosystem all` se ha ejecutado de verdad contra un checkout real de los tres ecosistemas (encontro correctamente 55 repositorios de HYDRA-UMC, 7 de URTC y 15 de A.R.M.O.R.) - `install`/`update` todavia no. Se encontro y corrigio un bug real durante esa primera ejecucion real: ver la entrada de `--workspace` en `CHANGELOG.md`.
+**Comprobacion de honestidad - que funciona hoy:** **Madurez: andamiaje.** Es un despachador delgado, no una cuarta implementacion del descubrimiento de ecosistemas: no tiene logica propia de lectura de manifiestos, instalacion o actualizacion. `dispatch()` y la construccion de sus comandos (13 pruebas, todas contra un ejecutor de subproceso simulado) estan probados de verdad; `status --ecosystem all` se ha ejecutado de verdad contra un checkout real de los tres ecosistemas (encontro correctamente 55 repositorios de HYDRA-UMC, 7 de URTC y 15 de A.R.M.O.R.) - `install`/`update` todavia no. Se encontro y corrigio un bug real durante esa primera ejecucion real: ver la entrada de `--workspace` en `CHANGELOG.md`.
 
 ---
 
@@ -58,7 +58,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 
 ```bash
 pip install -e ".[dev]"                 # tambien instala hydra-umc-updater, urtc-updater y armor-updater desde GitHub
-python -m pytest tests -q               # 10 pruebas, sin red ni subproceso real
+python -m pytest tests -q               # 13 pruebas, sin red ni subproceso real
 electro-hobby-3d-updater status --ecosystem all               # comprueba los tres ecosistemas en secuencia
 electro-hobby-3d-updater status --ecosystem armor             # comprueba solo uno
 electro-hobby-3d-updater install --ecosystem urtc URTC-TESTER # clona y construye un proyecto que aun no esta instalado

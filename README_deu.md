@@ -20,13 +20,13 @@
   <img src="https://img.shields.io/badge/License-GPL%203.0-blue.svg" alt="GPL 3.0">
   <img src="https://img.shields.io/badge/Language-Python%203.10%2B-3776ab.svg" alt="Language">
   <img src="https://img.shields.io/badge/Dependencies-3%20real%20sub--updaters-2ea44f.svg" alt="Dependencies">
-  <img src="https://img.shields.io/badge/Tests-10-00E5FF.svg" alt="Tests">
+  <img src="https://img.shields.io/badge/Tests-13-00E5FF.svg" alt="Tests">
   <img src="https://img.shields.io/badge/Maturity-scaffolding-ff9800.svg" alt="Maturity">
 </p>
 
 ---
 
-**Ehrlichkeitspruefung - was heute laeuft:** **Reifegrad: Geruest.** Dies ist ein duenner Dispatcher, keine vierte Implementierung der Oekosystem-Erkennung: er enthaelt keine eigene Manifest-Analyse-, Installations- oder Aktualisierungslogik. `dispatch()` und sein Befehlsaufbau (10 Tests, alle gegen einen simulierten Subprozess-Runner) sind real und getestet; `status --ecosystem all` wurde echt gegen ein reales Checkout aller drei Oekosysteme ausgefuehrt (55 HYDRA-UMC-, 7 URTC- und 15 A.R.M.O.R.-Repositories korrekt gefunden) - `install`/`update` noch nicht. Ein echter Fehler wurde bei diesem ersten echten Lauf gefunden und behoben: siehe den `--workspace`-Eintrag in `CHANGELOG.md`.
+**Ehrlichkeitspruefung - was heute laeuft:** **Reifegrad: Geruest.** Dies ist ein duenner Dispatcher, keine vierte Implementierung der Oekosystem-Erkennung: er enthaelt keine eigene Manifest-Analyse-, Installations- oder Aktualisierungslogik. `dispatch()` und sein Befehlsaufbau (13 Tests, alle gegen einen simulierten Subprozess-Runner) sind real und getestet; `status --ecosystem all` wurde echt gegen ein reales Checkout aller drei Oekosysteme ausgefuehrt (55 HYDRA-UMC-, 7 URTC- und 15 A.R.M.O.R.-Repositories korrekt gefunden) - `install`/`update` noch nicht. Ein echter Fehler wurde bei diesem ersten echten Lauf gefunden und behoben: siehe den `--workspace`-Eintrag in `CHANGELOG.md`.
 
 ---
 
@@ -58,7 +58,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 
 ```bash
 pip install -e ".[dev]"                 # installiert auch hydra-umc-updater, urtc-updater und armor-updater von GitHub
-python -m pytest tests -q               # 10 Tests, ohne Netzwerk oder echten Subprozess
+python -m pytest tests -q               # 13 Tests, ohne Netzwerk oder echten Subprozess
 electro-hobby-3d-updater status --ecosystem all               # prueft alle drei Oekosysteme nacheinander
 electro-hobby-3d-updater status --ecosystem armor             # prueft nur eines
 electro-hobby-3d-updater install --ecosystem urtc URTC-TESTER # klont und baut ein noch nicht installiertes Projekt

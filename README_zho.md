@@ -20,13 +20,13 @@
   <img src="https://img.shields.io/badge/License-GPL%203.0-blue.svg" alt="GPL 3.0">
   <img src="https://img.shields.io/badge/Language-Python%203.10%2B-3776ab.svg" alt="Language">
   <img src="https://img.shields.io/badge/Dependencies-3%20real%20sub--updaters-2ea44f.svg" alt="Dependencies">
-  <img src="https://img.shields.io/badge/Tests-10-00E5FF.svg" alt="Tests">
+  <img src="https://img.shields.io/badge/Tests-13-00E5FF.svg" alt="Tests">
   <img src="https://img.shields.io/badge/Maturity-scaffolding-ff9800.svg" alt="Maturity">
 </p>
 
 ---
 
-**诚实性检查 - 今天真正能运行的部分:** **成熟度：脚手架。** 这是一个轻量的分发器，而不是生态系统发现的第四套实现：它自身不包含任何清单解析、安装或更新逻辑。`dispatch()` 及其命令构建（10 个测试，全部针对模拟的子进程执行器）是真实且经过测试的；`status --ecosystem all` 已经针对三个生态系统的真实检出真正运行过（正确找到 55 个 HYDRA-UMC、7 个 URTC 和 15 个 A.R.M.O.R. 仓库）——`install`/`update` 尚未如此。在那次首次真实运行中发现并修复了一个真实的缺陷：见 `CHANGELOG.md` 中的 `--workspace` 条目。
+**诚实性检查 - 今天真正能运行的部分:** **成熟度：脚手架。** 这是一个轻量的分发器，而不是生态系统发现的第四套实现：它自身不包含任何清单解析、安装或更新逻辑。`dispatch()` 及其命令构建（13 个测试，全部针对模拟的子进程执行器）是真实且经过测试的；`status --ecosystem all` 已经针对三个生态系统的真实检出真正运行过（正确找到 55 个 HYDRA-UMC、7 个 URTC 和 15 个 A.R.M.O.R. 仓库）——`install`/`update` 尚未如此。在那次首次真实运行中发现并修复了一个真实的缺陷：见 `CHANGELOG.md` 中的 `--workspace` 条目。
 
 ---
 
@@ -58,7 +58,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 
 ```bash
 pip install -e ".[dev]"                 # 同时会从 GitHub 安装 hydra-umc-updater、urtc-updater 和 armor-updater
-python -m pytest tests -q               # 10 个测试，不需要网络或真实子进程
+python -m pytest tests -q               # 13 个测试，不需要网络或真实子进程
 electro-hobby-3d-updater status --ecosystem all               # 按顺序检查全部三个生态系统
 electro-hobby-3d-updater status --ecosystem armor             # 只检查一个
 electro-hobby-3d-updater install --ecosystem urtc URTC-TESTER # 克隆并构建一个尚未安装的项目

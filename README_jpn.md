@@ -20,13 +20,13 @@
   <img src="https://img.shields.io/badge/License-GPL%203.0-blue.svg" alt="GPL 3.0">
   <img src="https://img.shields.io/badge/Language-Python%203.10%2B-3776ab.svg" alt="Language">
   <img src="https://img.shields.io/badge/Dependencies-3%20real%20sub--updaters-2ea44f.svg" alt="Dependencies">
-  <img src="https://img.shields.io/badge/Tests-10-00E5FF.svg" alt="Tests">
+  <img src="https://img.shields.io/badge/Tests-13-00E5FF.svg" alt="Tests">
   <img src="https://img.shields.io/badge/Maturity-scaffolding-ff9800.svg" alt="Maturity">
 </p>
 
 ---
 
-**正直さのチェック - 今日動いているもの:** **成熟度:骨組み。** これはエコシステム発見の4つ目の実装ではなく、薄いディスパッチャーです。マニフェスト解析、インストール、更新の独自ロジックは一切持ちません。`dispatch()` とそのコマンド構築(偽のサブプロセスランナーに対する10件のテスト)は実際にテスト済みです。`status --ecosystem all` は3つのエコシステム全ての実際のチェックアウトに対して実際に実行され(HYDRA-UMC 55件、URTC 7件、A.R.M.O.R. 15件のリポジトリを正しく検出)、`install`/`update` はまだです。その最初の実行で実際のバグが発見・修正されました:`CHANGELOG.md` の `--workspace` の項目を参照してください。
+**正直さのチェック - 今日動いているもの:** **成熟度:骨組み。** これはエコシステム発見の4つ目の実装ではなく、薄いディスパッチャーです。マニフェスト解析、インストール、更新の独自ロジックは一切持ちません。`dispatch()` とそのコマンド構築(偽のサブプロセスランナーに対する13件のテスト)は実際にテスト済みです。`status --ecosystem all` は3つのエコシステム全ての実際のチェックアウトに対して実際に実行され(HYDRA-UMC 55件、URTC 7件、A.R.M.O.R. 15件のリポジトリを正しく検出)、`install`/`update` はまだです。その最初の実行で実際のバグが発見・修正されました:`CHANGELOG.md` の `--workspace` の項目を参照してください。
 
 ---
 
@@ -58,7 +58,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 
 ```bash
 pip install -e ".[dev]"                 # GitHub から hydra-umc-updater、urtc-updater、armor-updater もインストールする
-python -m pytest tests -q               # 10件のテスト、ネットワークも実際のサブプロセスも不要
+python -m pytest tests -q               # 13件のテスト、ネットワークも実際のサブプロセスも不要
 electro-hobby-3d-updater status --ecosystem all               # 3つのエコシステムを順番にチェックする
 electro-hobby-3d-updater status --ecosystem armor             # 1つだけチェックする
 electro-hobby-3d-updater install --ecosystem urtc URTC-TESTER # まだインストールされていないプロジェクトをクローンしてビルドする

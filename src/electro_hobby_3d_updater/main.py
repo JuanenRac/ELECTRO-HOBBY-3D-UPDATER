@@ -17,8 +17,11 @@
 # replacing the `runner` this module's own `dispatch()` calls.
 #
 # `status --ecosystem all` is the one thing this tool does that no single
-# sub-updater does on its own: run all three in sequence and report which
-# ones failed, without stopping at the first. `install`/`update` always
+# sub-updater does on its own: run all three (in parallel - they are
+# independent processes - with each one's output printed whole and in a
+# fixed order) and report which ones failed, without stopping at the first.
+# `versions` shows which version of each sub-updater is installed and
+# warns when one is behind the latest on GitHub. `install`/`update` always
 # need exactly one ecosystem and one project name - there is no "update
 # everything across every ecosystem" here, same non-negotiable stance
 # each sub-updater's own CLI already takes for its own projects.
@@ -42,8 +45,12 @@
 from __future__ import annotations
 
 import argparse
+import re
 import subprocess
 import sys
+import urllib.request
+from concurrent.futures import ThreadPoolExecutor
+from importlib import metadata
 from pathlib import Path
 
 from . import __version__
@@ -91,10 +98,13 @@ def build_parser() -> argparse.ArgumentParser:
         action_parser.add_argument("project", help="the exact project/repository name, as that ecosystem's own manifest declares it")
         action_parser.add_argument("--workspace", help="Workspace root (default: this tool's own parent directory).")
 
+    versions = subparsers.add_parser("versions", help="installed version of each ecosystem's updater, and whether it is behind GitHub")
+    versions.add_argument("--offline", action="store_true", help="only show the installed versions, no GitHub check")
+
     return parser
 
 
-def _run_one(ecosystem_key: str, args: argparse.Namespace, *, runner) -> int:
+def _command_for(ecosystem_key: str, args: argparse.Namespace) -> list[str]:
     ecosystem = ECOSYSTEMS_BY_KEY[ecosystem_key]
     command = [sys.executable, "-m", ecosystem.module, "--cli", args.action]
     if args.action == "status":
@@ -103,24 +113,93 @@ def _run_one(ecosystem_key: str, args: argparse.Namespace, *, runner) -> int:
     else:
         command.append(args.project)
     workspace = getattr(args, "workspace", None) or str(default_workspace_root())
-    command += ["--workspace", workspace]
-    print(f"=== {ecosystem.display_name} ===", file=sys.stderr)
-    result = runner(command)
-    return result.returncode
+    return command + ["--workspace", workspace]
+
+
+def _run_one(ecosystem_key: str, args: argparse.Namespace, *, runner) -> int:
+    print(f"=== {ECOSYSTEMS_BY_KEY[ecosystem_key].display_name} ===", file=sys.stderr)
+    return runner(_command_for(ecosystem_key, args)).returncode
+
+
+def _status_all(args: argparse.Namespace, *, runner) -> int:
+    """The three sub-updaters run at the same time (they are independent
+    processes, and each one spends most of its time waiting on GitHub);
+    their captured output is printed whole, one ecosystem after another in
+    the fixed ECOSYSTEMS order, so the report reads the same as before."""
+    def run(ecosystem):
+        return runner(_command_for(ecosystem.key, args), capture_output=True, text=True)
+
+    with ThreadPoolExecutor(max_workers=len(ECOSYSTEMS)) as pool:
+        results = list(pool.map(run, ECOSYSTEMS))
+    failed = []
+    for ecosystem, result in zip(ECOSYSTEMS, results):
+        print(f"=== {ecosystem.display_name} ===", file=sys.stderr)
+        if getattr(result, "stdout", None):
+            sys.stdout.write(result.stdout)
+            sys.stdout.flush()
+        if getattr(result, "stderr", None):
+            sys.stderr.write(result.stderr)
+        if result.returncode != 0:
+            failed.append(ecosystem.display_name)
+    if failed:
+        print(f"FAILED: {', '.join(failed)}", file=sys.stderr)
+        return 1
+    return 0
+
+
+def _version_tuple(text: str) -> tuple[int, ...]:
+    return tuple(int(part) for part in re.findall(r"\d+", text)[:4])
+
+
+def latest_version_on_github(repository: str) -> str | None:
+    """The version in the repository's own pyproject.toml on main, or None
+    when GitHub cannot be reached."""
+    url = f"https://raw.githubusercontent.com/JuanenRac/{repository}/main/pyproject.toml"
+    try:
+        request = urllib.request.Request(url, headers={"User-Agent": "electro-hobby-3d-updater"})
+        with urllib.request.urlopen(request, timeout=15) as response:
+            text = response.read().decode("utf-8", errors="replace")
+    except OSError:
+        return None
+    match = re.search(r'^version\s*=\s*"([^"]+)"', text, re.M)
+    return match.group(1) if match else None
+
+
+def installed_version(distribution: str) -> str | None:
+    try:
+        return metadata.version(distribution)
+    except metadata.PackageNotFoundError:
+        return None
+
+
+def show_versions(args: argparse.Namespace, *, installed=installed_version, latest=latest_version_on_github) -> int:
+    behind = 0
+    for ecosystem in ECOSYSTEMS:
+        have = installed(ecosystem.distribution)
+        line = f"{ecosystem.display_name:<11} {ecosystem.distribution:<18} installed {have or 'NOT INSTALLED'}"
+        if not args.offline:
+            newest = latest(ecosystem.repository)
+            if newest is None:
+                line += "  (GitHub not reachable)"
+            else:
+                line += f"  latest {newest}"
+                if have is None or _version_tuple(have) < _version_tuple(newest):
+                    line += "  <- BEHIND: reinstall this tool (pyproject.toml pins each updater to a reviewed commit)"
+                    behind += 1
+        print(line)
+    return 0 if behind == 0 else 2
 
 
 def dispatch(args: argparse.Namespace, *, runner=subprocess.run) -> int:
     """Runs the real sub-updater(s) this call resolves to. `runner` takes
-    a command list and returns an object with a `.returncode` attribute -
-    the exact shape of `subprocess.run`'s own return value, swapped out in
-    tests for a fake that never actually spawns a process."""
+    a command list (plus subprocess.run keyword arguments) and returns an
+    object with `.returncode` (and, when output is captured, `.stdout`/
+    `.stderr`) - the shape of `subprocess.run`'s own return value, swapped
+    out in tests for a fake that never actually spawns a process."""
+    if args.action == "versions":
+        return show_versions(args)
     if args.action == "status" and args.ecosystem == "all":
-        exit_codes = [_run_one(ecosystem.key, args, runner=runner) for ecosystem in ECOSYSTEMS]
-        failed = [ecosystem.display_name for ecosystem, code in zip(ECOSYSTEMS, exit_codes) if code != 0]
-        if failed:
-            print(f"FAILED: {', '.join(failed)}", file=sys.stderr)
-            return 1
-        return 0
+        return _status_all(args, runner=runner)
     return _run_one(args.ecosystem, args, runner=runner)
 
 

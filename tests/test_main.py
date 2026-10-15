@@ -12,8 +12,10 @@ from electro_hobby_3d_updater.main import build_parser, default_workspace_root, 
 
 
 class _FakeResult:
-    def __init__(self, returncode: int) -> None:
+    def __init__(self, returncode: int, stdout: str = "", stderr: str = "") -> None:
         self.returncode = returncode
+        self.stdout = stdout
+        self.stderr = stderr
 
 
 class _FakeRunner:
@@ -24,10 +26,10 @@ class _FakeRunner:
         self.calls: list[list[str]] = []
         self._returncode_by_module = returncode_by_module or {}
 
-    def __call__(self, command: list[str]) -> _FakeResult:
+    def __call__(self, command: list[str], **_kwargs) -> _FakeResult:
         self.calls.append(command)
         module = command[2]
-        return _FakeResult(self._returncode_by_module.get(module, 0))
+        return _FakeResult(self._returncode_by_module.get(module, 0), stdout=f"report from {module}\n")
 
 
 def test_ecosystems_registry_has_exactly_the_three_real_ecosystems():
@@ -58,7 +60,7 @@ def test_status_offline_forwards_the_flag_to_the_sub_updater():
     ]
 
 
-def test_status_all_runs_every_ecosystem_once_each_in_order():
+def test_status_all_runs_every_ecosystem_once_and_prints_them_in_order(capsys):
     parser = build_parser()
     args = parser.parse_args(["status", "--ecosystem", "all", "--workspace", "/ws"])
     runner = _FakeRunner()
@@ -66,8 +68,11 @@ def test_status_all_runs_every_ecosystem_once_each_in_order():
     exit_code = dispatch(args, runner=runner)
 
     assert exit_code == 0
-    modules_run = [call[2] for call in runner.calls]
-    assert modules_run == ["hydra_umc_updater.main", "urtc_updater.main", "armor_updater.main"]
+    # They run in parallel, so the call order is not fixed...
+    assert sorted(call[2] for call in runner.calls) == ["armor_updater.main", "hydra_umc_updater.main", "urtc_updater.main"]
+    # ...but the report always comes out in the fixed ECOSYSTEMS order.
+    out = capsys.readouterr().out
+    assert out.index("hydra_umc_updater") < out.index("urtc_updater") < out.index("armor_updater")
 
 
 def test_status_all_never_stops_at_the_first_failure_and_reports_it():
@@ -184,3 +189,38 @@ def test_the_window_has_its_icon_and_the_about_texts():
     assert icon[:4] == b"\x00\x00\x01\x00" and int.from_bytes(icon[4:6], "little") >= 4  # an .ico with several sizes
     for key in ("menu_about", "about_tagline", "about_description", "about_version_label", "about_author_label", "about_email_label", "about_license_label", "about_license", "open_github", "close"):
         assert key in i18n.keys(), key
+
+
+def test_status_all_really_runs_the_three_at_the_same_time():
+    import threading
+    started = threading.Barrier(3, timeout=5)
+
+    def runner(command, **_kwargs):
+        started.wait()  # only returns once all three are running at once
+        return _FakeResult(0)
+
+    args = build_parser().parse_args(["status", "--ecosystem", "all", "--workspace", "/ws"])
+    assert dispatch(args, runner=runner) == 0
+
+
+def test_versions_reports_installed_and_flags_an_updater_behind_github(capsys):
+    from electro_hobby_3d_updater.main import show_versions
+    args = build_parser().parse_args(["versions"])
+    installed = {"hydra-umc-updater": "0.4.6", "urtc-updater": "0.0.6", "armor-updater": None}.get
+    latest = {"HYDRA-UMC-UPDATER": "0.4.6", "URTC-UPDATER": "0.0.7", "ARMOR-UPDATER": "0.0.7"}.get
+    assert show_versions(args, installed=installed, latest=latest) == 2
+    lines = capsys.readouterr().out.splitlines()
+    assert "BEHIND" not in lines[0]
+    assert "BEHIND" in lines[1] and "0.0.6" in lines[1]
+    assert "NOT INSTALLED" in lines[2] and "BEHIND" in lines[2]
+
+
+def test_versions_offline_never_contacts_github(capsys):
+    from electro_hobby_3d_updater.main import show_versions
+    args = build_parser().parse_args(["versions", "--offline"])
+
+    def latest(_repository):
+        raise AssertionError("--offline must not look anything up on GitHub")
+
+    assert show_versions(args, installed=lambda _d: "1.0.0", latest=latest) == 0
+    assert "latest" not in capsys.readouterr().out

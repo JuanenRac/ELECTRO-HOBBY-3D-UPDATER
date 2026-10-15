@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "electro-hobby-3d-updater"
-version = "0.0.5"
+version = "0.0.6"
 description = "Thin dispatcher over JuanenRac's (Electro Hobby 3D) three real, independent ecosystem updaters (hydra-umc-updater, urtc-updater, armor-updater) - pick an ecosystem, download and update its packages. Holds no discovery or install logic of its own."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -18,10 +18,17 @@ keywords = ["hydra-umc", "urtc", "armor", "updater", "installer", "fleet-managem
 # re-vendoring or re-implementing their discovery/install logic is
 # deliberate: this project has exactly one job, dispatch, and each
 # ecosystem's own updater remains the one place its own logic can drift.
+#
+# Each one is pinned to a reviewed commit, never to a moving branch: a pip
+# install must always install exactly what was reviewed, and a broken or
+# compromised main of any sub-updater must not reach this tool by itself.
+# To move to a newer release, review it, put its commit here, and bump this
+# project's version (`electro-hobby-3d-updater versions` shows which ones
+# are behind GitHub).
 dependencies = [
-    "hydra-umc-updater @ git+https://github.com/JuanenRac/HYDRA-UMC-UPDATER.git@main",
-    "urtc-updater @ git+https://github.com/JuanenRac/URTC-UPDATER.git@main",
-    "armor-updater @ git+https://github.com/JuanenRac/ARMOR-UPDATER.git@main",
+    "hydra-umc-updater @ git+https://github.com/JuanenRac/HYDRA-UMC-UPDATER.git@4831ff27b0adfaa852b7b6a5ee219555a4c68f89",  # v0.4.6
+    "urtc-updater @ git+https://github.com/JuanenRac/URTC-UPDATER.git@ea80bd696f3ec3a77627426922380065066b0efd",  # v0.0.7
+    "armor-updater @ git+https://github.com/JuanenRac/ARMOR-UPDATER.git@eff009dad4e843a88da5facc6eef0387b0b1aeec",  # v0.0.7
 ]
 
 [project.optional-dependencies]

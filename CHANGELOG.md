@@ -5,6 +5,27 @@ version number follows this ecosystem's "odometer" scheme: PATCH +1 on
 every real build, rolling into MINOR past 9 (`0.0.9` -> `0.1.0`); MAJOR is
 bumped manually only.
 
+## [0.0.6] - Pinned sub-updaters, `versions`, parallel `status all`
+
+- **Pinned dependencies:** the three sub-updaters are pinned to reviewed
+  commits (HYDRA-UMC-UPDATER 0.4.6, URTC-UPDATER 0.0.7, ARMOR-UPDATER 0.0.7)
+  instead of `@main`, so an install always gets exactly what was reviewed.
+- **`versions` (new):** shows the installed version of each sub-updater and
+  flags one that is behind its GitHub `main` (exit code 2); `--offline`
+  shows only what is installed.
+- **`status --ecosystem all` runs the three at the same time** and prints
+  each report whole, in the fixed HYDRA-UMC / URTC / A.R.M.O.R. order.
+- **build-test.sh/.bat** install the dependencies only when `pyproject.toml`
+  changed since the last run (16 s -> 2 s on a repeat run); otherwise they
+  only relink this project.
+- **Tests:** 16 (new: parallel run, output order, `versions` online and
+  offline).
+- READMEs in all 7 languages: real repository counts from a fresh
+  `status --ecosystem all` (55 HYDRA-UMC, 7 URTC, 17 A.R.M.O.R.), the
+  pinned dependencies, `versions`, and the limits inherited from the
+  sub-updaters (ARMOR-UPDATER breaking itself when it updates itself; only
+  URTC-UPDATER verifies commit signatures).
+
 ## [0.0.5] - The logo shows when the updater is opened from Electro Hobby 3D Updater
 
 - The window icon and the emblem at the top of the window are now looked for inside the package (`assets/`), so they also show when it is installed and not run from its own folder.

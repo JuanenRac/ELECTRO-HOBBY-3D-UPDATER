@@ -26,16 +26,18 @@
 
 ---
 
-**正直さのチェック - 今日動いているもの:** **成熟度:骨組み。** これはエコシステム発見の4つ目の実装ではなく、薄いディスパッチャーです。マニフェスト解析、インストール、更新の独自ロジックは一切持ちません。`dispatch()` とそのコマンド構築(偽のサブプロセスランナーに対する13件のテスト)は実際にテスト済みです。`status --ecosystem all` は3つのエコシステム全ての実際のチェックアウトに対して実際に実行され(HYDRA-UMC 55件、URTC 7件、A.R.M.O.R. 15件のリポジトリを正しく検出)、`install`/`update` はまだです。その最初の実行で実際のバグが発見・修正されました:`CHANGELOG.md` の `--workspace` の項目を参照してください。
+**正直さのチェック - 今日動いているもの:** **成熟度:骨組み。** これはエコシステム発見の4つ目の実装ではなく、薄いディスパッチャーです。マニフェスト解析、インストール、更新の独自ロジックは一切持ちません。`dispatch()` とそのコマンド構築(偽のサブプロセスランナーに対する16件のテスト)は実際にテスト済みです。`status --ecosystem all` は3つのエコシステム全ての実際のチェックアウトに対して実際に実行され(HYDRA-UMC 55件、URTC 7件、A.R.M.O.R. 17件のリポジトリを正しく検出)、`install`/`update` はまだです。その最初の実行で実際のバグが発見・修正されました:`CHANGELOG.md` の `--workspace` の項目を参照してください。
 
 ---
 
 ## 🎯 概要
 
-* **1つのツール、3つの実在するエコシステム:** [HYDRA-UMC](https://github.com/JuanenRac/HYDRA-UMC-UPDATER)、[URTC](https://github.com/JuanenRac/URTC-UPDATER)、[A.R.M.O.R.](https://github.com/JuanenRac/ARMOR-UPDATER) はそれぞれ既に独自の、独立してテストされたアップデーターを持っています。このプロジェクトはそれらを一切再実装しません - 3つ全てを実際の依存関係として(それぞれの GitHub リポジトリから直接)インストールし、`--ecosystem hydra-umc|urtc|armor` を対応するものへディスパッチします。
-* **毎回、実際に独立したサブプロセス。** 各呼び出しは `python -m <そのエコシステムのモジュール> --cli ...` を独自のインタープリタープロセスとして実行します - 別の CLI の `main()` を同じプロセスにインポートすることは決してありません。それぞれ独自に `sys.argv` を読み、`sys.exit()` を呼び出せる3つの独立した argparse プログラムを同一プロセス内で組み合わせると、互いを壊してしまいます。サブプロセスは、人が各コマンドを手動で入力するのと同じ分離を提供します。
-* **`status --ecosystem all`:** 単一のサブアップデーターだけでは実現できない、このツールならではの機能 - 3つのエコシステム全ての状態チェックを順番に実行し、最初の失敗で止まることなく、どれが失敗したかを報告します。
-* **`install`/`update` は常に1つのエコシステムと1つのプロジェクト名を必要とします。** 「全エコシステムにわたって全てを更新する」という操作はここには存在しません。これは各サブアップデーター自身の CLI が既に自分のプロジェクトに対して取っている、譲れない姿勢と同じです。
+* **1 つのツールで 3 つの実エコシステム：** [HYDRA-UMC](https://github.com/JuanenRac/HYDRA-UMC-UPDATER)、[URTC](https://github.com/JuanenRac/URTC-UPDATER)、[A.R.M.O.R.](https://github.com/JuanenRac/ARMOR-UPDATER) にはそれぞれ独立してテストされた専用アップデーターがあります。このプロジェクトはそれらを再実装せず、3 つを実際の依存関係としてインストールし、`--ecosystem hydra-umc|urtc|armor` を該当するものへ振り分けます。
+* **固定され、レビュー済みの依存関係：** `pyproject.toml` は各サブアップデーターを、動き続ける `main` ではなくレビュー済みのコミットに固定するため、インストールでは常にレビューした内容そのものが入ります。`versions` は各アップデーターのインストール済みバージョンを表示し、GitHub より古いものを知らせます。
+* **毎回、実際の独立したサブプロセス。** 各呼び出しは `python -m <そのエコシステムのモジュール> --cli ...` を独自のインタープリターで実行し、他の CLI の `main()` をこのプロセスにインポートすることはありません。`sys.argv` を読み `sys.exit()` を呼ぶ 3 つの独立した argparse プログラムは、同じプロセスでは互いに壊し合ってしまいます。
+* **`status --ecosystem all`：** 3 つのエコシステムのステータス確認を同時に実行し、各レポートを固定の順序でまとめて出力し、最初の失敗で止まらずにどれが失敗したかを示します。
+* **`install`/`update` には常に 1 つのエコシステムと 1 つのプロジェクト名が必要です。** ここには「全エコシステムをすべて更新」はなく、各サブアップデーターの CLI と同じ方針です。
+* **引き継がれる制限：** このツールは各サブアップデーターの動作をそのまま実行します。A.R.M.O.R. のアップデーターは自分自身を更新すると、まだ自身のインストールを壊します（編集可能インストールがステージングディレクトリを指したままになる）ので、当面 ARMOR-UPDATER は手動で更新してください。URTC-UPDATER は署名付きコミットを必須にできます（`URTC_UPDATER_REQUIRE_SIGNED=1`）が、他の 2 つはまだ署名を検証しません。
 
 ## 📂 リポジトリ構造
 
@@ -47,7 +49,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 │   ├── i18n.py         # ウィンドウの文言（7言語）
 │   ├── qt_gui.py       # Qt Quick ウィンドウ（エコシステムごとのカードとログ）- 各エコシステム専用のアップデーターを開く
 │   └── qml/Main.qml    # ウィンドウの QML
-├── tests/               # 偽のサブプロセスランナーに対する12件のテスト
+├── tests/               # 偽のサブプロセスランナーに対する16件のテスト
 ├── tools/               # ci_validate.py, build_test.py, _doc_policy.py, _readme_parity.py
 ├── build.sh / build.bat         # venv + 編集可能インストール(3つの実際の依存関係を取得) + コンパイルチェック
 ├── build-test.sh / build-test.bat  # 同じインストールの後、実際の pytest スイート
@@ -58,8 +60,9 @@ ELECTRO-HOBBY-3D-UPDATER/
 
 ```bash
 pip install -e ".[dev]"                 # GitHub から hydra-umc-updater、urtc-updater、armor-updater もインストールする
-python -m pytest tests -q               # 13件のテスト、ネットワークも実際のサブプロセスも不要
-electro-hobby-3d-updater status --ecosystem all               # 3つのエコシステムを順番にチェックする
+python -m pytest tests -q               # 16件のテスト、ネットワークも実際のサブプロセスも不要
+electro-hobby-3d-updater status --ecosystem all               # 全エコシステムを並列にチェックする
+electro-hobby-3d-updater versions                             # 各アップデーターのインストール済みバージョンと GitHub より古いかどうか
 electro-hobby-3d-updater status --ecosystem armor             # 1つだけチェックする
 electro-hobby-3d-updater install --ecosystem urtc URTC-TESTER # まだインストールされていないプロジェクトをクローンしてビルドする
 electro-hobby-3d-updater update  --ecosystem hydra-umc HYDRA-UMC-SERVER # 既にインストール済みのプロジェクトをプルして再ビルドする

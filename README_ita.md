@@ -26,16 +26,18 @@
 
 ---
 
-**Controllo di onesta - cosa funziona oggi:** **Maturita: impalcatura.** E' un dispatcher sottile, non una quarta implementazione della scoperta dell'ecosistema: non ha logica propria di analisi del manifesto, installazione o aggiornamento. `dispatch()` e la costruzione dei suoi comandi (13 test, tutti contro un esecutore di sottoprocessi simulato) sono reali e testati; `status --ecosystem all` e stato eseguito davvero contro un checkout reale dei tre ecosistemi (trovati correttamente 55 repository HYDRA-UMC, 7 URTC e 15 A.R.M.O.R.) - `install`/`update` non ancora. Un vero bug e stato trovato e corretto durante quella prima esecuzione reale: vedi la voce `--workspace` in `CHANGELOG.md`.
+**Controllo di onesta - cosa funziona oggi:** **Maturita: impalcatura.** E' un dispatcher sottile, non una quarta implementazione della scoperta dell'ecosistema: non ha logica propria di analisi del manifesto, installazione o aggiornamento. `dispatch()` e la costruzione dei suoi comandi (16 test, tutti contro un esecutore di sottoprocessi simulato) sono reali e testati; `status --ecosystem all` e stato eseguito davvero contro un checkout reale dei tre ecosistemi (trovati correttamente 55 repository HYDRA-UMC, 7 URTC e 17 A.R.M.O.R.) - `install`/`update` non ancora. Un vero bug e stato trovato e corretto durante quella prima esecuzione reale: vedi la voce `--workspace` in `CHANGELOG.md`.
 
 ---
 
 ## 🎯 Panoramica
 
-* **Uno strumento, tre ecosistemi reali:** [HYDRA-UMC](https://github.com/JuanenRac/HYDRA-UMC-UPDATER), [URTC](https://github.com/JuanenRac/URTC-UPDATER) e [A.R.M.O.R.](https://github.com/JuanenRac/ARMOR-UPDATER) hanno gia ciascuno il proprio updater dedicato e testato separatamente. Questo progetto non reimplementa nulla di tutto cio - installa tutti e tre come vere dipendenze (direttamente dai loro repository GitHub) e smista `--ecosystem hydra-umc|urtc|armor` verso quello giusto.
-* **Un vero sottoprocesso separato ogni volta.** Ogni chiamata esegue `python -m <modulo di quell'ecosistema> --cli ...` come proprio processo interprete - non importa mai il `main()` di un'altra CLI in questo stesso processo. Tre programmi argparse indipendenti, ognuno libero di leggere `sys.argv` e chiamare `sys.exit()`, si corromperebbero a vicenda se composti nello stesso processo; un sottoprocesso offre lo stesso isolamento di una persona che digita ogni comando a mano.
-* **`status --ecosystem all`:** l'unica cosa che questo strumento fa che nessun singolo updater fa da solo - esegue il controllo di stato dei tre ecosistemi in sequenza e riporta quale/i sono falliti, senza fermarsi al primo.
-* **`install`/`update` richiedono sempre un ecosistema e un nome di progetto.** Qui non esiste un "aggiorna tutto in tutti gli ecosistemi", la stessa posizione non negoziabile che la CLI di ogni updater gia adotta per i propri progetti.
+* **Uno strumento, tre ecosistemi reali:** [HYDRA-UMC](https://github.com/JuanenRac/HYDRA-UMC-UPDATER), [URTC](https://github.com/JuanenRac/URTC-UPDATER) e [A.R.M.O.R.](https://github.com/JuanenRac/ARMOR-UPDATER) hanno già ciascuno il proprio updater, testato separatamente. Questo progetto non reimplementa nulla di tutto ciò: installa i tre come dipendenze reali e inoltra `--ecosystem hydra-umc|urtc|armor` a quello corrispondente.
+* **Dipendenze fissate e verificate:** `pyproject.toml` fissa ogni sotto-updater a un commit verificato, mai a un `main` che si muove, così un'installazione ottiene sempre esattamente ciò che è stato verificato. `versions` mostra la versione installata di ciascuno e segnala quello rimasto indietro rispetto a GitHub.
+* **Ogni volta un vero sottoprocesso separato.** Ogni chiamata esegue `python -m <modulo di quell'ecosistema> --cli ...` nel proprio interprete - non importa mai il `main()` di un'altra CLI in questo. Tre programmi argparse indipendenti, ciascuno libero di leggere `sys.argv` e chiamare `sys.exit()`, si corromperebbero a vicenda nello stesso processo.
+* **`status --ecosystem all`:** esegue contemporaneamente il controllo di stato dei tre ecosistemi, stampa ogni rapporto per intero in un ordine fisso e indica quale o quali sono falliti senza fermarsi al primo.
+* **`install`/`update` richiedono sempre un ecosistema e un nome di progetto.** Qui non esiste "aggiorna tutto in tutti gli ecosistemi", la stessa posizione della CLI di ogni sotto-updater.
+* **Limiti ereditati:** questo strumento esegue ciò che fa ogni sotto-updater. L'updater di A.R.M.O.R. rompe ancora la propria installazione quando aggiorna se stesso (l'installazione modificabile punta alla sua directory di staging), quindi per ora aggiorna ARMOR-UPDATER a mano. URTC-UPDATER può richiedere commit firmati (`URTC_UPDATER_REQUIRE_SIGNED=1`); gli altri due non verificano ancora le firme.
 
 ## 📂 Struttura del Repository
 
@@ -47,7 +49,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 │   ├── i18n.py         # I testi della finestra nelle sette lingue
 │   ├── qt_gui.py       # Finestra Qt Quick (una scheda per ecosistema, un registro) - apre l'aggiornatore di ogni ecosistema
 │   └── qml/Main.qml    # Il QML della finestra
-├── tests/               # 12 test contro un esecutore di sottoprocessi simulato
+├── tests/               # 16 test contro un esecutore di sottoprocessi simulato
 ├── tools/               # ci_validate.py, build_test.py, _doc_policy.py, _readme_parity.py
 ├── build.sh / build.bat         # venv + installazione editabile (scarica le 3 dipendenze reali) + controllo di compilazione
 ├── build-test.sh / build-test.bat  # stessa installazione, poi la vera suite pytest
@@ -58,8 +60,9 @@ ELECTRO-HOBBY-3D-UPDATER/
 
 ```bash
 pip install -e ".[dev]"                 # installa anche hydra-umc-updater, urtc-updater e armor-updater da GitHub
-python -m pytest tests -q               # 13 test, senza rete ne sottoprocessi reali
-electro-hobby-3d-updater status --ecosystem all               # controlla i tre ecosistemi in sequenza
+python -m pytest tests -q               # 16 test, senza rete ne sottoprocessi reali
+electro-hobby-3d-updater status --ecosystem all               # controlla tutti gli ecosistemi (in parallelo)
+electro-hobby-3d-updater versions                             # versione installata di ogni updater e se e indietro rispetto a GitHub
 electro-hobby-3d-updater status --ecosystem armor             # controlla solo uno
 electro-hobby-3d-updater install --ecosystem urtc URTC-TESTER # clona e costruisce un progetto non ancora installato
 electro-hobby-3d-updater update  --ecosystem hydra-umc HYDRA-UMC-SERVER # aggiorna e ricostruisce un progetto gia installato

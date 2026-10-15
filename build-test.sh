@@ -12,7 +12,18 @@ fi
 # shellcheck disable=SC1091
 source .venv/bin/activate
 
-python -m pip install -e ".[dev]"
+# Dependencies (the three pinned sub-updaters, pytest) are installed only
+# when pyproject.toml changed since the last run - not re-downloaded on
+# every build-test - and this project itself is (re)linked without touching
+# them.
+stamp=".venv/.deps-installed"
+want="$(python -c 'import hashlib,sys; print(hashlib.sha256(open("pyproject.toml","rb").read()).hexdigest())')"
+if [ ! -f "$stamp" ] || [ "$(cat "$stamp")" != "$want" ]; then
+    python -m pip install -e ".[dev]"
+    echo "$want" > "$stamp"
+else
+    python -m pip install --no-deps -e . >/dev/null
+fi
 python -m pytest tests -q
 
 echo "BUILD_TEST_RESULT=PASS"

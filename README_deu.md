@@ -26,16 +26,18 @@
 
 ---
 
-**Ehrlichkeitspruefung - was heute laeuft:** **Reifegrad: Geruest.** Dies ist ein duenner Dispatcher, keine vierte Implementierung der Oekosystem-Erkennung: er enthaelt keine eigene Manifest-Analyse-, Installations- oder Aktualisierungslogik. `dispatch()` und sein Befehlsaufbau (13 Tests, alle gegen einen simulierten Subprozess-Runner) sind real und getestet; `status --ecosystem all` wurde echt gegen ein reales Checkout aller drei Oekosysteme ausgefuehrt (55 HYDRA-UMC-, 7 URTC- und 15 A.R.M.O.R.-Repositories korrekt gefunden) - `install`/`update` noch nicht. Ein echter Fehler wurde bei diesem ersten echten Lauf gefunden und behoben: siehe den `--workspace`-Eintrag in `CHANGELOG.md`.
+**Ehrlichkeitspruefung - was heute laeuft:** **Reifegrad: Geruest.** Dies ist ein duenner Dispatcher, keine vierte Implementierung der Oekosystem-Erkennung: er enthaelt keine eigene Manifest-Analyse-, Installations- oder Aktualisierungslogik. `dispatch()` und sein Befehlsaufbau (16 Tests, alle gegen einen simulierten Subprozess-Runner) sind real und getestet; `status --ecosystem all` wurde echt gegen ein reales Checkout aller drei Oekosysteme ausgefuehrt (55 HYDRA-UMC-, 7 URTC- und 17 A.R.M.O.R.-Repositories korrekt gefunden) - `install`/`update` noch nicht. Ein echter Fehler wurde bei diesem ersten echten Lauf gefunden und behoben: siehe den `--workspace`-Eintrag in `CHANGELOG.md`.
 
 ---
 
 ## 🎯 Ueberblick
 
-* **Ein Werkzeug, drei echte Oekosysteme:** [HYDRA-UMC](https://github.com/JuanenRac/HYDRA-UMC-UPDATER), [URTC](https://github.com/JuanenRac/URTC-UPDATER) und [A.R.M.O.R.](https://github.com/JuanenRac/ARMOR-UPDATER) haben bereits jeweils ihren eigenen, unabhaengig getesteten Updater. Dieses Projekt implementiert nichts davon neu - es installiert alle drei als echte Abhaengigkeiten (direkt von ihren eigenen GitHub-Repositories) und leitet `--ecosystem hydra-umc|urtc|armor` an den passenden weiter.
-* **Jedes Mal ein echter, separater Subprozess.** Jeder Aufruf fuehrt `python -m <Modul dieses Oekosystems> --cli ...` als eigenen Interpreter-Prozess aus - importiert niemals das `main()` einer anderen CLI in denselben Prozess. Drei unabhaengige argparse-Programme, jedes frei, `sys.argv` zu lesen und `sys.exit()` aufzurufen, wuerden sich gegenseitig beschaedigen, wenn sie im selben Prozess kombiniert wuerden; ein Subprozess bietet dieselbe Isolation wie eine Person, die jeden Befehl von Hand eingibt.
-* **`status --ecosystem all`:** das Einzige, was dieses Werkzeug tut, das kein einzelner Sub-Updater fuer sich allein tut - fuehrt die Statuspruefung aller drei Oekosysteme nacheinander aus und meldet, welche(s) fehlgeschlagen ist, ohne beim ersten anzuhalten.
-* **`install`/`update` brauchen immer genau ein Oekosystem und einen Projektnamen.** Es gibt hier kein "alles in jedem Oekosystem aktualisieren", dieselbe nicht verhandelbare Haltung, die die eigene CLI jedes Sub-Updaters fuer seine eigenen Projekte bereits einnimmt.
+* **Ein Werkzeug, drei echte Ökosysteme:** [HYDRA-UMC](https://github.com/JuanenRac/HYDRA-UMC-UPDATER), [URTC](https://github.com/JuanenRac/URTC-UPDATER) und [A.R.M.O.R.](https://github.com/JuanenRac/ARMOR-UPDATER) haben jeweils bereits einen eigenen, unabhängig getesteten Updater. Dieses Projekt implementiert nichts davon neu - es installiert alle drei als echte Abhängigkeiten und leitet `--ecosystem hydra-umc|urtc|armor` an den passenden weiter.
+* **Festgelegte, geprüfte Abhängigkeiten:** `pyproject.toml` legt jeden Sub-Updater auf einen geprüften Commit fest, nie auf ein wanderndes `main`, sodass eine Installation immer genau das Geprüfte erhält. `versions` zeigt die installierte Version jedes einzelnen und meldet, wenn einer hinter GitHub zurückliegt.
+* **Jedes Mal ein echter, eigener Subprozess.** Jeder Aufruf startet `python -m <Modul dieses Ökosystems> --cli ...` in einem eigenen Interpreter - importiert nie das `main()` einer anderen CLI in diesen Prozess. Drei unabhängige argparse-Programme, die `sys.argv` lesen und `sys.exit()` aufrufen dürfen, würden sich im selben Prozess gegenseitig stören.
+* **`status --ecosystem all`:** führt die Statusprüfung der drei Ökosysteme gleichzeitig aus, gibt jeden Bericht vollständig in fester Reihenfolge aus und nennt, welche fehlgeschlagen sind, ohne beim ersten Fehler anzuhalten.
+* **`install`/`update` brauchen immer ein Ökosystem und einen Projektnamen.** Ein "alles in allen Ökosystemen aktualisieren" gibt es hier nicht - dieselbe Haltung wie die CLI jedes Sub-Updaters.
+* **Geerbte Grenzen:** dieses Werkzeug führt aus, was jeder Sub-Updater tut. Der A.R.M.O.R.-Updater beschädigt seine eigene Installation noch, wenn er sich selbst aktualisiert (die editierbare Installation zeigt auf sein Staging-Verzeichnis); ARMOR-UPDATER daher vorerst von Hand aktualisieren. URTC-UPDATER kann signierte Commits verlangen (`URTC_UPDATER_REQUIRE_SIGNED=1`); die anderen beiden prüfen noch keine Signaturen.
 
 ## 📂 Repository-Struktur
 
@@ -47,7 +49,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 │   ├── i18n.py         # Die Texte des Fensters in den sieben Sprachen
 │   ├── qt_gui.py       # Qt-Quick-Fenster (eine Karte je Oekosystem, ein Protokoll) - oeffnet den Updater des jeweiligen Oekosystems
 │   └── qml/Main.qml    # Das QML des Fensters
-├── tests/               # 12 Tests gegen einen simulierten Subprozess-Runner
+├── tests/               # 16 Tests gegen einen simulierten Subprozess-Runner
 ├── tools/               # ci_validate.py, build_test.py, _doc_policy.py, _readme_parity.py
 ├── build.sh / build.bat         # venv + editierbare Installation (holt die 3 echten Abhaengigkeiten) + Kompilierungspruefung
 ├── build-test.sh / build-test.bat  # gleiche Installation, dann die echte pytest-Suite
@@ -58,8 +60,9 @@ ELECTRO-HOBBY-3D-UPDATER/
 
 ```bash
 pip install -e ".[dev]"                 # installiert auch hydra-umc-updater, urtc-updater und armor-updater von GitHub
-python -m pytest tests -q               # 13 Tests, ohne Netzwerk oder echten Subprozess
-electro-hobby-3d-updater status --ecosystem all               # prueft alle drei Oekosysteme nacheinander
+python -m pytest tests -q               # 16 Tests, ohne Netzwerk oder echten Subprozess
+electro-hobby-3d-updater status --ecosystem all               # prueft alle Oekosysteme (parallel)
+electro-hobby-3d-updater versions                             # installierte Version jedes Updaters und ob er hinter GitHub liegt
 electro-hobby-3d-updater status --ecosystem armor             # prueft nur eines
 electro-hobby-3d-updater install --ecosystem urtc URTC-TESTER # klont und baut ein noch nicht installiertes Projekt
 electro-hobby-3d-updater update  --ecosystem hydra-umc HYDRA-UMC-SERVER # aktualisiert und baut ein bereits installiertes Projekt neu

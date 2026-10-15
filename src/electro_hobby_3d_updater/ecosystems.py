@@ -27,12 +27,17 @@ class Ecosystem:
     #: purely informational here (status --help text), matched inside
     #: that ecosystem's own updater, never re-checked by this dispatcher.
     manifest_file: str
+    #: The pip distribution name of that updater (`versions` reads its
+    #: installed version) and its GitHub repository (`versions` reads the
+    #: latest version from that repository's own pyproject.toml).
+    distribution: str
+    repository: str
 
 
 ECOSYSTEMS: tuple[Ecosystem, ...] = (
-    Ecosystem("hydra-umc", "HYDRA-UMC", "hydra_umc_updater.main", "hydra-umc.project.json"),
-    Ecosystem("urtc", "URTC", "urtc_updater.main", "urtc.project.json"),
-    Ecosystem("armor", "A.R.M.O.R.", "armor_updater.main", "armor.project.json"),
+    Ecosystem("hydra-umc", "HYDRA-UMC", "hydra_umc_updater.main", "hydra-umc.project.json", "hydra-umc-updater", "HYDRA-UMC-UPDATER"),
+    Ecosystem("urtc", "URTC", "urtc_updater.main", "urtc.project.json", "urtc-updater", "URTC-UPDATER"),
+    Ecosystem("armor", "A.R.M.O.R.", "armor_updater.main", "armor.project.json", "armor-updater", "ARMOR-UPDATER"),
 )
 
 ECOSYSTEMS_BY_KEY: dict[str, Ecosystem] = {ecosystem.key: ecosystem for ecosystem in ECOSYSTEMS}

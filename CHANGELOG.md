@@ -5,6 +5,10 @@ version number follows this ecosystem's "odometer" scheme: PATCH +1 on
 every real build, rolling into MINOR past 9 (`0.0.9` -> `0.1.0`); MAJOR is
 bumped manually only.
 
+## Unreleased
+
+- The log has a small copy button (an icon of two sheets) that copies the whole log, so it can be pasted into a message; it turns green for a moment when it has copied.
+
 ## [0.0.6] - Pinned sub-updaters, `versions`, parallel `status all`
 
 - **Pinned dependencies:** the three sub-updaters are pinned to reviewed

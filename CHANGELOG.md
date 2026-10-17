@@ -5,8 +5,10 @@ version number follows this ecosystem's "odometer" scheme: PATCH +1 on
 every real build, rolling into MINOR past 9 (`0.0.9` -> `0.1.0`); MAJOR is
 bumped manually only.
 
-## Unreleased
+## [0.0.7] - Portuguese, updaters pinned to current commits
 
+- European Portuguese is the eighth language: the window texts (`i18n.py`), the language selector and a full `README_por.md`; every README links to it from its language bar, and the documentation checks now require it.
+- The three sub-updaters are pinned to their current commits (HYDRA-UMC-UPDATER 0.4.7, URTC-UPDATER 0.1.1, ARMOR-UPDATER 0.1.4).
 - The log has a small copy button (an icon of two sheets) that copies the whole log, so it can be pasted into a message; it turns green for a moment when it has copied.
 
 ## [0.0.6] - Pinned sub-updaters, `versions`, parallel `status all`

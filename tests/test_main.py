@@ -150,11 +150,11 @@ def test_workspace_defaults_to_this_projects_own_parent_directory_when_not_given
     assert runner.calls[0][-2:] == ["--workspace", str(default_workspace_root())]
 
 
-def test_the_window_texts_exist_in_all_seven_languages():
+def test_the_window_texts_exist_in_all_eight_languages():
     from electro_hobby_3d_updater import i18n
 
     codes = [code for code, _name in i18n.LANGUAGES]
-    assert codes == ["en", "es", "de", "fr", "it", "ja", "zh"]
+    assert codes == ["en", "es", "de", "fr", "it", "ja", "zh", "pt"]
     for key in i18n.keys():
         for code in codes:
             assert i18n.text(code, key).strip(), (key, code)

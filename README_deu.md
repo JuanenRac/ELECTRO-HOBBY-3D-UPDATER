@@ -11,7 +11,8 @@
   <a href="README_ita.md">🇮🇹 Italiano</a> |
   <b>🇩🇪 Deutsch</b> |
   <a href="README_zho.md">🇨🇳 简体中文</a> |
-  <a href="README_jpn.md">🇯🇵 日本語</a>
+  <a href="README_jpn.md">🇯🇵 日本語</a> |
+  <a href="README_por.md">🇵🇹 Português</a>
 </p>
 
 ### Eine einzige Kommandozeile fuer alle drei Electro-Hobby-3D-Oekosysteme - Oekosystem waehlen, seine Pakete herunterladen und aktualisieren
@@ -46,7 +47,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 ├── src/electro_hobby_3d_updater/
 │   ├── ecosystems.py   # Der einzige Ort, der die drei echten Oekosysteme und ihr CLI-Modul benennt
 │   ├── main.py         # argparse-CLI + dispatch() - baut den richtigen Subprozess-Befehl auf und fuehrt ihn aus
-│   ├── i18n.py         # Die Texte des Fensters in den sieben Sprachen
+│   ├── i18n.py         # Die Texte des Fensters in den acht Sprachen
 │   ├── qt_gui.py       # Qt-Quick-Fenster (eine Karte je Oekosystem, ein Protokoll) - oeffnet den Updater des jeweiligen Oekosystems
 │   └── qml/Main.qml    # Das QML des Fensters
 ├── tests/               # 16 Tests gegen einen simulierten Subprozess-Runner

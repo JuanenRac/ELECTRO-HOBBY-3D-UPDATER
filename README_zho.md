@@ -11,7 +11,8 @@
   <a href="README_ita.md">🇮🇹 Italiano</a> |
   <a href="README_deu.md">🇩🇪 Deutsch</a> |
   <b>🇨🇳 简体中文</b> |
-  <a href="README_jpn.md">🇯🇵 日本語</a>
+  <a href="README_jpn.md">🇯🇵 日本語</a> |
+  <a href="README_por.md">🇵🇹 Português</a>
 </p>
 
 ### 面向 Electro Hobby 3D 全部三个生态系统的统一命令行——选择一个系统，下载并更新它的软件包
@@ -46,7 +47,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 ├── src/electro_hobby_3d_updater/
 │   ├── ecosystems.py   # 唯一命名三个真实生态系统及其 CLI 模块的地方
 │   ├── main.py         # argparse CLI + dispatch() —— 构建并运行正确的子进程命令
-│   ├── i18n.py         # 窗口文字（七种语言）
+│   ├── i18n.py         # 窗口文字（八种语言）
 │   ├── qt_gui.py       # Qt Quick 窗口（每个生态系统一张卡片、一个日志）—— 打开各生态系统自己的更新器
 │   └── qml/Main.qml    # 窗口的 QML
 ├── tests/               # 16 个测试，针对模拟的子进程执行器

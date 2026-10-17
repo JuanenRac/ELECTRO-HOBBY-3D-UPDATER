@@ -11,7 +11,8 @@
   <a href="README_ita.md">🇮🇹 Italiano</a> |
   <a href="README_deu.md">🇩🇪 Deutsch</a> |
   <a href="README_zho.md">🇨🇳 简体中文</a> |
-  <b>🇯🇵 日本語</b>
+  <b>🇯🇵 日本語</b> |
+  <a href="README_por.md">🇵🇹 Português</a>
 </p>
 
 ### Electro Hobby 3D の3つのエコシステム全てに対応する単一のコマンドライン - システムを選び、そのパッケージをダウンロード・更新する
@@ -46,7 +47,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 ├── src/electro_hobby_3d_updater/
 │   ├── ecosystems.py   # 3つの実在するエコシステムとその CLI モジュールを唯一名指しする場所
 │   ├── main.py         # argparse CLI + dispatch() - 正しいサブプロセスコマンドを構築して実行する
-│   ├── i18n.py         # ウィンドウの文言（7言語）
+│   ├── i18n.py         # ウィンドウの文言（8言語）
 │   ├── qt_gui.py       # Qt Quick ウィンドウ（エコシステムごとのカードとログ）- 各エコシステム専用のアップデーターを開く
 │   └── qml/Main.qml    # ウィンドウの QML
 ├── tests/               # 偽のサブプロセスランナーに対する16件のテスト

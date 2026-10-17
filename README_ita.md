@@ -11,7 +11,8 @@
   <b>🇮🇹 Italiano</b> |
   <a href="README_deu.md">🇩🇪 Deutsch</a> |
   <a href="README_zho.md">🇨🇳 简体中文</a> |
-  <a href="README_jpn.md">🇯🇵 日本語</a>
+  <a href="README_jpn.md">🇯🇵 日本語</a> |
+  <a href="README_por.md">🇵🇹 Português</a>
 </p>
 
 ### Un'unica riga di comando per tutti e tre gli ecosistemi Electro Hobby 3D - scegli un sistema, scarica e aggiorna i suoi pacchetti
@@ -46,7 +47,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 ├── src/electro_hobby_3d_updater/
 │   ├── ecosystems.py   # L'unico posto che nomina i tre ecosistemi reali e il loro modulo CLI
 │   ├── main.py         # CLI argparse + dispatch() - costruisce ed esegue il comando di sottoprocesso corretto
-│   ├── i18n.py         # I testi della finestra nelle sette lingue
+│   ├── i18n.py         # I testi della finestra nelle otto lingue
 │   ├── qt_gui.py       # Finestra Qt Quick (una scheda per ecosistema, un registro) - apre l'aggiornatore di ogni ecosistema
 │   └── qml/Main.qml    # Il QML della finestra
 ├── tests/               # 16 test contro un esecutore di sottoprocessi simulato

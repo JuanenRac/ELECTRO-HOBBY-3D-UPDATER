@@ -22,12 +22,12 @@
   <img src="https://img.shields.io/badge/Language-Python%203.10%2B-3776ab.svg" alt="Language">
   <img src="https://img.shields.io/badge/Dependencies-3%20real%20sub--updaters-2ea44f.svg" alt="Dependencies">
   <img src="https://img.shields.io/badge/Tests-13-00E5FF.svg" alt="Tests">
-  <img src="https://img.shields.io/badge/Maturity-scaffolding-ff9800.svg" alt="Maturity">
+  <img src="https://img.shields.io/badge/Maturity-functional-4caf50.svg" alt="Maturity">
 </p>
 
 ---
 
-**Honesty check - what runs today:** **Maturity: scaffolding.** This is a thin dispatcher, not a fourth implementation of ecosystem discovery: it holds no manifest-parsing, install or update logic of its own. `dispatch()` and its command-building (16 tests, all against a fake subprocess runner) are real and tested; `status --ecosystem all` has been run for real against a real checkout of all three ecosystems (55 HYDRA-UMC + 7 URTC + 17 A.R.M.O.R. repositories correctly found) - `install`/`update` have not. A real bug was found and fixed during that first real run: see `CHANGELOG.md`'s `--workspace` entry.
+**Honesty check - what runs today:** **Maturity: functional.** This is a thin dispatcher, not a fourth implementation of ecosystem discovery: it holds no manifest-parsing, install or update logic of its own. `dispatch()` and its command-building (16 tests, all against a fake subprocess runner) are real and tested; `status --ecosystem all` has been run for real against a real checkout of all three ecosystems (55 HYDRA-UMC + 7 URTC + 17 A.R.M.O.R. repositories correctly found) - `install` has also been run for real, from a clean environment, and ARMOR-COMMON was cloned, built, tested and promoted by the ARMOR updater (unsigned revisions are installed with a warning); `update` has not been run for real. A real bug was found and fixed during that first real run: see `CHANGELOG.md`'s `--workspace` entry.
 
 ---
 

@@ -22,12 +22,12 @@
   <img src="https://img.shields.io/badge/Language-Python%203.10%2B-3776ab.svg" alt="Language">
   <img src="https://img.shields.io/badge/Dependencies-3%20real%20sub--updaters-2ea44f.svg" alt="Dependencies">
   <img src="https://img.shields.io/badge/Tests-13-00E5FF.svg" alt="Tests">
-  <img src="https://img.shields.io/badge/Maturity-scaffolding-ff9800.svg" alt="Maturity">
+  <img src="https://img.shields.io/badge/Maturity-functional-4caf50.svg" alt="Maturity">
 </p>
 
 ---
 
-**Verification d'honnetete - ce qui fonctionne aujourd'hui:** **Maturite : echafaudage.** C'est un dispatcheur mince, pas une quatrieme implementation de la decouverte d'ecosysteme : il ne contient aucune logique propre d'analyse de manifeste, d'installation ou de mise a jour. `dispatch()` et la construction de ses commandes (16 tests, tous contre un executeur de sous-processus simule) sont reels et testes ; `status --ecosystem all` a ete execute pour de vrai contre un checkout reel des trois ecosystemes (55 depots HYDRA-UMC, 7 URTC et 17 A.R.M.O.R. correctement trouves) - `install`/`update` ne l'ont pas encore ete. Un vrai bug a ete trouve et corrige lors de cette premiere execution reelle : voir l'entree `--workspace` dans `CHANGELOG.md`.
+**Verification d'honnetete - ce qui fonctionne aujourd'hui:** **Maturite : fonctionnel.** C'est un dispatcheur mince, pas une quatrieme implementation de la decouverte d'ecosysteme : il ne contient aucune logique propre d'analyse de manifeste, d'installation ou de mise a jour. `dispatch()` et la construction de ses commandes (16 tests, tous contre un executeur de sous-processus simule) sont reels et testes ; `status --ecosystem all` a ete execute pour de vrai contre un checkout reel des trois ecosystemes (55 depots HYDRA-UMC, 7 URTC et 17 A.R.M.O.R. correctement trouves) - `install` a aussi ete execute pour de vrai, depuis un environnement propre, et ARMOR-COMMON a ete clone, construit, teste et promu par l'actualisateur ARMOR (les revisions non signees sont installees avec un avertissement) ; `update` n'a pas encore ete execute pour de vrai. Un vrai bug a ete trouve et corrige lors de cette premiere execution reelle : voir l'entree `--workspace` dans `CHANGELOG.md`.
 
 ---
 

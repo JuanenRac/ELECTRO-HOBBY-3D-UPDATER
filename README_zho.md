@@ -22,12 +22,12 @@
   <img src="https://img.shields.io/badge/Language-Python%203.10%2B-3776ab.svg" alt="Language">
   <img src="https://img.shields.io/badge/Dependencies-3%20real%20sub--updaters-2ea44f.svg" alt="Dependencies">
   <img src="https://img.shields.io/badge/Tests-13-00E5FF.svg" alt="Tests">
-  <img src="https://img.shields.io/badge/Maturity-scaffolding-ff9800.svg" alt="Maturity">
+  <img src="https://img.shields.io/badge/Maturity-functional-4caf50.svg" alt="Maturity">
 </p>
 
 ---
 
-**诚实性检查 - 今天真正能运行的部分:** **成熟度：脚手架。** 这是一个轻量的分发器，而不是生态系统发现的第四套实现：它自身不包含任何清单解析、安装或更新逻辑。`dispatch()` 及其命令构建（16 个测试，全部针对模拟的子进程执行器）是真实且经过测试的；`status --ecosystem all` 已经针对三个生态系统的真实检出真正运行过（正确找到 55 个 HYDRA-UMC、7 个 URTC 和 17 个 A.R.M.O.R. 仓库）——`install`/`update` 尚未如此。在那次首次真实运行中发现并修复了一个真实的缺陷：见 `CHANGELOG.md` 中的 `--workspace` 条目。
+**诚实性检查 - 今天真正能运行的部分:** **成熟度：可用（functional）。** 这是一个轻量的分发器，而不是生态系统发现的第四套实现：它自身不包含任何清单解析、安装或更新逻辑。`dispatch()` 及其命令构建（16 个测试，全部针对模拟的子进程执行器）是真实且经过测试的；`status --ecosystem all` 已经针对三个生态系统的真实检出真正运行过（正确找到 55 个 HYDRA-UMC、7 个 URTC 和 17 个 A.R.M.O.R. 仓库）——`install` 也已在干净环境中真实运行：ARMOR-COMMON 由 ARMOR 更新器克隆、构建、测试并提升（未签名的修订会带警告安装）；`update` 尚未真实运行。在那次首次真实运行中发现并修复了一个真实的缺陷：见 `CHANGELOG.md` 中的 `--workspace` 条目。
 
 ---
 

@@ -22,12 +22,12 @@
   <img src="https://img.shields.io/badge/Language-Python%203.10%2B-3776ab.svg" alt="Language">
   <img src="https://img.shields.io/badge/Dependencies-3%20real%20sub--updaters-2ea44f.svg" alt="Dependencies">
   <img src="https://img.shields.io/badge/Tests-13-00E5FF.svg" alt="Tests">
-  <img src="https://img.shields.io/badge/Maturity-scaffolding-ff9800.svg" alt="Maturity">
+  <img src="https://img.shields.io/badge/Maturity-functional-4caf50.svg" alt="Maturity">
 </p>
 
 ---
 
-**Ehrlichkeitspruefung - was heute laeuft:** **Reifegrad: Geruest.** Dies ist ein duenner Dispatcher, keine vierte Implementierung der Oekosystem-Erkennung: er enthaelt keine eigene Manifest-Analyse-, Installations- oder Aktualisierungslogik. `dispatch()` und sein Befehlsaufbau (16 Tests, alle gegen einen simulierten Subprozess-Runner) sind real und getestet; `status --ecosystem all` wurde echt gegen ein reales Checkout aller drei Oekosysteme ausgefuehrt (55 HYDRA-UMC-, 7 URTC- und 17 A.R.M.O.R.-Repositories korrekt gefunden) - `install`/`update` noch nicht. Ein echter Fehler wurde bei diesem ersten echten Lauf gefunden und behoben: siehe den `--workspace`-Eintrag in `CHANGELOG.md`.
+**Ehrlichkeitspruefung - was heute laeuft:** **Reifegrad: funktional.** Dies ist ein duenner Dispatcher, keine vierte Implementierung der Oekosystem-Erkennung: er enthaelt keine eigene Manifest-Analyse-, Installations- oder Aktualisierungslogik. `dispatch()` und sein Befehlsaufbau (16 Tests, alle gegen einen simulierten Subprozess-Runner) sind real und getestet; `status --ecosystem all` wurde echt gegen ein reales Checkout aller drei Oekosysteme ausgefuehrt (55 HYDRA-UMC-, 7 URTC- und 17 A.R.M.O.R.-Repositories korrekt gefunden) - `install` wurde ebenfalls echt ausgefuehrt, aus einer sauberen Umgebung, und ARMOR-COMMON wurde vom ARMOR-Updater geklont, gebaut, getestet und uebernommen (unsignierte Revisionen werden mit einer Warnung installiert); `update` wurde noch nicht echt ausgefuehrt. Ein echter Fehler wurde bei diesem ersten echten Lauf gefunden und behoben: siehe den `--workspace`-Eintrag in `CHANGELOG.md`.
 
 ---
 

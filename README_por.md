@@ -22,12 +22,12 @@
   <img src="https://img.shields.io/badge/Language-Python%203.10%2B-3776ab.svg" alt="Language">
   <img src="https://img.shields.io/badge/Dependencies-3%20real%20sub--updaters-2ea44f.svg" alt="Dependencies">
   <img src="https://img.shields.io/badge/Tests-13-00E5FF.svg" alt="Tests">
-  <img src="https://img.shields.io/badge/Maturity-scaffolding-ff9800.svg" alt="Maturity">
+  <img src="https://img.shields.io/badge/Maturity-functional-4caf50.svg" alt="Maturity">
 </p>
 
 ---
 
-**Verificação de honestidade - o que funciona hoje:** **Maturidade: andaime (scaffolding).** Isto é um despachante fino, não uma quarta implementação da deteção de ecossistemas: não tem lógica própria de leitura de manifestos, de instalação nem de atualização. `dispatch()` e a construção dos seus comandos (16 testes, todos contra um executor de subprocessos simulado) são reais e estão testados; `status --ecosystem all` foi executado a sério contra uma cópia real dos três ecossistemas (55 repositórios HYDRA-UMC + 7 URTC + 17 A.R.M.O.R. encontrados corretamente) - `install`/`update` ainda não. Foi encontrado e corrigido um erro real durante essa primeira execução real: ver a entrada `--workspace` do `CHANGELOG.md`.
+**Verificação de honestidade - o que funciona hoje:** **Maturidade: funcional.** Isto é um despachante fino, não uma quarta implementação da deteção de ecossistemas: não tem lógica própria de leitura de manifestos, de instalação nem de atualização. `dispatch()` e a construção dos seus comandos (16 testes, todos contra um executor de subprocessos simulado) são reais e estão testados; `status --ecosystem all` foi executado a sério contra uma cópia real dos três ecossistemas (55 repositórios HYDRA-UMC + 7 URTC + 17 A.R.M.O.R. encontrados corretamente) - O `install` também foi executado a sério, a partir de um ambiente limpo, e o ARMOR-COMMON foi clonado, compilado, testado e promovido pelo atualizador do ARMOR (as revisões sem assinatura são instaladas com um aviso); o `update` ainda não foi executado a sério. Foi encontrado e corrigido um erro real durante essa primeira execução real: ver a entrada `--workspace` do `CHANGELOG.md`.
 
 ---
 

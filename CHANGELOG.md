@@ -5,6 +5,12 @@ version number follows this ecosystem's "odometer" scheme: PATCH +1 on
 every real build, rolling into MINOR past 9 (`0.0.9` -> `0.1.0`); MAJOR is
 bumped manually only.
 
+## [0.0.8] - Functional
+
+- Maturity moves from scaffolding to functional: `install` has now been run for real from a clean environment (ARMOR-COMMON cloned, built, tested and promoted by the ARMOR updater), on top of the real `status` and `versions` runs.
+- The URTC updater is pinned to its current commit (0.1.2), which installs an unsigned revision with a warning instead of refusing it.
+- The READMEs in the eight languages say what has run for real and that `update` has not yet.
+
 ## [0.0.7] - Portuguese, updaters pinned to current commits
 
 - European Portuguese is the eighth language: the window texts (`i18n.py`), the language selector and a full `README_por.md`; every README links to it from its language bar, and the documentation checks now require it.

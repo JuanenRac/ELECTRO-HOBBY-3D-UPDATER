@@ -22,12 +22,12 @@
   <img src="https://img.shields.io/badge/Language-Python%203.10%2B-3776ab.svg" alt="Language">
   <img src="https://img.shields.io/badge/Dependencies-3%20real%20sub--updaters-2ea44f.svg" alt="Dependencies">
   <img src="https://img.shields.io/badge/Tests-13-00E5FF.svg" alt="Tests">
-  <img src="https://img.shields.io/badge/Maturity-scaffolding-ff9800.svg" alt="Maturity">
+  <img src="https://img.shields.io/badge/Maturity-functional-4caf50.svg" alt="Maturity">
 </p>
 
 ---
 
-**Controllo di onesta - cosa funziona oggi:** **Maturita: impalcatura.** E' un dispatcher sottile, non una quarta implementazione della scoperta dell'ecosistema: non ha logica propria di analisi del manifesto, installazione o aggiornamento. `dispatch()` e la costruzione dei suoi comandi (16 test, tutti contro un esecutore di sottoprocessi simulato) sono reali e testati; `status --ecosystem all` e stato eseguito davvero contro un checkout reale dei tre ecosistemi (trovati correttamente 55 repository HYDRA-UMC, 7 URTC e 17 A.R.M.O.R.) - `install`/`update` non ancora. Un vero bug e stato trovato e corretto durante quella prima esecuzione reale: vedi la voce `--workspace` in `CHANGELOG.md`.
+**Controllo di onesta - cosa funziona oggi:** **Maturita: funzionale.** E' un dispatcher sottile, non una quarta implementazione della scoperta dell'ecosistema: non ha logica propria di analisi del manifesto, installazione o aggiornamento. `dispatch()` e la costruzione dei suoi comandi (16 test, tutti contro un esecutore di sottoprocessi simulato) sono reali e testati; `status --ecosystem all` e stato eseguito davvero contro un checkout reale dei tre ecosistemi (trovati correttamente 55 repository HYDRA-UMC, 7 URTC e 17 A.R.M.O.R.) - Anche `install` e stato eseguito davvero, da un ambiente pulito, e ARMOR-COMMON e stato clonato, compilato, testato e promosso dall'aggiornatore ARMOR (le revisioni non firmate vengono installate con un avviso); `update` non e ancora stato eseguito davvero. Un vero bug e stato trovato e corretto durante quella prima esecuzione reale: vedi la voce `--workspace` in `CHANGELOG.md`.
 
 ---
 

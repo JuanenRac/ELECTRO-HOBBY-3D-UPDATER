@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "ecosystem": "ELECTRO-HOBBY-3D",
   "name": "ELECTRO-HOBBY-3D-UPDATER",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "role": "tool",
   "stack": "python",
   "technologies": [
@@ -12,7 +12,7 @@
     "armor-updater"
   ],
   "deployment_target": "user-pc",
-  "maturity": "scaffolding",
+  "maturity": "functional",
   "family": "Ecosystem Operations",
   "parent": null,
   "native_version": {

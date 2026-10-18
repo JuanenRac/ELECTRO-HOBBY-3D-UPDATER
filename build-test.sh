@@ -10,7 +10,12 @@ if [ ! -d .venv ]; then
     python3 -m venv .venv
 fi
 # shellcheck disable=SC1091
-source .venv/bin/activate
+# the virtual environment of Linux/macOS (bin) or of Windows under Git Bash (Scripts)
+if [ -f .venv/bin/activate ]; then
+    source .venv/bin/activate
+else
+    source .venv/Scripts/activate
+fi
 
 # Dependencies (the three pinned sub-updaters, pytest) are installed only
 # when pyproject.toml changed since the last run - not re-downloaded on

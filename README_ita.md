@@ -27,7 +27,7 @@
 
 ---
 
-**Controllo di onesta - cosa funziona oggi:** **Maturita: funzionale.** E' un dispatcher sottile, non una quarta implementazione della scoperta dell'ecosistema: non ha logica propria di analisi del manifesto, installazione o aggiornamento. `dispatch()` e la costruzione dei suoi comandi (16 test, tutti contro un esecutore di sottoprocessi simulato) sono reali e testati; `status --ecosystem all` e stato eseguito davvero contro un checkout reale dei tre ecosistemi (trovati correttamente 55 repository HYDRA-UMC, 7 URTC e 17 A.R.M.O.R.) - Anche `install` e stato eseguito davvero, da un ambiente pulito, e ARMOR-COMMON e stato clonato, compilato, testato e promosso dall'aggiornatore ARMOR (le revisioni non firmate vengono installate con un avviso); `update` non e ancora stato eseguito davvero. Un vero bug e stato trovato e corretto durante quella prima esecuzione reale: vedi la voce `--workspace` in `CHANGELOG.md`.
+**Controllo di onesta - cosa funziona oggi:** **Maturita: funzionale.** E' un dispatcher sottile, non una quarta implementazione della scoperta dell'ecosistema: non ha logica propria di analisi del manifesto, installazione o aggiornamento. `dispatch()` e la costruzione dei suoi comandi (19 test, tutti contro un esecutore di sottoprocessi simulato) sono reali e testati; `status --ecosystem all` e stato eseguito davvero contro un checkout reale dei tre ecosistemi (trovati correttamente 55 repository HYDRA-UMC, 7 URTC e 17 A.R.M.O.R.) - Anche `install` e stato eseguito davvero, da un ambiente pulito, e ARMOR-COMMON e stato clonato, compilato, testato e promosso dall'aggiornatore ARMOR (le revisioni non firmate vengono installate con un avviso); `update` non e ancora stato eseguito davvero. Un vero bug e stato trovato e corretto durante quella prima esecuzione reale: vedi la voce `--workspace` in `CHANGELOG.md`.
 
 ---
 
@@ -50,7 +50,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 │   ├── i18n.py         # I testi della finestra nelle otto lingue
 │   ├── qt_gui.py       # Finestra Qt Quick (una scheda per ecosistema, un registro) - apre l'aggiornatore di ogni ecosistema
 │   └── qml/Main.qml    # Il QML della finestra
-├── tests/               # 16 test contro un esecutore di sottoprocessi simulato
+├── tests/               # 19 test contro un esecutore di sottoprocessi simulato
 ├── tools/               # ci_validate.py, build_test.py, _doc_policy.py, _readme_parity.py
 ├── build.sh / build.bat         # venv + installazione editabile (scarica le 3 dipendenze reali) + controllo di compilazione
 ├── build-test.sh / build-test.bat  # stessa installazione, poi la vera suite pytest
@@ -61,7 +61,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 
 ```bash
 pip install -e ".[dev]"                 # installa anche hydra-umc-updater, urtc-updater e armor-updater da GitHub
-python -m pytest tests -q               # 16 test, senza rete ne sottoprocessi reali
+python -m pytest tests -q               # 19 test, senza rete ne sottoprocessi reali
 electro-hobby-3d-updater status --ecosystem all               # controlla tutti gli ecosistemi (in parallelo)
 electro-hobby-3d-updater versions                             # versione installata di ogni updater e se e indietro rispetto a GitHub
 electro-hobby-3d-updater status --ecosystem armor             # controlla solo uno

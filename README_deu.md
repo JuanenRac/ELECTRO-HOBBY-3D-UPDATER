@@ -27,7 +27,7 @@
 
 ---
 
-**Ehrlichkeitspruefung - was heute laeuft:** **Reifegrad: funktional.** Dies ist ein duenner Dispatcher, keine vierte Implementierung der Oekosystem-Erkennung: er enthaelt keine eigene Manifest-Analyse-, Installations- oder Aktualisierungslogik. `dispatch()` und sein Befehlsaufbau (16 Tests, alle gegen einen simulierten Subprozess-Runner) sind real und getestet; `status --ecosystem all` wurde echt gegen ein reales Checkout aller drei Oekosysteme ausgefuehrt (55 HYDRA-UMC-, 7 URTC- und 17 A.R.M.O.R.-Repositories korrekt gefunden) - `install` wurde ebenfalls echt ausgefuehrt, aus einer sauberen Umgebung, und ARMOR-COMMON wurde vom ARMOR-Updater geklont, gebaut, getestet und uebernommen (unsignierte Revisionen werden mit einer Warnung installiert); `update` wurde noch nicht echt ausgefuehrt. Ein echter Fehler wurde bei diesem ersten echten Lauf gefunden und behoben: siehe den `--workspace`-Eintrag in `CHANGELOG.md`.
+**Ehrlichkeitspruefung - was heute laeuft:** **Reifegrad: funktional.** Dies ist ein duenner Dispatcher, keine vierte Implementierung der Oekosystem-Erkennung: er enthaelt keine eigene Manifest-Analyse-, Installations- oder Aktualisierungslogik. `dispatch()` und sein Befehlsaufbau (19 Tests, alle gegen einen simulierten Subprozess-Runner) sind real und getestet; `status --ecosystem all` wurde echt gegen ein reales Checkout aller drei Oekosysteme ausgefuehrt (55 HYDRA-UMC-, 7 URTC- und 17 A.R.M.O.R.-Repositories korrekt gefunden) - `install` wurde ebenfalls echt ausgefuehrt, aus einer sauberen Umgebung, und ARMOR-COMMON wurde vom ARMOR-Updater geklont, gebaut, getestet und uebernommen (unsignierte Revisionen werden mit einer Warnung installiert); `update` wurde noch nicht echt ausgefuehrt. Ein echter Fehler wurde bei diesem ersten echten Lauf gefunden und behoben: siehe den `--workspace`-Eintrag in `CHANGELOG.md`.
 
 ---
 
@@ -50,7 +50,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 │   ├── i18n.py         # Die Texte des Fensters in den acht Sprachen
 │   ├── qt_gui.py       # Qt-Quick-Fenster (eine Karte je Oekosystem, ein Protokoll) - oeffnet den Updater des jeweiligen Oekosystems
 │   └── qml/Main.qml    # Das QML des Fensters
-├── tests/               # 16 Tests gegen einen simulierten Subprozess-Runner
+├── tests/               # 19 Tests gegen einen simulierten Subprozess-Runner
 ├── tools/               # ci_validate.py, build_test.py, _doc_policy.py, _readme_parity.py
 ├── build.sh / build.bat         # venv + editierbare Installation (holt die 3 echten Abhaengigkeiten) + Kompilierungspruefung
 ├── build-test.sh / build-test.bat  # gleiche Installation, dann die echte pytest-Suite
@@ -61,7 +61,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 
 ```bash
 pip install -e ".[dev]"                 # installiert auch hydra-umc-updater, urtc-updater und armor-updater von GitHub
-python -m pytest tests -q               # 16 Tests, ohne Netzwerk oder echten Subprozess
+python -m pytest tests -q               # 19 Tests, ohne Netzwerk oder echten Subprozess
 electro-hobby-3d-updater status --ecosystem all               # prueft alle Oekosysteme (parallel)
 electro-hobby-3d-updater versions                             # installierte Version jedes Updaters und ob er hinter GitHub liegt
 electro-hobby-3d-updater status --ecosystem armor             # prueft nur eines

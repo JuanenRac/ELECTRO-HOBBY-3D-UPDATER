@@ -13,6 +13,7 @@ PySide6 is imported only when the window is opened; the command line keeps needi
 from __future__ import annotations
 
 import ctypes
+import os
 import subprocess
 import sys
 import threading
@@ -44,6 +45,10 @@ class Bridge(QObject):
     logChanged = Signal()
     busyChanged = Signal()
     workspaceChanged = Signal()
+    # the worker thread never touches the log or the busy flag itself: it emits these, and Qt delivers
+    # them to this object's own thread (queued), where the properties the window reads are changed
+    _lineAdded = Signal(str)
+    _busyChanging = Signal(bool)
 
     def __init__(self, workspace: Path) -> None:
         super().__init__()
@@ -51,6 +56,8 @@ class Bridge(QObject):
         self._log: list[str] = []
         self._busy = False
         self._workspace = str(workspace)
+        self._lineAdded.connect(self._apply_line)
+        self._busyChanging.connect(self._apply_busy)
 
     # ---- what the window shows ----
     @Property(str, notify=languageChanged)
@@ -112,19 +119,25 @@ class Bridge(QObject):
         if not installed(ecosystem.module):
             self._add(f"{ecosystem.display_name}: {text(self._language, 'missing')}")
             return
-        # a separate process with its own window: this one stays usable and the two never share a Qt application
-        subprocess.Popen([sys.executable, "-m", ecosystem.module], close_fds=True)   # noqa: S603  (its window remembers its own folder)
+        # a separate process with its own window: this one stays usable and the two never share a Qt application.
+        # It starts in the chosen workspace and is told about it (HYDRA-UMC-UPDATER and ARMOR-UPDATER read an
+        # environment variable, URTC-UPDATER the current folder): started from this environment without a
+        # workspace it would look for the projects inside this tool's own virtual environment.
+        workspace_env = {**os.environ, "HYDRA_UMC_WORKSPACE": self._workspace, "ARMOR_WORKSPACE": self._workspace}
+        subprocess.Popen([sys.executable, "-m", ecosystem.module], close_fds=True, cwd=self._workspace, env=workspace_env)   # noqa: S603  (its window remembers its own folder)
         self._add(f"{ecosystem.display_name}: {text(self._language, 'open')}")
 
     @Slot(str, bool)
     def check(self, key: str, offline: bool) -> None:
         if self._busy:
             return
+        # busy is set here, on the window's own thread, BEFORE the worker starts: two quick clicks
+        # can no longer start two workers
+        self._apply_busy(True)
         keys = [item.key for item in ECOSYSTEMS] if key == "all" else [key]
         threading.Thread(target=self._check, args=(keys, offline), daemon=True).start()
 
     def _check(self, keys: list[str], offline: bool) -> None:
-        self._set_busy(True)
         try:
             for key in keys:
                 ecosystem = ECOSYSTEMS_BY_KEY[key]
@@ -145,10 +158,18 @@ class Bridge(QObject):
             self._set_busy(False)
 
     def _add(self, line: str) -> None:
+        self._lineAdded.emit(line)
+
+    def _set_busy(self, value: bool) -> None:
+        self._busyChanging.emit(value)
+
+    @Slot(str)
+    def _apply_line(self, line: str) -> None:
         self._log.append(line)
         self.logChanged.emit()
 
-    def _set_busy(self, value: bool) -> None:
+    @Slot(bool)
+    def _apply_busy(self, value: bool) -> None:
         self._busy = value
         self.busyChanged.emit()
 

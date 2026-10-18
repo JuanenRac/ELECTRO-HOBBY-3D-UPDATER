@@ -88,6 +88,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     status.add_argument("--offline", action="store_true", help="skip the GitHub check for every ecosystem run")
     status.add_argument("--workspace", help="Workspace root each ecosystem is scanned under (default: this tool's own parent directory).")
+    status.add_argument("--timeout-seconds", type=float, default=900.0, help="stop an updater that has not finished after this long (0 = no limit; default 900)")
 
     for action_name, help_text in (
         ("install", "clone + build one project that isn't installed yet"),
@@ -97,6 +98,7 @@ def build_parser() -> argparse.ArgumentParser:
         action_parser.add_argument("--ecosystem", required=True, choices=ECOSYSTEM_KEYS, help="which ecosystem's own updater owns this project")
         action_parser.add_argument("project", help="the exact project/repository name, as that ecosystem's own manifest declares it")
         action_parser.add_argument("--workspace", help="Workspace root (default: this tool's own parent directory).")
+        action_parser.add_argument("--timeout-seconds", type=float, default=1800.0, help="stop an updater that has not finished after this long (0 = no limit; default 1800)")
 
     versions = subparsers.add_parser("versions", help="installed version of each ecosystem's updater, and whether it is behind GitHub")
     versions.add_argument("--offline", action="store_true", help="only show the installed versions, no GitHub check")
@@ -116,9 +118,31 @@ def _command_for(ecosystem_key: str, args: argparse.Namespace) -> list[str]:
     return command + ["--workspace", workspace]
 
 
+def _timeout(args: argparse.Namespace) -> float | None:
+    """The limit for one sub-updater run: a git prompt waiting for a credential, or a hung
+    network, must not block this command for ever. 0 or less means no limit."""
+    value = getattr(args, "timeout_seconds", None)
+    return value if value and value > 0 else None
+
+
 def _run_one(ecosystem_key: str, args: argparse.Namespace, *, runner) -> int:
-    print(f"=== {ECOSYSTEMS_BY_KEY[ecosystem_key].display_name} ===", file=sys.stderr)
-    return runner(_command_for(ecosystem_key, args)).returncode
+    name = ECOSYSTEMS_BY_KEY[ecosystem_key].display_name
+    print(f"=== {name} ===", file=sys.stderr)
+    try:
+        return runner(_command_for(ecosystem_key, args), timeout=_timeout(args)).returncode
+    except subprocess.TimeoutExpired:
+        print(f"{name}: did not finish within {_timeout(args):.0f} seconds and was stopped (change it with --timeout-seconds)", file=sys.stderr)
+        return 1
+
+
+class _TimedOut:
+    """Stands in for a finished run whose updater had to be stopped."""
+
+    returncode = 1
+    stdout = ""
+
+    def __init__(self, message: str) -> None:
+        self.stderr = message + chr(10)
 
 
 def _status_all(args: argparse.Namespace, *, runner) -> int:
@@ -127,12 +151,15 @@ def _status_all(args: argparse.Namespace, *, runner) -> int:
     their captured output is printed whole, one ecosystem after another in
     the fixed ECOSYSTEMS order, so the report reads the same as before."""
     def run(ecosystem):
-        return runner(_command_for(ecosystem.key, args), capture_output=True, text=True)
+        try:
+            return runner(_command_for(ecosystem.key, args), capture_output=True, text=True, timeout=_timeout(args))
+        except subprocess.TimeoutExpired:
+            return _TimedOut(f"{ecosystem.display_name}: did not finish within {_timeout(args):.0f} seconds and was stopped (change it with --timeout-seconds)")
 
     with ThreadPoolExecutor(max_workers=len(ECOSYSTEMS)) as pool:
         results = list(pool.map(run, ECOSYSTEMS))
     failed = []
-    for ecosystem, result in zip(ECOSYSTEMS, results):
+    for ecosystem, result in zip(ECOSYSTEMS, results, strict=True):
         print(f"=== {ecosystem.display_name} ===", file=sys.stderr)
         if getattr(result, "stdout", None):
             sys.stdout.write(result.stdout)
@@ -184,7 +211,7 @@ def show_versions(args: argparse.Namespace, *, installed=installed_version, late
             else:
                 line += f"  latest {newest}"
                 if have is None or _version_tuple(have) < _version_tuple(newest):
-                    line += "  <- BEHIND: reinstall this tool (pyproject.toml pins each updater to a reviewed commit)"
+                    line += "  <- BEHIND the main branch: this tool pins each updater to a reviewed commit in pyproject.toml; update the pin there, then reinstall"
                     behind += 1
         print(line)
     return 0 if behind == 0 else 2

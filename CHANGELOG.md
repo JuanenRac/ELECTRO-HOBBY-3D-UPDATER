@@ -5,6 +5,15 @@ version number follows this ecosystem's "odometer" scheme: PATCH +1 on
 every real build, rolling into MINOR past 9 (`0.0.9` -> `0.1.0`); MAJOR is
 bumped manually only.
 
+## [0.0.9] - Window threads, time limits, the right workspace for the sub-updater windows
+
+- **Window:** the worker thread that runs a check used to change the log and the busy flag of an object that belongs to the window's thread, and two fast clicks could start two workers because the flag was set inside the worker. The worker now only emits signals that Qt delivers to the window's thread, and the busy flag is set before the worker starts.
+- **Sub-updater windows:** "open" started the window of an updater without telling it which folder holds the projects, so an updater installed in this tool's virtual environment looked for them inside that environment. The window now starts in the chosen workspace and receives it through `HYDRA_UMC_WORKSPACE` and `ARMOR_WORKSPACE` (URTC-UPDATER uses the current folder).
+- **Time limits:** `status`, `install` and `update` stop a sub-updater that has not finished after `--timeout-seconds` (900 for status, 1800 for install and update, 0 for no limit) and say so, instead of waiting for ever for a git prompt.
+- **`versions`:** the hint for an updater that is behind the main branch now says to update the pinned commit in `pyproject.toml` (reinstalling would install the same pin again).
+- **Scripts:** `build.sh` and `build-test.sh` find the virtual environment of Windows under Git Bash (`.venv/Scripts`) as well as `.venv/bin`.
+- **Tests:** timeouts and the thread hand-over are covered (19 tests).
+
 ## [0.0.8] - Functional
 
 - Maturity moves from scaffolding to functional: `install` has now been run for real from a clean environment (ARMOR-COMMON cloned, built, tested and promoted by the ARMOR updater), on top of the real `status` and `versions` runs.

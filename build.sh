@@ -10,7 +10,12 @@ if [ ! -d .venv ]; then
     python3 -m venv .venv
 fi
 # shellcheck disable=SC1091
-source .venv/bin/activate
+# the virtual environment of Linux/macOS (bin) or of Windows under Git Bash (Scripts)
+if [ -f .venv/bin/activate ]; then
+    source .venv/bin/activate
+else
+    source .venv/Scripts/activate
+fi
 
 python -m pip install -e ".[dev,gui]"
 python -m compileall -q src

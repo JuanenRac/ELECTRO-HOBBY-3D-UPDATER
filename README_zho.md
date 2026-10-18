@@ -27,7 +27,7 @@
 
 ---
 
-**诚实性检查 - 今天真正能运行的部分:** **成熟度：可用（functional）。** 这是一个轻量的分发器，而不是生态系统发现的第四套实现：它自身不包含任何清单解析、安装或更新逻辑。`dispatch()` 及其命令构建（16 个测试，全部针对模拟的子进程执行器）是真实且经过测试的；`status --ecosystem all` 已经针对三个生态系统的真实检出真正运行过（正确找到 55 个 HYDRA-UMC、7 个 URTC 和 17 个 A.R.M.O.R. 仓库）——`install` 也已在干净环境中真实运行：ARMOR-COMMON 由 ARMOR 更新器克隆、构建、测试并提升（未签名的修订会带警告安装）；`update` 尚未真实运行。在那次首次真实运行中发现并修复了一个真实的缺陷：见 `CHANGELOG.md` 中的 `--workspace` 条目。
+**诚实性检查 - 今天真正能运行的部分:** **成熟度：可用（functional）。** 这是一个轻量的分发器，而不是生态系统发现的第四套实现：它自身不包含任何清单解析、安装或更新逻辑。`dispatch()` 及其命令构建（19 个测试，全部针对模拟的子进程执行器）是真实且经过测试的；`status --ecosystem all` 已经针对三个生态系统的真实检出真正运行过（正确找到 55 个 HYDRA-UMC、7 个 URTC 和 17 个 A.R.M.O.R. 仓库）——`install` 也已在干净环境中真实运行：ARMOR-COMMON 由 ARMOR 更新器克隆、构建、测试并提升（未签名的修订会带警告安装）；`update` 尚未真实运行。在那次首次真实运行中发现并修复了一个真实的缺陷：见 `CHANGELOG.md` 中的 `--workspace` 条目。
 
 ---
 
@@ -50,7 +50,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 │   ├── i18n.py         # 窗口文字（八种语言）
 │   ├── qt_gui.py       # Qt Quick 窗口（每个生态系统一张卡片、一个日志）—— 打开各生态系统自己的更新器
 │   └── qml/Main.qml    # 窗口的 QML
-├── tests/               # 16 个测试，针对模拟的子进程执行器
+├── tests/               # 19 个测试，针对模拟的子进程执行器
 ├── tools/               # ci_validate.py, build_test.py, _doc_policy.py, _readme_parity.py
 ├── build.sh / build.bat         # 创建虚拟环境 + 可编辑安装（拉取 3 个真实依赖）+ 编译检查
 ├── build-test.sh / build-test.bat  # 相同的安装步骤，然后运行真实的 pytest 套件
@@ -61,7 +61,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 
 ```bash
 pip install -e ".[dev]"                 # 同时会从 GitHub 安装 hydra-umc-updater、urtc-updater 和 armor-updater
-python -m pytest tests -q               # 16 个测试，不需要网络或真实子进程
+python -m pytest tests -q               # 19 个测试，不需要网络或真实子进程
 electro-hobby-3d-updater status --ecosystem all               # 检查全部生态系统（并行）
 electro-hobby-3d-updater versions                             # 每个更新器的已安装版本，以及是否落后于 GitHub
 electro-hobby-3d-updater status --ecosystem armor             # 只检查一个

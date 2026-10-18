@@ -27,7 +27,7 @@
 
 ---
 
-**正直さのチェック - 今日動いているもの:** **成熟度:機能段階(functional)。** これはエコシステム発見の4つ目の実装ではなく、薄いディスパッチャーです。マニフェスト解析、インストール、更新の独自ロジックは一切持ちません。`dispatch()` とそのコマンド構築(偽のサブプロセスランナーに対する16件のテスト)は実際にテスト済みです。`status --ecosystem all` は3つのエコシステム全ての実際のチェックアウトに対して実際に実行され(HYDRA-UMC 55件、URTC 7件、A.R.M.O.R. 17件のリポジトリを正しく検出)、`install` もクリーンな環境から実際に実行し、ARMOR-COMMON を ARMOR アップデーターがクローン・ビルド・テスト・昇格しました(署名のないリビジョンは警告付きでインストールされます)。`update` はまだ実際には実行していません。その最初の実行で実際のバグが発見・修正されました:`CHANGELOG.md` の `--workspace` の項目を参照してください。
+**正直さのチェック - 今日動いているもの:** **成熟度:機能段階(functional)。** これはエコシステム発見の4つ目の実装ではなく、薄いディスパッチャーです。マニフェスト解析、インストール、更新の独自ロジックは一切持ちません。`dispatch()` とそのコマンド構築(偽のサブプロセスランナーに対する19件のテスト)は実際にテスト済みです。`status --ecosystem all` は3つのエコシステム全ての実際のチェックアウトに対して実際に実行され(HYDRA-UMC 55件、URTC 7件、A.R.M.O.R. 17件のリポジトリを正しく検出)、`install` もクリーンな環境から実際に実行し、ARMOR-COMMON を ARMOR アップデーターがクローン・ビルド・テスト・昇格しました(署名のないリビジョンは警告付きでインストールされます)。`update` はまだ実際には実行していません。その最初の実行で実際のバグが発見・修正されました:`CHANGELOG.md` の `--workspace` の項目を参照してください。
 
 ---
 
@@ -50,7 +50,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 │   ├── i18n.py         # ウィンドウの文言（8言語）
 │   ├── qt_gui.py       # Qt Quick ウィンドウ（エコシステムごとのカードとログ）- 各エコシステム専用のアップデーターを開く
 │   └── qml/Main.qml    # ウィンドウの QML
-├── tests/               # 偽のサブプロセスランナーに対する16件のテスト
+├── tests/               # 偽のサブプロセスランナーに対する19件のテスト
 ├── tools/               # ci_validate.py, build_test.py, _doc_policy.py, _readme_parity.py
 ├── build.sh / build.bat         # venv + 編集可能インストール(3つの実際の依存関係を取得) + コンパイルチェック
 ├── build-test.sh / build-test.bat  # 同じインストールの後、実際の pytest スイート
@@ -61,7 +61,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 
 ```bash
 pip install -e ".[dev]"                 # GitHub から hydra-umc-updater、urtc-updater、armor-updater もインストールする
-python -m pytest tests -q               # 16件のテスト、ネットワークも実際のサブプロセスも不要
+python -m pytest tests -q               # 19件のテスト、ネットワークも実際のサブプロセスも不要
 electro-hobby-3d-updater status --ecosystem all               # 全エコシステムを並列にチェックする
 electro-hobby-3d-updater versions                             # 各アップデーターのインストール済みバージョンと GitHub より古いかどうか
 electro-hobby-3d-updater status --ecosystem armor             # 1つだけチェックする

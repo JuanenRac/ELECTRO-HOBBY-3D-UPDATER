@@ -27,7 +27,7 @@
 
 ---
 
-**Honesty check - what runs today:** **Maturity: functional.** This is a thin dispatcher, not a fourth implementation of ecosystem discovery: it holds no manifest-parsing, install or update logic of its own. `dispatch()` and its command-building (16 tests, all against a fake subprocess runner) are real and tested; `status --ecosystem all` has been run for real against a real checkout of all three ecosystems (55 HYDRA-UMC + 7 URTC + 17 A.R.M.O.R. repositories correctly found) - `install` has also been run for real, from a clean environment, and ARMOR-COMMON was cloned, built, tested and promoted by the ARMOR updater (unsigned revisions are installed with a warning); `update` has not been run for real. A real bug was found and fixed during that first real run: see `CHANGELOG.md`'s `--workspace` entry.
+**Honesty check - what runs today:** **Maturity: functional.** This is a thin dispatcher, not a fourth implementation of ecosystem discovery: it holds no manifest-parsing, install or update logic of its own. `dispatch()` and its command-building (19 tests, all against a fake subprocess runner) are real and tested; `status --ecosystem all` has been run for real against a real checkout of all three ecosystems (55 HYDRA-UMC + 7 URTC + 17 A.R.M.O.R. repositories correctly found) - `install` has also been run for real, from a clean environment, and ARMOR-COMMON was cloned, built, tested and promoted by the ARMOR updater (unsigned revisions are installed with a warning); `update` has not been run for real. A real bug was found and fixed during that first real run: see `CHANGELOG.md`'s `--workspace` entry.
 
 ---
 
@@ -50,7 +50,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 │   ├── i18n.py         # The words of the window in the eight languages
 │   ├── qt_gui.py       # Qt Quick window (a card per ecosystem, a log) - opens each ecosystem's own updater
 │   └── qml/Main.qml    # The window's QML
-├── tests/               # 16 tests against a fake subprocess runner
+├── tests/               # 19 tests against a fake subprocess runner
 ├── tools/               # ci_validate.py, build_test.py, _doc_policy.py, _readme_parity.py
 ├── build.sh / build.bat         # venv + editable install (pulls the 3 real dependencies) + compile-check
 ├── build-test.sh / build-test.bat  # same install, then the real pytest suite
@@ -61,7 +61,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 
 ```bash
 pip install -e ".[dev]"                 # also installs hydra-umc-updater, urtc-updater, armor-updater from GitHub
-python -m pytest tests -q               # 16 tests, no network or real subprocess needed
+python -m pytest tests -q               # 19 tests, no network or real subprocess needed
 electro-hobby-3d-updater status --ecosystem all               # check every ecosystem (in parallel)
 electro-hobby-3d-updater versions                             # installed version of each updater, and whether it is behind GitHub
 electro-hobby-3d-updater status --ecosystem armor             # check just one

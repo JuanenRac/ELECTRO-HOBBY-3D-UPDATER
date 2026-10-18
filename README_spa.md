@@ -27,7 +27,7 @@
 
 ---
 
-**Comprobacion de honestidad - que funciona hoy:** **Madurez: funcional.** Es un despachador delgado, no una cuarta implementacion del descubrimiento de ecosistemas: no tiene logica propia de lectura de manifiestos, instalacion o actualizacion. `dispatch()` y la construccion de sus comandos (16 pruebas, todas contra un ejecutor de subproceso simulado) estan probados de verdad; `status --ecosystem all` se ha ejecutado de verdad contra un checkout real de los tres ecosistemas (encontro correctamente 55 repositorios de HYDRA-UMC, 7 de URTC y 17 de A.R.M.O.R.) - `install` tambien se ha ejecutado de verdad, desde un entorno limpio, y ARMOR-COMMON se clono, construyo, probo y promovio con el actualizador de ARMOR (las revisiones sin firmar se instalan con un aviso); `update` todavia no se ha ejecutado de verdad. Se encontro y corrigio un bug real durante esa primera ejecucion real: ver la entrada de `--workspace` en `CHANGELOG.md`.
+**Comprobacion de honestidad - que funciona hoy:** **Madurez: funcional.** Es un despachador delgado, no una cuarta implementacion del descubrimiento de ecosistemas: no tiene logica propia de lectura de manifiestos, instalacion o actualizacion. `dispatch()` y la construccion de sus comandos (19 pruebas, todas contra un ejecutor de subproceso simulado) estan probados de verdad; `status --ecosystem all` se ha ejecutado de verdad contra un checkout real de los tres ecosistemas (encontro correctamente 55 repositorios de HYDRA-UMC, 7 de URTC y 17 de A.R.M.O.R.) - `install` tambien se ha ejecutado de verdad, desde un entorno limpio, y ARMOR-COMMON se clono, construyo, probo y promovio con el actualizador de ARMOR (las revisiones sin firmar se instalan con un aviso); `update` todavia no se ha ejecutado de verdad. Se encontro y corrigio un bug real durante esa primera ejecucion real: ver la entrada de `--workspace` en `CHANGELOG.md`.
 
 ---
 
@@ -50,7 +50,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 │   ├── i18n.py         # Los textos de la ventana en los ocho idiomas
 │   ├── qt_gui.py       # Ventana Qt Quick (una tarjeta por ecosistema, un registro) - abre el actualizador de cada ecosistema
 │   └── qml/Main.qml    # El QML de la ventana
-├── tests/               # 16 pruebas contra un ejecutor de subproceso simulado
+├── tests/               # 19 pruebas contra un ejecutor de subproceso simulado
 ├── tools/               # ci_validate.py, build_test.py, _doc_policy.py, _readme_parity.py
 ├── build.sh / build.bat         # venv + instalacion editable (trae las 3 dependencias reales) + comprobacion de compilacion
 ├── build-test.sh / build-test.bat  # misma instalacion, luego la suite real de pytest
@@ -61,7 +61,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 
 ```bash
 pip install -e ".[dev]"                 # tambien instala hydra-umc-updater, urtc-updater y armor-updater desde GitHub
-python -m pytest tests -q               # 16 pruebas, sin red ni subproceso real
+python -m pytest tests -q               # 19 pruebas, sin red ni subproceso real
 electro-hobby-3d-updater status --ecosystem all               # comprueba todos los ecosistemas (en paralelo)
 electro-hobby-3d-updater versions                             # versión instalada de cada actualizador y si va por detrás de GitHub
 electro-hobby-3d-updater status --ecosystem armor             # comprueba solo uno

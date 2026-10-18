@@ -224,3 +224,52 @@ def test_versions_offline_never_contacts_github(capsys):
 
     assert show_versions(args, installed=lambda _d: "1.0.0", latest=latest) == 0
     assert "latest" not in capsys.readouterr().out
+
+
+def test_a_sub_updater_that_hangs_is_stopped_with_a_clear_message(capsys):
+    import subprocess
+
+    def runner(command, **kwargs):
+        assert kwargs["timeout"] == 5.0
+        raise subprocess.TimeoutExpired(command, kwargs["timeout"])
+
+    args = build_parser().parse_args(["status", "--ecosystem", "hydra-umc", "--workspace", "/ws", "--timeout-seconds", "5"])
+    assert dispatch(args, runner=runner) == 1
+    assert "did not finish within 5 seconds" in capsys.readouterr().err
+
+    everything = build_parser().parse_args(["status", "--ecosystem", "all", "--workspace", "/ws", "--timeout-seconds", "5"])
+    assert dispatch(everything, runner=runner) == 1
+    assert "did not finish within 5 seconds" in capsys.readouterr().err
+
+
+def test_a_zero_timeout_means_no_limit():
+    seen = []
+
+    def runner(command, **kwargs):
+        seen.append(kwargs["timeout"])
+        return _FakeResult(0)
+
+    args = build_parser().parse_args(["install", "--ecosystem", "armor", "ARMOR-SERVER", "--workspace", "/ws", "--timeout-seconds", "0"])
+    assert dispatch(args, runner=runner) == 0
+    assert seen == [None]
+
+
+def test_the_window_log_is_changed_only_on_the_window_thread():
+    import threading
+
+    import pytest
+
+    qtcore = pytest.importorskip("PySide6.QtCore")
+    from pathlib import Path
+
+    from electro_hobby_3d_updater.qt_gui import Bridge
+
+    app = qtcore.QCoreApplication.instance() or qtcore.QCoreApplication([])
+    bridge = Bridge(Path("."))
+    worker = threading.Thread(target=lambda: (bridge._add("from the worker"), bridge._set_busy(True)))
+    worker.start()
+    worker.join()
+    assert bridge.log == ""  # nothing is changed from the worker's thread...
+    app.processEvents()
+    assert bridge.log == "from the worker"  # ...it is delivered to the window's thread
+    assert bridge.busy is True

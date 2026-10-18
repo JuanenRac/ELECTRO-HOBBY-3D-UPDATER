@@ -31,6 +31,16 @@
 
 ---
 
+## 📋 De un vistazo
+
+| | |
+|---|---|
+| Versión | `0.0.9` |
+| Madurez | Funcional |
+| Tecnología | Python 3.10+ / hydra-umc-updater / urtc-updater / armor-updater |
+| Destino | El PC de quien lo usa |
+| En hardware real | No aplica: nada de esto se ejecuta en hardware |
+
 ## 🎯 Vision general
 
 * **Una herramienta, tres ecosistemas reales:** [HYDRA-UMC](https://github.com/JuanenRac/HYDRA-UMC-UPDATER), [URTC](https://github.com/JuanenRac/URTC-UPDATER) y [A.R.M.O.R.](https://github.com/JuanenRac/ARMOR-UPDATER) ya tienen cada uno su propio actualizador, probado por separado. Este proyecto no reimplementa nada de eso: instala los tres como dependencias reales y envía `--ecosystem hydra-umc|urtc|armor` al que corresponde.

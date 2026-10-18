@@ -1,4 +1,8 @@
 @echo off
+rem Keep the window open for people, never in automation (CI / HYDRA_UMC_CI).
+set "KEEP_OPEN=pause"
+if defined CI set "KEEP_OPEN=ver >nul"
+if "%HYDRA_UMC_CI%"=="1" set "KEEP_OPEN=ver >nul"
 REM ELECTRO-HOBBY-3D-UPDATER - run.bat
 REM Opens the window (no arguments) or runs the CLI. Build first (build.bat) at least once per checkout.
 REM
@@ -20,4 +24,4 @@ if exist .venv\Scripts\python.exe (
     python -m electro_hobby_3d_updater.main %ARGS%
 )
 
-pause
+%KEEP_OPEN%

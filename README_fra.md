@@ -35,7 +35,7 @@
 
 | | |
 |---|---|
-| Version | `0.1.0` |
+| Version | `0.1.1` |
 | Maturité | Fonctionnel |
 | Technologie | Python 3.10+ / hydra-umc-updater / urtc-updater / armor-updater / eh3d-updater |
 | Cible | Le PC de la personne qui l'utilise |

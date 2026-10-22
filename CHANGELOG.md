@@ -2,6 +2,13 @@
 
 All notable changes to this project are documented here.
 
+## [0.1.1] - Pins that match the updaters of today and build scripts that work with any python
+
+- **The four updaters are pinned to their current commits** (HYDRA-UMC-UPDATER 0.4.8, URTC-UPDATER 0.1.7, ARMOR-UPDATER 0.1.4 and EH3D-UPDATER 0.0.1, with their build fixes). The old pins of the URTC and EH3D updaters did not know the `evidence` and `components` fields of the manifests, so every URTC and EH3D repository was reported as an invalid manifest.
+- **The build scripts no longer need the venv to have an activate script:** the python first on the PATH may be a stripped one (for example the one that ESP-IDF installs) whose venv has none. The venv is made with the `py` launcher when there is one and its folder is put first on the PATH.
+- **The windows of the four updaters, and this one, close without filling the console with `Cannot read property ... of null`** (the windows are deleted before the object their bindings read); the four updaters are pinned to the commits that carry it.
+- **An environment made before 0.1.0 has to be rebuilt once** (`build.bat` / `build.sh`): it lacks the EH3D updater, and its old updaters print a warning for every repository they do not understand.
+
 ## [0.1.0] - The fourth ecosystem
 
 - **EH3D is the fourth ecosystem:** `--ecosystem eh3d` dispatches to EH3D-UPDATER (pinned to its first release, 0.0.1), `status --ecosystem all` runs the four at the same time and prints them in the fixed order HYDRA-UMC / URTC / A.R.M.O.R. / EH3D, and `versions` lists the fourth updater too.

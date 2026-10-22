@@ -32,8 +32,8 @@ class _FakeRunner:
         return _FakeResult(self._returncode_by_module.get(module, 0), stdout=f"report from {module}\n")
 
 
-def test_ecosystems_registry_has_exactly_the_three_real_ecosystems():
-    assert {ecosystem.key for ecosystem in ECOSYSTEMS} == {"hydra-umc", "urtc", "armor"}
+def test_ecosystems_registry_has_exactly_the_four_real_ecosystems():
+    assert {ecosystem.key for ecosystem in ECOSYSTEMS} == {"hydra-umc", "urtc", "armor", "eh3d"}
     assert ECOSYSTEMS_BY_KEY["armor"].module == "armor_updater.main"
 
 
@@ -69,10 +69,10 @@ def test_status_all_runs_every_ecosystem_once_and_prints_them_in_order(capsys):
 
     assert exit_code == 0
     # They run in parallel, so the call order is not fixed...
-    assert sorted(call[2] for call in runner.calls) == ["armor_updater.main", "hydra_umc_updater.main", "urtc_updater.main"]
+    assert sorted(call[2] for call in runner.calls) == ["armor_updater.main", "eh3d_updater.main", "hydra_umc_updater.main", "urtc_updater.main"]
     # ...but the report always comes out in the fixed ECOSYSTEMS order.
     out = capsys.readouterr().out
-    assert out.index("hydra_umc_updater") < out.index("urtc_updater") < out.index("armor_updater")
+    assert out.index("hydra_umc_updater") < out.index("urtc_updater") < out.index("armor_updater") < out.index("eh3d_updater")
 
 
 def test_status_all_never_stops_at_the_first_failure_and_reports_it():
@@ -83,7 +83,7 @@ def test_status_all_never_stops_at_the_first_failure_and_reports_it():
     exit_code = dispatch(args, runner=runner)
 
     # Every ecosystem still ran, even though URTC's own check failed...
-    assert len(runner.calls) == 3
+    assert len(runner.calls) == 4
     # ...and the overall result honestly reflects that one real failure.
     assert exit_code == 1
 
@@ -191,12 +191,12 @@ def test_the_window_has_its_icon_and_the_about_texts():
         assert key in i18n.keys(), key
 
 
-def test_status_all_really_runs_the_three_at_the_same_time():
+def test_status_all_really_runs_the_four_at_the_same_time():
     import threading
-    started = threading.Barrier(3, timeout=5)
+    started = threading.Barrier(4, timeout=5)
 
     def runner(command, **_kwargs):
-        started.wait()  # only returns once all three are running at once
+        started.wait()  # only returns once all four are running at once
         return _FakeResult(0)
 
     args = build_parser().parse_args(["status", "--ecosystem", "all", "--workspace", "/ws"])
@@ -206,8 +206,8 @@ def test_status_all_really_runs_the_three_at_the_same_time():
 def test_versions_reports_installed_and_flags_an_updater_behind_github(capsys):
     from electro_hobby_3d_updater.main import show_versions
     args = build_parser().parse_args(["versions"])
-    installed = {"hydra-umc-updater": "0.4.6", "urtc-updater": "0.0.6", "armor-updater": None}.get
-    latest = {"HYDRA-UMC-UPDATER": "0.4.6", "URTC-UPDATER": "0.0.7", "ARMOR-UPDATER": "0.0.7"}.get
+    installed = {"hydra-umc-updater": "0.4.6", "urtc-updater": "0.0.6", "armor-updater": None, "eh3d-updater": "0.0.1"}.get
+    latest = {"HYDRA-UMC-UPDATER": "0.4.6", "URTC-UPDATER": "0.0.7", "ARMOR-UPDATER": "0.0.7", "EH3D-UPDATER": "0.0.1"}.get
     assert show_versions(args, installed=installed, latest=latest) == 2
     lines = capsys.readouterr().out.splitlines()
     assert "BEHIND" not in lines[0]

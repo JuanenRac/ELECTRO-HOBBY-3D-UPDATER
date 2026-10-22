@@ -29,10 +29,10 @@ jobs:
       - name: Validate manifest, version, changelog and README parity
         run: python tools/ci_validate.py
 
-      # Installs this project plus its three real dependencies - hydra-umc-
-      # updater, urtc-updater and armor-updater - straight from GitHub, the
-      # same three real packages a developer's own build.sh/.bat pulls in.
-      - name: Install this project and its three real ecosystem updaters
+      # Installs this project plus its four real dependencies - hydra-umc-
+      # updater, urtc-updater, armor-updater and eh3d-updater - straight from GitHub, the
+      # same four real packages a developer's own build.sh/.bat pulls in.
+      - name: Install this project and its four real ecosystem updaters
         run: python -m pip install -e ".[dev]"
 
       - name: Compile every Python source and run the real test suite

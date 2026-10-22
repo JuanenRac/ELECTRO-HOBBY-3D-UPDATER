@@ -15,7 +15,7 @@
   <a href="README_por.md">🇵🇹 Português</a>
 </p>
 
-### Une seule ligne de commande pour les trois ecosystemes Electro Hobby 3D - choisissez un systeme, telechargez et mettez a jour ses paquets
+### Une seule ligne de commande pour les quatre ecosystemes Electro Hobby 3D - choisissez un systeme, telechargez et mettez a jour ses paquets
 
 <p align="center">
   <img src="https://img.shields.io/badge/License-GPL%203.0-blue.svg" alt="GPL 3.0">
@@ -27,7 +27,7 @@
 
 ---
 
-**Verification d'honnetete - ce qui fonctionne aujourd'hui:** **Maturite : fonctionnel.** C'est un dispatcheur mince, pas une quatrieme implementation de la decouverte d'ecosysteme : il ne contient aucune logique propre d'analyse de manifeste, d'installation ou de mise a jour. `dispatch()` et la construction de ses commandes (19 tests, tous contre un executeur de sous-processus simule) sont reels et testes ; `status --ecosystem all` a ete execute pour de vrai contre un checkout reel des trois ecosystemes (55 depots HYDRA-UMC, 7 URTC et 17 A.R.M.O.R. correctement trouves) - `install` a aussi ete execute pour de vrai, depuis un environnement propre, et ARMOR-COMMON a ete clone, construit, teste et promu par l'actualisateur ARMOR (les revisions non signees sont installees avec un avertissement) ; `update` n'a pas encore ete execute pour de vrai. Un vrai bug a ete trouve et corrige lors de cette premiere execution reelle : voir l'entree `--workspace` dans `CHANGELOG.md`.
+**Verification d'honnetete - ce qui fonctionne aujourd'hui:** **Maturite : fonctionnel.** C'est un dispatcheur mince, pas une cinquieme implementation de la decouverte d'ecosysteme : il ne contient aucune logique propre d'analyse de manifeste, d'installation ou de mise a jour. `dispatch()` et la construction de ses commandes (19 tests, tous contre un executeur de sous-processus simule) sont reels et testes ; `status --ecosystem all` a ete execute pour de vrai contre un checkout reel des trois ecosystemes (55 depots HYDRA-UMC, 7 URTC et 17 A.R.M.O.R. correctement trouves) - `install` a aussi ete execute pour de vrai, depuis un environnement propre, et ARMOR-COMMON a ete clone, construit, teste et promu par l'actualisateur ARMOR (les revisions non signees sont installees avec un avertissement) ; `update` n'a pas encore ete execute pour de vrai. Un vrai bug a ete trouve et corrige lors de cette premiere execution reelle : voir l'entree `--workspace` dans `CHANGELOG.md`. L'outil de mise à jour d'EH3D a été ajouté à partir de ses propres tests (317, contre un faux GitHub) et n'a pas encore été exécuté via ce dispatcheur sur une vraie copie.
 
 ---
 
@@ -35,18 +35,18 @@
 
 | | |
 |---|---|
-| Version | `0.0.9` |
+| Version | `0.1.0` |
 | Maturité | Fonctionnel |
-| Technologie | Python 3.10+ / hydra-umc-updater / urtc-updater / armor-updater |
+| Technologie | Python 3.10+ / hydra-umc-updater / urtc-updater / armor-updater / eh3d-updater |
 | Cible | Le PC de la personne qui l'utilise |
 | Sur matériel réel | Sans objet : rien ici ne s'exécute sur du matériel |
 
 ## 🎯 Apercu
 
-* **Un outil, trois écosystèmes réels :** [HYDRA-UMC](https://github.com/JuanenRac/HYDRA-UMC-UPDATER), [URTC](https://github.com/JuanenRac/URTC-UPDATER) et [A.R.M.O.R.](https://github.com/JuanenRac/ARMOR-UPDATER) ont chacun déjà leur propre outil de mise à jour, testé séparément. Ce projet ne réimplémente rien de cela : il installe les trois comme vraies dépendances et transmet `--ecosystem hydra-umc|urtc|armor` à celui qui correspond.
+* **Un outil, quatre écosystèmes réels :** [HYDRA-UMC](https://github.com/JuanenRac/HYDRA-UMC-UPDATER), [URTC](https://github.com/JuanenRac/URTC-UPDATER), [A.R.M.O.R.](https://github.com/JuanenRac/ARMOR-UPDATER) et [EH3D](https://github.com/JuanenRac/EH3D-UPDATER) ont chacun déjà leur propre outil de mise à jour, testé séparément. Ce projet ne réimplémente rien de cela : il installe les quatre comme vraies dépendances et transmet `--ecosystem hydra-umc|urtc|armor|eh3d` à celui qui correspond.
 * **Dépendances épinglées et relues :** `pyproject.toml` épingle chaque sous-outil sur un commit relu, jamais sur un `main` mouvant, donc une installation obtient toujours exactement ce qui a été relu. `versions` affiche la version installée de chacun et signale celui qui est en retard sur GitHub.
-* **Un vrai sous-processus séparé à chaque fois.** Chaque appel lance `python -m <module de cet écosystème> --cli ...` dans son propre interpréteur - il n'importe jamais le `main()` d'une autre CLI dans celui-ci. Trois programmes argparse indépendants, chacun libre de lire `sys.argv` et d'appeler `sys.exit()`, se corrompraient dans un même processus.
-* **`status --ecosystem all` :** lance en même temps la vérification d'état des trois écosystèmes, affiche chaque rapport en entier dans un ordre fixe et indique lequel ou lesquels ont échoué sans s'arrêter au premier.
+* **Un vrai sous-processus séparé à chaque fois.** Chaque appel lance `python -m <module de cet écosystème> --cli ...` dans son propre interpréteur - il n'importe jamais le `main()` d'une autre CLI dans celui-ci. Quatre programmes argparse indépendants, chacun libre de lire `sys.argv` et d'appeler `sys.exit()`, se corrompraient dans un même processus.
+* **`status --ecosystem all` :** lance en même temps la vérification d'état des quatre écosystèmes, affiche chaque rapport en entier dans un ordre fixe et indique lequel ou lesquels ont échoué sans s'arrêter au premier.
 * **`install`/`update` exigent toujours un écosystème et un nom de projet.** Il n'y a pas de « tout mettre à jour dans tous les écosystèmes » ici, la même position que la CLI de chaque sous-outil.
 * **Limites héritées :** cet outil exécute ce que fait chaque sous-outil. L'outil de mise à jour d'A.R.M.O.R. casse encore sa propre installation quand il se met à jour lui-même (l'installation éditable pointe vers son répertoire de staging) ; mettez donc à jour ARMOR-UPDATER à la main pour l'instant. URTC-UPDATER peut exiger des commits signés (`URTC_UPDATER_REQUIRE_SIGNED=1`) ; les deux autres ne vérifient pas encore les signatures.
 
@@ -55,7 +55,7 @@
 ```text
 ELECTRO-HOBBY-3D-UPDATER/
 ├── src/electro_hobby_3d_updater/
-│   ├── ecosystems.py   # Le seul endroit qui nomme les trois ecosystemes reels et leur module CLI
+│   ├── ecosystems.py   # Le seul endroit qui nomme les quatre ecosystemes reels et leur module CLI
 │   ├── main.py         # CLI argparse + dispatch() - construit et execute la bonne commande de sous-processus
 │   ├── i18n.py         # Les textes de la fenetre dans les huit langues
 │   ├── qt_gui.py       # Fenetre Qt Quick (une carte par ecosysteme, un journal) - ouvre l'outil de chaque ecosysteme
@@ -70,7 +70,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 ## 🛠️ Environnement de Developpement
 
 ```bash
-pip install -e ".[dev]"                 # installe aussi hydra-umc-updater, urtc-updater et armor-updater depuis GitHub
+pip install -e ".[dev]"                 # installe aussi hydra-umc-updater, urtc-updater, armor-updater et eh3d-updater depuis GitHub
 python -m pytest tests -q               # 19 tests, sans reseau ni vrai sous-processus
 electro-hobby-3d-updater status --ecosystem all               # verifie tous les ecosystemes (en parallele)
 electro-hobby-3d-updater versions                             # version installee de chaque outil et s'il est en retard sur GitHub
@@ -81,14 +81,15 @@ electro-hobby-3d-updater update  --ecosystem hydra-umc HYDRA-UMC-SERVER # met a 
 
 ## 🔗 Projets Lies
 
-Cet outil est la quatrieme piece de la propre famille d'updaters de JuanenRac (Electro Hobby 3D) - il enveloppe les trois autres au lieu d'en remplacer un :
+Cet outil est la cinquieme piece de la propre famille d'updaters de JuanenRac (Electro Hobby 3D) - il enveloppe les quatre autres au lieu d'en remplacer un :
 
 * **[HYDRA-UMC-UPDATER](https://github.com/JuanenRac/HYDRA-UMC-UPDATER)** - detecte, installe et met a jour les propres depots de l'ecosysteme HYDRA-UMC
 * **[URTC-UPDATER](https://github.com/JuanenRac/URTC-UPDATER)** - detecte, installe et met a jour les propres depots de l'ecosysteme URTC
 * **[ARMOR-UPDATER](https://github.com/JuanenRac/ARMOR-UPDATER)** - detecte, installe et met a jour les propres depots de l'ecosysteme A.R.M.O.R.
-* **ELECTRO-HOBBY-3D-UPDATER** (ce depot) - redirige vers celui des trois que l'utilisateur choisit
+* **[EH3D-UPDATER](https://github.com/JuanenRac/EH3D-UPDATER)** - detecte, installe et met a jour les propres depots de l'ecosysteme EH3D
+* **ELECTRO-HOBBY-3D-UPDATER** (ce depot) - redirige vers celui des quatre que l'utilisateur choisit
 
-Et les trois ecosystemes reels eux-memes : **[HYDRA-UMC](https://github.com/JuanenRac/HYDRA-UMC)** (controle industriel multi-robots), **[URTC](https://github.com/JuanenRac/URTC)** (la plateforme Universal Robot Tool Controller), **[A.R.M.O.R.](https://github.com/JuanenRac/ARMOR-COMMON)** (securite perimetrique et domotique).
+Et les quatre ecosystemes reels eux-memes : **[HYDRA-UMC](https://github.com/JuanenRac/HYDRA-UMC)** (controle industriel multi-robots), **[URTC](https://github.com/JuanenRac/URTC)** (la plateforme Universal Robot Tool Controller), **[A.R.M.O.R.](https://github.com/JuanenRac/ARMOR-COMMON)** (securite perimetrique et domotique), **[EH3D](https://github.com/JuanenRac/EH3D)** (la suite de fabrication : FAO, CNC et commande de machines).
 
 ## 📚 Documentation et Communaute
 

@@ -15,7 +15,7 @@
   <a href="README_por.md">🇵🇹 Português</a>
 </p>
 
-### One command line for all three Electro Hobby 3D ecosystems - pick a system, download and update its packages
+### One command line for all four Electro Hobby 3D ecosystems - pick a system, download and update its packages
 
 <p align="center">
   <img src="https://img.shields.io/badge/License-GPL%203.0-blue.svg" alt="GPL 3.0">
@@ -27,7 +27,7 @@
 
 ---
 
-**Honesty check - what runs today:** **Maturity: functional.** This is a thin dispatcher, not a fourth implementation of ecosystem discovery: it holds no manifest-parsing, install or update logic of its own. `dispatch()` and its command-building (19 tests, all against a fake subprocess runner) are real and tested; `status --ecosystem all` has been run for real against a real checkout of all three ecosystems (55 HYDRA-UMC + 7 URTC + 17 A.R.M.O.R. repositories correctly found) - `install` has also been run for real, from a clean environment, and ARMOR-COMMON was cloned, built, tested and promoted by the ARMOR updater (unsigned revisions are installed with a warning); `update` has not been run for real. A real bug was found and fixed during that first real run: see `CHANGELOG.md`'s `--workspace` entry.
+**Honesty check - what runs today:** **Maturity: functional.** This is a thin dispatcher, not a fifth implementation of ecosystem discovery: it holds no manifest-parsing, install or update logic of its own. `dispatch()` and its command-building (19 tests, all against a fake subprocess runner) are real and tested; `status --ecosystem all` has been run for real against a real checkout of all three ecosystems (55 HYDRA-UMC + 7 URTC + 17 A.R.M.O.R. repositories correctly found) - `install` has also been run for real, from a clean environment, and ARMOR-COMMON was cloned, built, tested and promoted by the ARMOR updater (unsigned revisions are installed with a warning); `update` has not been run for real. A real bug was found and fixed during that first real run: see `CHANGELOG.md`'s `--workspace` entry. The EH3D updater was added from its own tests (317, against a fake GitHub) and has not been run through this dispatcher against a real checkout yet.
 
 ---
 
@@ -35,18 +35,18 @@
 
 | | |
 |---|---|
-| Version | `0.0.9` |
+| Version | `0.1.0` |
 | Maturity | Functional |
-| Stack | Python 3.10+ / hydra-umc-updater / urtc-updater / armor-updater |
+| Stack | Python 3.10+ / hydra-umc-updater / urtc-updater / armor-updater / eh3d-updater |
 | Target | The PC of the person using it |
 | On real hardware | Not applicable: nothing here runs on hardware |
 
 ## 🎯 Overview
 
-* **One tool, three real ecosystems:** [HYDRA-UMC](https://github.com/JuanenRac/HYDRA-UMC-UPDATER), [URTC](https://github.com/JuanenRac/URTC-UPDATER) and [A.R.M.O.R.](https://github.com/JuanenRac/ARMOR-UPDATER) each already have their own dedicated, independently-tested updater. This project does not re-implement any of that - it installs all three as real dependencies and dispatches `--ecosystem hydra-umc|urtc|armor` to the matching one.
+* **One tool, four real ecosystems:** [HYDRA-UMC](https://github.com/JuanenRac/HYDRA-UMC-UPDATER), [URTC](https://github.com/JuanenRac/URTC-UPDATER), [A.R.M.O.R.](https://github.com/JuanenRac/ARMOR-UPDATER) and [EH3D](https://github.com/JuanenRac/EH3D-UPDATER) each already have their own dedicated, independently-tested updater. This project does not re-implement any of that - it installs all four as real dependencies and dispatches `--ecosystem hydra-umc|urtc|armor|eh3d` to the matching one.
 * **Pinned, reviewed dependencies:** `pyproject.toml` pins each sub-updater to a reviewed commit, never to a moving `main`, so an install always gets exactly what was reviewed. `versions` shows the installed version of each one and flags any that is behind GitHub.
-* **A real, separate subprocess every time.** Each call runs `python -m <that ecosystem's module> --cli ...` as its own interpreter process - never imports another CLI's `main()` into this one. Three independent argparse programs, each free to parse `sys.argv` and call `sys.exit()`, would corrupt each other if composed in-process.
-* **`status --ecosystem all`:** runs the three ecosystems' own status checks at the same time, prints each report whole in a fixed order, and says which one(s) failed without stopping at the first.
+* **A real, separate subprocess every time.** Each call runs `python -m <that ecosystem's module> --cli ...` as its own interpreter process - never imports another CLI's `main()` into this one. Four independent argparse programs, each free to parse `sys.argv` and call `sys.exit()`, would corrupt each other if composed in-process.
+* **`status --ecosystem all`:** runs the four ecosystems' own status checks at the same time, prints each report whole in a fixed order, and says which one(s) failed without stopping at the first.
 * **`install`/`update` always need one ecosystem and one project name.** There is no "update everything across every ecosystem" here, the same stance each sub-updater's own CLI already takes.
 * **Inherited limits:** this tool runs whatever each sub-updater does. A.R.M.O.R.'s updater still breaks its own installation when it updates itself (the editable install points at its staging directory), so update ARMOR-UPDATER by hand for now. URTC-UPDATER can require signed commits (`URTC_UPDATER_REQUIRE_SIGNED=1`); the other two do not verify signatures yet.
 
@@ -55,14 +55,14 @@
 ```text
 ELECTRO-HOBBY-3D-UPDATER/
 ├── src/electro_hobby_3d_updater/
-│   ├── ecosystems.py   # The one place naming the three real ecosystems and their CLI module
+│   ├── ecosystems.py   # The one place naming the four real ecosystems and their CLI module
 │   ├── main.py         # argparse CLI + dispatch() - builds and runs the right subprocess command
 │   ├── i18n.py         # The words of the window in the eight languages
 │   ├── qt_gui.py       # Qt Quick window (a card per ecosystem, a log) - opens each ecosystem's own updater
 │   └── qml/Main.qml    # The window's QML
 ├── tests/               # 19 tests against a fake subprocess runner
 ├── tools/               # ci_validate.py, build_test.py, _doc_policy.py, _readme_parity.py
-├── build.sh / build.bat         # venv + editable install (pulls the 3 real dependencies) + compile-check
+├── build.sh / build.bat         # venv + editable install (pulls the 4 real dependencies) + compile-check
 ├── build-test.sh / build-test.bat  # same install, then the real pytest suite
 └── run.sh / run.bat              # CLI entry point (no arguments: the window)
 ```
@@ -70,7 +70,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 ## 🛠️ Development Environment
 
 ```bash
-pip install -e ".[dev]"                 # also installs hydra-umc-updater, urtc-updater, armor-updater from GitHub
+pip install -e ".[dev]"                 # also installs hydra-umc-updater, urtc-updater, armor-updater, eh3d-updater from GitHub
 python -m pytest tests -q               # 19 tests, no network or real subprocess needed
 electro-hobby-3d-updater status --ecosystem all               # check every ecosystem (in parallel)
 electro-hobby-3d-updater versions                             # installed version of each updater, and whether it is behind GitHub
@@ -81,14 +81,15 @@ electro-hobby-3d-updater update  --ecosystem hydra-umc HYDRA-UMC-SERVER # pull +
 
 ## 🔗 Related Projects
 
-This tool is the fourth piece of JuanenRac's (Electro Hobby 3D) own updater family - it wraps the other three rather than replacing any of them:
+This tool is the fifth piece of JuanenRac's (Electro Hobby 3D) own updater family - it wraps the other four rather than replacing any of them:
 
 * **[HYDRA-UMC-UPDATER](https://github.com/JuanenRac/HYDRA-UMC-UPDATER)** - detects, installs and updates the HYDRA-UMC ecosystem's own repositories
 * **[URTC-UPDATER](https://github.com/JuanenRac/URTC-UPDATER)** - detects, installs and updates the URTC ecosystem's own repositories
 * **[ARMOR-UPDATER](https://github.com/JuanenRac/ARMOR-UPDATER)** - detects, installs and updates the A.R.M.O.R. ecosystem's own repositories
-* **ELECTRO-HOBBY-3D-UPDATER** (this repository) - dispatches to whichever of the three the user picks
+* **[EH3D-UPDATER](https://github.com/JuanenRac/EH3D-UPDATER)** - detects, installs and updates the EH3D ecosystem's own repositories
+* **ELECTRO-HOBBY-3D-UPDATER** (this repository) - dispatches to whichever of the four the user picks
 
-And the three real ecosystems themselves: **[HYDRA-UMC](https://github.com/JuanenRac/HYDRA-UMC)** (industrial multi-robot cell control), **[URTC](https://github.com/JuanenRac/URTC)** (the Universal Robot Tool Controller platform), **[A.R.M.O.R.](https://github.com/JuanenRac/ARMOR-COMMON)** (perimeter security and home automation).
+And the four real ecosystems themselves: **[HYDRA-UMC](https://github.com/JuanenRac/HYDRA-UMC)** (industrial multi-robot cell control), **[URTC](https://github.com/JuanenRac/URTC)** (the Universal Robot Tool Controller platform), **[A.R.M.O.R.](https://github.com/JuanenRac/ARMOR-COMMON)** (perimeter security and home automation), **[EH3D](https://github.com/JuanenRac/EH3D)** (the fabrication suite: CAM, CNC and machine control).
 
 ## 📚 Documentation & Community
 

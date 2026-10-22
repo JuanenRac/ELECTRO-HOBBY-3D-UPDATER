@@ -3,7 +3,7 @@
 // Copyright (C) 2026 JuanenRac (Electro Hobby 3D) <electrohobby3d@gmail.com>
 // GPL-3.0-or-later - see LICENSE
 // =============================================================================
-// Three cards, one per ecosystem; each opens that ecosystem's own updater or asks it for its
+// Four cards, one per ecosystem; each opens that ecosystem's own updater or asks it for its
 // status. Everything shown comes from the Python bridge: nothing is decided here.
 import QtQuick
 import QtQuick.Controls
@@ -225,7 +225,7 @@ ApplicationWindow {
         }
     }
 
-    // A real Version/Author/Email/License row, the same as the About window of the three updaters.
+    // A real Version/Author/Email/License row, the same as the About window of the four updaters.
     component AboutInfoRow: Rectangle {
         property string label: ""
         property string value: ""

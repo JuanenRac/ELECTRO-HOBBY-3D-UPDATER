@@ -5,6 +5,13 @@ version number follows this ecosystem's "odometer" scheme: PATCH +1 on
 every real build, rolling into MINOR past 9 (`0.0.9` -> `0.1.0`); MAJOR is
 bumped manually only.
 
+## [0.1.0] - The fourth ecosystem
+
+- **EH3D is the fourth ecosystem:** `--ecosystem eh3d` dispatches to EH3D-UPDATER (pinned to its first release, 0.0.1), `status --ecosystem all` runs the four at the same time and prints them in the fixed order HYDRA-UMC / URTC / A.R.M.O.R. / EH3D, and `versions` lists the fourth updater too.
+- **Window:** a fourth card for EH3D with its own accent and description, "Check all four" and the texts of the subtitle, the tagline and the About window, in the eight languages.
+- **Documents:** the eight README files, the manifest and the keywords name the four ecosystems; the EH3D updater has been added from its own tests and has not been run through this dispatcher against a real checkout yet.
+- **Tests:** the registry, the order of the report, the simultaneous run and `versions` are covered for four ecosystems (19 tests).
+
 ## [0.0.9] - Window threads, time limits, the right workspace for the sub-updater windows
 
 - **Window:** the worker thread that runs a check used to change the log and the busy flag of an object that belongs to the window's thread, and two fast clicks could start two workers because the flag was set inside the worker. The worker now only emits signals that Qt delivers to the window's thread, and the busy flag is set before the worker starts.

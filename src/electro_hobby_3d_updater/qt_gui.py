@@ -3,9 +3,9 @@
 # Copyright (C) 2026 JuanenRac (Electro Hobby 3D) <electrohobby3d@gmail.com>
 # GPL-3.0-or-later - see LICENSE
 # =============================================================================
-"""The visual window of this tool, in the same family as the HYDRA-UMC, URTC and A.R.M.O.R. updaters.
+"""The visual window of this tool, in the same family as the HYDRA-UMC, URTC, A.R.M.O.R. and EH3D updaters.
 
-It is still only a dispatcher: it shows the three ecosystems, opens the window of the updater each one has, and asks each updater's own command line for its status (the same
+It is still only a dispatcher: it shows the four ecosystems, opens the window of the updater each one has, and asks each updater's own command line for its status (the same
 `python -m <module> --cli status` that main.py runs). Nothing here discovers, installs or updates anything by itself.
 
 PySide6 is imported only when the window is opened; the command line keeps needing nothing but the standard library.
@@ -29,7 +29,7 @@ from . import __version__
 from .ecosystems import ECOSYSTEMS, ECOSYSTEMS_BY_KEY
 from .i18n import LANGUAGES, text
 
-ACCENTS = {"hydra-umc": "#ff8a3d", "urtc": "#43db9b", "armor": "#38d4e6"}
+ACCENTS = {"hydra-umc": "#ff8a3d", "urtc": "#43db9b", "armor": "#38d4e6", "eh3d": "#b48cff"}
 
 
 def installed(module: str) -> bool:

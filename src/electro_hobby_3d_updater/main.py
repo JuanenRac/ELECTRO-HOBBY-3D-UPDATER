@@ -5,19 +5,19 @@
 #
 # This tool is deliberately a THIN dispatcher, never a fourth
 # implementation of manifest discovery/install/update: `--ecosystem
-# hydra-umc|urtc|armor` picks which of the three real, independent,
-# already-tested ecosystem updaters (hydra_umc_updater, urtc_updater,
+# hydra-umc|urtc|armor|eh3d` picks which of the four real, independent,
+# already-tested ecosystem updaters (hydra_umc_updater, urtc_updater, eh3d_updater,
 # armor_updater) actually does the work, and this process runs it as a
 # genuinely separate Python interpreter subprocess (`python -m <module>
 # --cli ...`) - never imports its `main()` function directly into this
-# same process. Three independent argparse CLIs, each free to call
+# same process. Four independent argparse CLIs, each free to call
 # `sys.exit()` and each parsing its own `sys.argv`, would corrupt each
 # other if composed in-process; a subprocess is the same isolation a user
 # gets running each command by hand, and is trivially testable by
 # replacing the `runner` this module's own `dispatch()` calls.
 #
 # `status --ecosystem all` is the one thing this tool does that no single
-# sub-updater does on its own: run all three (in parallel - they are
+# sub-updater does on its own: run all four (in parallel - they are
 # independent processes - with each one's output printed whole and in a
 # fixed order) and report which ones failed, without stopping at the first.
 # `versions` shows which version of each sub-updater is installed and
@@ -32,7 +32,7 @@
 # directory (`Path(__file__).resolve().parents[3]`), correct only when
 # that sub-updater is run from its own local sibling checkout. Once it is
 # installed as a regular dependency of THIS project instead (this
-# project's own `pyproject.toml` pulls all three straight from GitHub),
+# project's own `pyproject.toml` pulls all four straight from GitHub),
 # that heuristic resolves to somewhere under THIS project's own `.venv`,
 # not the user's real workspace - silently discovering zero projects
 # instead of failing loudly. Defaulting `--workspace` here to this
@@ -71,7 +71,7 @@ def build_parser() -> argparse.ArgumentParser:
         prog="electro-hobby-3d-updater",
         description=(
             "Detects, installs, and updates every one of JuanenRac's (Electro "
-            "Hobby 3D) three real ecosystems - HYDRA-UMC, URTC and A.R.M.O.R. "
+            "Hobby 3D) four real ecosystems - HYDRA-UMC, URTC, A.R.M.O.R. and EH3D. "
             "- by delegating to each ecosystem's own dedicated updater. This "
             "tool holds no discovery or install logic of its own."
         ),
@@ -84,7 +84,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--ecosystem",
         required=True,
         choices=(*ECOSYSTEM_KEYS, "all"),
-        help="which ecosystem to check, or 'all' for every one of the three in sequence",
+        help="which ecosystem to check, or 'all' for every one of the four in sequence",
     )
     status.add_argument("--offline", action="store_true", help="skip the GitHub check for every ecosystem run")
     status.add_argument("--workspace", help="Workspace root each ecosystem is scanned under (default: this tool's own parent directory).")
@@ -146,7 +146,7 @@ class _TimedOut:
 
 
 def _status_all(args: argparse.Namespace, *, runner) -> int:
-    """The three sub-updaters run at the same time (they are independent
+    """The four sub-updaters run at the same time (they are independent
     processes, and each one spends most of its time waiting on GitHub);
     their captured output is printed whole, one ecosystem after another in
     the fixed ECOSYSTEMS order, so the report reads the same as before."""

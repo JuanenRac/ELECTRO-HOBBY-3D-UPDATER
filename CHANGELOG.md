@@ -1,9 +1,6 @@
 # Changelog: ELECTRO-HOBBY-3D-UPDATER
 
-All notable changes to this project will be documented in this file. The
-version number follows this ecosystem's "odometer" scheme: PATCH +1 on
-every real build, rolling into MINOR past 9 (`0.0.9` -> `0.1.0`); MAJOR is
-bumped manually only.
+All notable changes to this project are documented here.
 
 ## [0.1.0] - The fourth ecosystem
 
@@ -58,13 +55,11 @@ bumped manually only.
 
 - The window icon and the emblem at the top of the window are now looked for inside the package (`assets/`), so they also show when it is installed and not run from its own folder.
 
-
 ## [0.0.4] - The check box, an About window and the icon
 
 - **The check box *Without asking GitHub* no longer sits on top of its text:** it had no text of its own, so Qt centred its box over the label; the text now belongs to the check box.
 - **About window**, like the one of the HYDRA-UMC, URTC and A.R.M.O.R. updaters: emblem, name, what it does, version, author, email, license and a button to open the project on GitHub, in the seven languages. It opens from the button next to the version at the bottom of the window.
 - **Icon:** the window and the taskbar show the emblem of Electro Hobby 3D (`images/ELECTRO_HOBBY_3D_ICON.svg` and an `.ico` with seven sizes made from it), and the emblem also heads the window. The window is given its icon itself and the process its own identity on Windows, so it does not depend on the application-wide icon being picked up.
-
 
 ## [0.0.3] - A window, like the other updaters
 

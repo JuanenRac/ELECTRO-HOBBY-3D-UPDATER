@@ -1,4 +1,4 @@
-# Changelog: ELECTRO-HOBBY-3D-UPDATER
+# Changelog
 
 All notable changes to this project are documented here.
 

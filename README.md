@@ -37,7 +37,7 @@
 |---|---|
 | Version | `0.1.1` |
 | Maturity | Functional |
-| Stack | Python 3.10+ / hydra-umc-updater / urtc-updater / armor-updater / eh3d-updater |
+| Stack | Python 3.10+ / hydra-umc-updater / urtc-updater / eh3d-updater / armor-updater |
 | Target | The PC of the person using it |
 | On real hardware | Not applicable: nothing here runs on hardware |
 

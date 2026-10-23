@@ -37,7 +37,7 @@
 |---|---|
 | 版本 | `0.1.1` |
 | 成熟度 | 可用 |
-| 技术栈 | Python 3.10+ / hydra-umc-updater / urtc-updater / armor-updater / eh3d-updater |
+| 技术栈 | Python 3.10+ / hydra-umc-updater / urtc-updater / eh3d-updater / armor-updater |
 | 目标 | 使用者的电脑 |
 | 真实硬件 | 不适用：这里的内容不在硬件上运行 |
 

@@ -37,7 +37,7 @@
 |---|---|
 | バージョン | `0.1.1` |
 | 成熟度 | 機能する |
-| 技術 | Python 3.10+ / hydra-umc-updater / urtc-updater / armor-updater / eh3d-updater |
+| 技術 | Python 3.10+ / hydra-umc-updater / urtc-updater / eh3d-updater / armor-updater |
 | 対象 | 利用者の PC |
 | 実機での確認 | 対象外：ここにあるものはハードウェア上では動きません |
 

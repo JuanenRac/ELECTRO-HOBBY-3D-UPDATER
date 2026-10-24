@@ -41,6 +41,22 @@
 | Destino | O PC de quem o usa |
 | Em hardware real | Não aplicável: nada aqui corre em hardware |
 
+## 🚦 Estado do projeto
+
+Cada linha é uma parte deste repositório e a luz diz até onde chega hoje. É escrita com o que o repositório consegue demonstrar (testes, compilações, execuções), não com o que está previsto.
+
+🟢 Feito e verificado · 🟡 Funciona, com limites conhecidos · 🟠 Feito a meio ou ainda por verificar · 🔴 Por fazer ou a não funcionar
+
+| Área | Estado | O que significa aqui |
+|---|---|---|
+| Software | 🟡 | Um reencaminhador fino: não tem lógica própria de descoberta, instalação ou atualização e passa `--ecosystem hydra-umc\|urtc\|armor\|eh3d` ao atualizador de cada ecossistema, que instala como dependências fixadas. |
+| Testes | 🟢 | 19 testes cobrem o reencaminhamento e os comandos que constrói, todos contra um executor de subprocessos simulado. |
+| Utilização real | 🟠 | O `status` correu sobre uma cópia real dos três ecossistemas mais antigos e o `install` correu uma vez a partir de um ambiente limpo; o `update` não foi executado a sério. |
+| Integração | 🟠 | A passagem ao atualizador do EH3D foi acrescentada a partir dos testes desse atualizador e não foi executada através deste reencaminhador sobre uma cópia real. |
+| Segurança | 🟡 | Cada subatualizador está fixado num commit revisto, nunca num ramo que se move; as revisões não assinadas são instaladas com um aviso e não houve revisão independente. |
+| Hardware real | 🟢 | Não se aplica: corre no PC de quem o usa. |
+| Documentação | 🟢 | README em oito idiomas, verificado contra o manifesto e o registo de alterações a cada alteração. |
+
 ## 🎯 Visão geral
 
 * **Uma só ferramenta, quatro ecossistemas reais:** o [HYDRA-UMC](https://github.com/JuanenRac/HYDRA-UMC-UPDATER), o [URTC](https://github.com/JuanenRac/URTC-UPDATER), o [A.R.M.O.R.](https://github.com/JuanenRac/ARMOR-UPDATER) e o [EH3D](https://github.com/JuanenRac/EH3D-UPDATER) já têm cada um o seu atualizador dedicado e testado de forma independente. Este projeto não reimplementa nada disso - instala os quatro como dependências reais e despacha `--ecosystem hydra-umc|urtc|armor|eh3d` para o que corresponde.

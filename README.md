@@ -41,6 +41,22 @@
 | Target | The PC of the person using it |
 | On real hardware | Not applicable: nothing here runs on hardware |
 
+## 🚦 Project status
+
+Each line is one part of this repository and the light says how far it is today. It is written from what the repository can show (tests, builds, runs), not from what is planned.
+
+🟢 Done and verified · 🟡 Works, with known limits · 🟠 Partly done or not verified yet · 🔴 Not done or not working
+
+| Area | State | What it means here |
+|---|---|---|
+| Software | 🟡 | A thin dispatcher: it holds no discovery, install or update logic of its own and hands `--ecosystem hydra-umc\|urtc\|armor\|eh3d` over to the updater of each ecosystem, which it installs as pinned dependencies. |
+| Tests | 🟢 | 19 tests cover the dispatching and the commands it builds, all against a fake subprocess runner. |
+| Real use | 🟠 | `status` has run against a real checkout of all three older ecosystems, and `install` has run once from a clean environment; `update` has not been run for real. |
+| Integration | 🟠 | The hand-over to the EH3D updater was added from that updater's own tests and has not been run through this dispatcher against a real checkout. |
+| Security | 🟡 | Each sub-updater is pinned to a reviewed commit, never to a moving branch; unsigned revisions are installed with a warning, and there has been no independent review. |
+| Real hardware | 🟢 | Not applicable: it runs on the PC of the person using it. |
+| Documentation | 🟢 | README in eight languages, checked against the manifest and the changelog on every change. |
+
 ## 🎯 Overview
 
 * **One tool, four real ecosystems:** [HYDRA-UMC](https://github.com/JuanenRac/HYDRA-UMC-UPDATER), [URTC](https://github.com/JuanenRac/URTC-UPDATER), [A.R.M.O.R.](https://github.com/JuanenRac/ARMOR-UPDATER) and [EH3D](https://github.com/JuanenRac/EH3D-UPDATER) each already have their own dedicated, independently-tested updater. This project does not re-implement any of that - it installs all four as real dependencies and dispatches `--ecosystem hydra-umc|urtc|armor|eh3d` to the matching one.

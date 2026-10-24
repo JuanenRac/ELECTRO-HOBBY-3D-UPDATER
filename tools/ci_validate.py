@@ -193,6 +193,51 @@ def validate_local_markdown_links() -> None:
         preview = "; ".join(broken[:10])
         suffix = "" if len(broken) <= 10 else f" (+{len(broken) - 10} more)"
         fail(f"broken local Markdown link(s): {preview}{suffix}")
+
+STATUS_LIGHTS = ("🟢", "🟡", "🟠", "🔴")
+
+
+def status_lights(text: str) -> list[str] | None:
+    """The lights of the "Project status" section of a README, in order, or None when the section is missing or malformed.
+
+    The section is the second `## ` heading (right after "At a glance"), has the legend with the four lights and a
+    table whose State column holds only a light."""
+    lines, fenced, heads = text.splitlines(), False, []
+    for index, line in enumerate(lines):
+        if line.lstrip().startswith("```"):
+            fenced = not fenced
+        elif not fenced and line.startswith("## "):
+            heads.append(index)
+    if len(heads) < 3 or not lines[heads[1]].startswith("## 🚦 "):
+        return None
+    block = lines[heads[1]:heads[2]]
+    if not all(light in " ".join(block) for light in STATUS_LIGHTS):
+        return None
+    rows = [line for line in block if line.startswith("|")][2:]
+    lights = []
+    for row in rows:
+        cells = [part.strip() for part in re.split(r"(?<!\\)\|", row.strip().strip("|"))]
+        if len(cells) != 3 or cells[1] not in STATUS_LIGHTS or not cells[0] or not cells[2]:
+            return None
+        lights.append(cells[1])
+    return lights if len(lights) >= 3 else None
+
+
+def validate_project_status() -> None:
+    """Every README carries the "Project status" table of lights, the same lights in all eight languages."""
+    english = status_lights((ROOT / "README.md").read_text(encoding="utf-8", errors="replace"))
+    if english is None:
+        fail("README.md has no valid 'Project status' section right after 'At a glance' (a table of lights, one row per part)")
+    for document_name in REQUIRED_DOCUMENTS:
+        if not document_name.startswith("README_"):
+            continue
+        lights = status_lights((ROOT / document_name).read_text(encoding="utf-8", errors="replace"))
+        if lights is None:
+            fail(f"{document_name} has no valid 'Project status' section right after 'At a glance'")
+        if lights != english:
+            fail(f"{document_name} does not show the same lights as README.md in its 'Project status' table")
+
+
 def main() -> int:
     try:
         manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
@@ -241,6 +286,7 @@ def main() -> int:
         fail(f"latest changelog version {found} differs from manifest {manifest['version']}")
 
     validate_readme_version_prose(manifest)
+    validate_project_status()
 
     gitignore = ROOT / ".gitignore"
     if not gitignore.is_file():

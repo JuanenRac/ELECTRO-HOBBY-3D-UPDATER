@@ -41,6 +41,22 @@
 | Ziel | Der PC der Person, die es benutzt |
 | Auf echter Hardware | Nicht zutreffend: nichts hiervon läuft auf Hardware |
 
+## 🚦 Projektstatus
+
+Jede Zeile ist ein Teil dieses Repositorys, und die Ampel sagt, wie weit er heute ist. Sie beruht auf dem, was das Repository zeigen kann (Tests, Builds, Läufe), nicht auf dem, was geplant ist.
+
+🟢 Fertig und überprüft · 🟡 Funktioniert, mit bekannten Grenzen · 🟠 Teilweise fertig oder noch nicht überprüft · 🔴 Nicht gemacht oder funktioniert nicht
+
+| Bereich | Stand | Was das hier bedeutet |
+|---|---|---|
+| Software | 🟡 | Ein dünner Verteiler: Er hat keine eigene Logik zum Finden, Installieren oder Aktualisieren und reicht `--ecosystem hydra-umc\|urtc\|armor\|eh3d` an den Updater des jeweiligen Ökosystems weiter, den er als festgelegte Abhängigkeiten installiert. |
+| Tests | 🟢 | 19 Tests decken die Weitergabe und die gebauten Befehle ab, alle gegen einen simulierten Unterprozess-Ausführer. |
+| Echter Einsatz | 🟠 | `status` lief gegen einen echten Checkout der drei älteren Ökosysteme, und `install` lief einmal aus einer sauberen Umgebung; `update` wurde nie echt ausgeführt. |
+| Integration | 🟠 | Die Übergabe an den EH3D-Updater wurde anhand von dessen eigenen Tests ergänzt und nie über diesen Verteiler an einem echten Checkout ausgeführt. |
+| Sicherheit | 🟡 | Jeder Unter-Updater ist an einen geprüften Commit gebunden, nie an einen beweglichen Branch; unsignierte Revisionen werden mit einer Warnung installiert, und es gab keine unabhängige Prüfung. |
+| Echte Hardware | 🟢 | Nicht zutreffend: es läuft auf dem PC der Person, die es benutzt. |
+| Dokumentation | 🟢 | README in acht Sprachen, bei jeder Änderung mit dem Manifest und dem Änderungsprotokoll abgeglichen. |
+
 ## 🎯 Ueberblick
 
 * **Ein Werkzeug, vier echte Ökosysteme:** [HYDRA-UMC](https://github.com/JuanenRac/HYDRA-UMC-UPDATER), [URTC](https://github.com/JuanenRac/URTC-UPDATER), [A.R.M.O.R.](https://github.com/JuanenRac/ARMOR-UPDATER) und [EH3D](https://github.com/JuanenRac/EH3D-UPDATER) haben jeweils bereits einen eigenen, unabhängig getesteten Updater. Dieses Projekt implementiert nichts davon neu - es installiert alle vier als echte Abhängigkeiten und leitet `--ecosystem hydra-umc|urtc|armor|eh3d` an den passenden weiter.

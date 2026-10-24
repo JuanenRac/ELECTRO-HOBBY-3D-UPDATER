@@ -41,6 +41,22 @@
 | Cible | Le PC de la personne qui l'utilise |
 | Sur matériel réel | Sans objet : rien ici ne s'exécute sur du matériel |
 
+## 🚦 État du projet
+
+Chaque ligne est une partie de ce dépôt et le feu dit où elle en est aujourd'hui. Elle est écrite d'après ce que le dépôt peut montrer (tests, compilations, exécutions), pas d'après ce qui est prévu.
+
+🟢 Fait et vérifié · 🟡 Fonctionne, avec des limites connues · 🟠 À moitié fait ou pas encore vérifié · 🔴 Pas fait ou ne fonctionne pas
+
+| Domaine | État | Ce que cela veut dire ici |
+|---|---|---|
+| Logiciel | 🟡 | Un répartiteur mince : il n'a pas de logique propre de découverte, d'installation ni de mise à jour et passe `--ecosystem hydra-umc\|urtc\|armor\|eh3d` à l'outil de mise à jour de chaque écosystème, qu'il installe comme dépendances épinglées. |
+| Tests | 🟢 | 19 tests couvrent la délégation et les commandes qu'il construit, tous contre un lanceur de sous-processus simulé. |
+| Usage réel | 🟠 | `status` a tourné sur une vraie copie des trois écosystèmes les plus anciens, et `install` a tourné une fois depuis un environnement propre ; `update` n'a pas été exécuté pour de vrai. |
+| Intégration | 🟠 | La délégation à l'outil de mise à jour d'EH3D a été ajoutée d'après les tests de cet outil et n'a pas été exécutée via ce répartiteur sur une vraie copie. |
+| Sécurité | 🟡 | Chaque sous-outil de mise à jour est épinglé sur un commit relu, jamais sur une branche mouvante ; les révisions non signées sont installées avec un avertissement, et il n'y a pas eu de revue indépendante. |
+| Matériel réel | 🟢 | Sans objet : il tourne sur le PC de la personne qui l'utilise. |
+| Documentation | 🟢 | README en huit langues, vérifié par rapport au manifeste et au journal des modifications à chaque changement. |
+
 ## 🎯 Apercu
 
 * **Un outil, quatre écosystèmes réels :** [HYDRA-UMC](https://github.com/JuanenRac/HYDRA-UMC-UPDATER), [URTC](https://github.com/JuanenRac/URTC-UPDATER), [A.R.M.O.R.](https://github.com/JuanenRac/ARMOR-UPDATER) et [EH3D](https://github.com/JuanenRac/EH3D-UPDATER) ont chacun déjà leur propre outil de mise à jour, testé séparément. Ce projet ne réimplémente rien de cela : il installe les quatre comme vraies dépendances et transmet `--ecosystem hydra-umc|urtc|armor|eh3d` à celui qui correspond.

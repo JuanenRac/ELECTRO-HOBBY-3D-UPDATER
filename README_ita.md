@@ -41,6 +41,22 @@
 | Destinazione | Il PC di chi lo usa |
 | Su hardware reale | Non applicabile: nulla qui gira su hardware |
 
+## 🚦 Stato del progetto
+
+Ogni riga è una parte di questo repository e il semaforo dice a che punto è oggi. È scritta in base a ciò che il repository può mostrare (test, compilazioni, esecuzioni), non a ciò che è previsto.
+
+🟢 Fatto e verificato · 🟡 Funziona, con limiti noti · 🟠 Fatto a metà o non ancora verificato · 🔴 Non fatto o non funzionante
+
+| Area | Stato | Cosa significa qui |
+|---|---|---|
+| Software | 🟡 | Un inoltratore sottile: non ha logica propria di rilevamento, installazione o aggiornamento e passa `--ecosystem hydra-umc\|urtc\|armor\|eh3d` all'updater di ciascun ecosistema, che installa come dipendenze bloccate. |
+| Test | 🟢 | 19 test coprono l'inoltro e i comandi che costruisce, tutti contro un esecutore di sottoprocessi simulato. |
+| Uso reale | 🟠 | `status` è stato eseguito su una copia reale dei tre ecosistemi più vecchi e `install` una volta da un ambiente pulito; `update` non è stato eseguito davvero. |
+| Integrazione | 🟠 | Il passaggio all'updater di EH3D è stato aggiunto a partire dai test di quell'updater e non è stato eseguito tramite questo inoltratore su una copia reale. |
+| Sicurezza | 🟡 | Ogni sotto-updater è bloccato su un commit rivisto, mai su un ramo mobile; le revisioni non firmate vengono installate con un avviso e non c'è stata una revisione indipendente. |
+| Hardware reale | 🟢 | Non applicabile: gira sul PC di chi lo usa. |
+| Documentazione | 🟢 | README in otto lingue, verificato con il manifesto e il registro delle modifiche a ogni modifica. |
+
 ## 🎯 Panoramica
 
 * **Uno strumento, quattro ecosistemi reali:** [HYDRA-UMC](https://github.com/JuanenRac/HYDRA-UMC-UPDATER), [URTC](https://github.com/JuanenRac/URTC-UPDATER), [A.R.M.O.R.](https://github.com/JuanenRac/ARMOR-UPDATER) e [EH3D](https://github.com/JuanenRac/EH3D-UPDATER) hanno già ciascuno il proprio updater, testato separatamente. Questo progetto non reimplementa nulla di tutto ciò: installa i quattro come dipendenze reali e inoltra `--ecosystem hydra-umc|urtc|armor|eh3d` a quello corrispondente.

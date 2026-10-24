@@ -75,7 +75,8 @@ ELECTRO-HOBBY-3D-UPDATER/
 │   ├── main.py         # argparse-CLI + dispatch() - baut den richtigen Subprozess-Befehl auf und fuehrt ihn aus
 │   ├── i18n.py         # Die Texte des Fensters in den acht Sprachen
 │   ├── qt_gui.py       # Qt-Quick-Fenster (eine Karte je Oekosystem, ein Protokoll) - oeffnet den Updater des jeweiligen Oekosystems
-│   └── qml/Main.qml    # Das QML des Fensters
+│   ├── qml/Main.qml    # Das QML des Fensters
+│   └── assets/         # Das Symbol des Programms (.ico und .svg)
 ├── tests/               # 19 Tests gegen einen simulierten Subprozess-Runner
 ├── tools/               # ci_validate.py, build_test.py, _doc_policy.py, _readme_parity.py
 ├── build.sh / build.bat         # venv + editierbare Installation (holt die 3 echten Abhaengigkeiten) + Kompilierungspruefung

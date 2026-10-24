@@ -75,7 +75,8 @@ ELECTRO-HOBBY-3D-UPDATER/
 │   ├── main.py         # argparse CLI + dispatch() - 正しいサブプロセスコマンドを構築して実行する
 │   ├── i18n.py         # ウィンドウの文言（8言語）
 │   ├── qt_gui.py       # Qt Quick ウィンドウ（エコシステムごとのカードとログ）- 各エコシステム専用のアップデーターを開く
-│   └── qml/Main.qml    # ウィンドウの QML
+│   ├── qml/Main.qml    # ウィンドウの QML
+│   └── assets/         # プログラムのアイコン (.ico と .svg)
 ├── tests/               # 偽のサブプロセスランナーに対する19件のテスト
 ├── tools/               # ci_validate.py, build_test.py, _doc_policy.py, _readme_parity.py
 ├── build.sh / build.bat         # venv + 編集可能インストール(4つの実際の依存関係を取得) + コンパイルチェック

@@ -75,7 +75,8 @@ ELECTRO-HOBBY-3D-UPDATER/
 │   ├── main.py         # argparse CLI + dispatch() —— 构建并运行正确的子进程命令
 │   ├── i18n.py         # 窗口文字（八种语言）
 │   ├── qt_gui.py       # Qt Quick 窗口（每个生态系统一张卡片、一个日志）—— 打开各生态系统自己的更新器
-│   └── qml/Main.qml    # 窗口的 QML
+│   ├── qml/Main.qml    # 窗口的 QML
+│   └── assets/         # 程序图标 (.ico 和 .svg)
 ├── tests/               # 19 个测试，针对模拟的子进程执行器
 ├── tools/               # ci_validate.py, build_test.py, _doc_policy.py, _readme_parity.py
 ├── build.sh / build.bat         # 创建虚拟环境 + 可编辑安装（拉取 3 个真实依赖）+ 编译检查

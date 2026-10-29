@@ -2,6 +2,10 @@
 
 All notable changes to this project are documented here.
 
+## [Unreleased]
+
+- **The layout of the README is checked in the CI:** the validator runs `tools/universal_readme_check.py` and lists, as a warning, what differs from the universal layout of the README.
+
 ## [0.1.1] - Pins that match the updaters of today and build scripts that work with any python
 
 - **The four updaters are pinned to their current commits** (HYDRA-UMC-UPDATER 0.4.8, URTC-UPDATER 0.1.7, ARMOR-UPDATER 0.1.4 and EH3D-UPDATER 0.0.1, with their build fixes). The old pins of the URTC and EH3D updaters did not know the `evidence` and `components` fields of the manifests, so every URTC and EH3D repository was reported as an invalid manifest.

@@ -30,11 +30,11 @@
 |---|---|
 | Versão | `0.1.1` |
 | Maturidade | Funcional |
-| Testes | 18 |
-| Tecnologias | Python 3.10+ (PySide6 for the window) |
-| Em hardware real | Não se aplica: corre no PC da pessoa que o usa |
+| Tecnologia | Python 3.10+ / hydra-umc-updater / urtc-updater / eh3d-updater / armor-updater |
+| Destino | O PC de quem o usa |
+| Em hardware real | Não aplicável: nada aqui corre em hardware |
 
-**Ir para:** [Visão geral](#-visão-geral) · [Arquitetura](#-arquitetura) · [Início rápido](#-início-rápido) · [Testes](#-testes) · [Estrutura](#-estrutura-do-repositório) · [Relacionados](#-projetos-relacionados)
+**Ir para:** [Visão geral](#-visão-geral) · [Arquitetura](#-arquitetura) · [Segurança e proteção](#-segurança-e-proteção) · [Interfaces](#-interfaces) · [Configuração](#-configuração) · [Início rápido](#-início-rápido) · [Testes](#-testes) · [Resolução de problemas](#-resolução-de-problemas) · [Estrutura do repositório](#-estrutura-do-repositório) · [Projetos relacionados](#-projetos-relacionados)
 
 ## 🚦 Estado do projeto
 

@@ -30,11 +30,11 @@
 |---|---|
 | Version | `0.1.1` |
 | Maturity | Functional |
-| Tests | 18 |
-| Stack | Python 3.10+ (PySide6 for the window) |
-| On real hardware | Not applicable: it runs on the PC of the person using it |
+| Stack | Python 3.10+ / hydra-umc-updater / urtc-updater / eh3d-updater / armor-updater |
+| Target | The PC of the person using it |
+| On real hardware | Not applicable: nothing here runs on hardware |
 
-**Jump to:** [Overview](#-overview) · [Architecture](#-architecture) · [Quick start](#-quick-start) · [Testing](#-testing) · [Structure](#-repository-structure) · [Related](#-related-projects)
+**Jump to:** [Overview](#-overview) · [Architecture](#-architecture) · [Security & Safety](#-security--safety) · [Interfaces](#-interfaces) · [Configuration](#-configuration) · [Quick start](#-quick-start) · [Testing](#-testing) · [Troubleshooting](#-troubleshooting) · [Repository Structure](#-repository-structure) · [Related Projects](#-related-projects)
 
 ## 🚦 Project status
 

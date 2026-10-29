@@ -1,0 +1,164 @@
+{
+  "repo": "ELECTRO-HOBBY-3D-UPDATER",
+  "ecosystem": "eh3d",
+  "tagline": "One command line and one window over the updaters of the four ecosystems: it dispatches, it never discovers.",
+  "description": "ELECTRO-HOBBY-3D-UPDATER is a thin dispatcher in Python. Each of the four ecosystems has its own updater, which finds its projects through the manifest of each repository (hydra-umc.project.json, urtc.project.json, armor.project.json and eh3d.project.json). This tool holds no discovery, install or update logic: it runs the chosen updater as a separate process, runs the four at once for a status report, shows which updater is behind GitHub and opens a window with a card per ecosystem. The dispatching is tested against a fake process runner; the status report has run for real against three ecosystems, an install once, and the hand-over to the EH3D updater has not been run against a real checkout.",
+  "columns": [
+    "WHO USES IT",
+    "THIS REPOSITORY",
+    "THE FOUR UPDATERS"
+  ],
+  "nodes": [
+    {
+      "id": "person",
+      "column": 0,
+      "level": "external",
+      "title": "A person",
+      "lines": [
+        "no arguments opens the window;",
+        "with arguments it is a command",
+        "line: status, install, update"
+      ]
+    },
+    {
+      "id": "registry",
+      "column": 1,
+      "level": "tested",
+      "title": "The four ecosystems",
+      "lines": [
+        "one place names each key, module,",
+        "manifest file and repository"
+      ],
+      "code": [
+        "src/electro_hobby_3d_updater/ecosystems.py::ECOSYSTEMS"
+      ]
+    },
+    {
+      "id": "dispatch",
+      "column": 1,
+      "level": "tested",
+      "title": "Dispatcher",
+      "lines": [
+        "runs python -m <updater> --cli;",
+        "forwards the workspace, limits",
+        "the time; status all runs four"
+      ],
+      "code": [
+        "src/electro_hobby_3d_updater/main.py::dispatch",
+        "src/electro_hobby_3d_updater/main.py::_status_all"
+      ]
+    },
+    {
+      "id": "versions",
+      "column": 1,
+      "level": "tested",
+      "title": "Versions and pins",
+      "lines": [
+        "installed version of each updater",
+        "against GitHub; each pinned to a",
+        "reviewed commit"
+      ],
+      "code": [
+        "src/electro_hobby_3d_updater/main.py::show_versions",
+        "pyproject.toml::eh3d-updater"
+      ]
+    },
+    {
+      "id": "window",
+      "column": 1,
+      "level": "tested",
+      "title": "Window",
+      "lines": [
+        "a card per ecosystem and a log,",
+        "in eight languages"
+      ],
+      "code": [
+        "src/electro_hobby_3d_updater/qt_gui.py",
+        "src/electro_hobby_3d_updater/qml/Main.qml"
+      ]
+    },
+    {
+      "id": "hydra",
+      "column": 2,
+      "level": "external",
+      "title": "HYDRA-UMC-UPDATER",
+      "lines": [
+        "status ran for real"
+      ]
+    },
+    {
+      "id": "urtc",
+      "column": 2,
+      "level": "external",
+      "title": "URTC-UPDATER",
+      "lines": [
+        "status ran for real"
+      ]
+    },
+    {
+      "id": "armor",
+      "column": 2,
+      "level": "external",
+      "title": "ARMOR-UPDATER",
+      "lines": [
+        "status and one install ran for real"
+      ]
+    },
+    {
+      "id": "eh3d",
+      "column": 2,
+      "level": "untested",
+      "title": "EH3D-UPDATER",
+      "lines": [
+        "added from its own tests;",
+        "not run through this tool",
+        "on a real checkout"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "person",
+      "to": "dispatch",
+      "label": "command line",
+      "level": "tested"
+    },
+    {
+      "from": "person",
+      "to": "window",
+      "label": "no arguments",
+      "level": "tested"
+    },
+    {
+      "from": "registry",
+      "to": "dispatch",
+      "level": "tested"
+    },
+    {
+      "from": "dispatch",
+      "to": "hydra",
+      "level": "tested"
+    },
+    {
+      "from": "dispatch",
+      "to": "urtc",
+      "level": "tested"
+    },
+    {
+      "from": "dispatch",
+      "to": "armor",
+      "level": "tested"
+    },
+    {
+      "from": "dispatch",
+      "to": "eh3d",
+      "level": "untested"
+    }
+  ],
+  "legend": {
+    "tested": "covered by tests on a computer",
+    "untested": "never run for real",
+    "external": "another repository"
+  },
+  "footer": "A thin dispatcher: the discovery, the install and the update are the work of each updater."
+}

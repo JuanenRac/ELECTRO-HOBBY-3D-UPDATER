@@ -1,0 +1,355 @@
+{
+  "repo": "ELECTRO-HOBBY-3D-UPDATER",
+  "ecosystem": "eh3d",
+  "svg": "en",
+  "exempt": [
+    "test.bat",
+    "test.sh"
+  ],
+  "tagline": {
+    "en": "Two levels: the folders, and the files that carry the logic.",
+    "es": "Dos niveles: las carpetas y los ficheros que llevan la lógica.",
+    "de": "Zwei Ebenen: die Ordner und die Dateien, die die Logik tragen.",
+    "fr": "Deux niveaux : les dossiers et les fichiers qui portent la logique.",
+    "it": "Due livelli: le cartelle e i file che portano la logica.",
+    "ja": "2階層：フォルダと、ロジックを担うファイル。",
+    "zh": "两个层级：文件夹，以及承载逻辑的文件。",
+    "pt": "Dois níveis: as pastas e os ficheiros que levam a lógica."
+  },
+  "cards": [
+    {
+      "name": "src/electro_hobby_3d_updater/",
+      "span": 3,
+      "accent": "a",
+      "rows": [
+        {
+          "desc": {
+            "en": "the one place that names the four ecosystems",
+            "es": "el único sitio que nombra los cuatro ecosistemas",
+            "de": "der eine Ort, der die vier Ökosysteme benennt",
+            "fr": "le seul endroit qui nomme les quatre écosystèmes",
+            "it": "l'unico posto che nomina i quattro ecosistemi",
+            "ja": "4 つのエコシステムの名前を定める唯一の場所",
+            "zh": "唯一命名四个生态系统的地方",
+            "pt": "o único sítio que nomeia os quatro ecossistemas"
+          },
+          "name": "ecosystems.py"
+        },
+        {
+          "desc": {
+            "en": "the command line, the dispatch and the versions",
+            "es": "la línea de comandos, el despacho y las versiones",
+            "de": "die Kommandozeile, das Weiterreichen und die Versionen",
+            "fr": "la ligne de commande, le routage et les versions",
+            "it": "la riga di comando, il dispatching e le versioni",
+            "ja": "コマンドライン、ディスパッチ、バージョン",
+            "zh": "命令行、分派和版本",
+            "pt": "a linha de comandos, o despacho e as versões"
+          },
+          "name": "main.py"
+        },
+        {
+          "desc": {
+            "en": "the Qt Quick window and its QML",
+            "es": "la ventana Qt Quick y su QML",
+            "de": "das Qt-Quick-Fenster und sein QML",
+            "fr": "la fenêtre Qt Quick et son QML",
+            "it": "la finestra Qt Quick e il suo QML",
+            "ja": "Qt Quick ウィンドウとその QML",
+            "zh": "Qt Quick 窗口及其 QML",
+            "pt": "a janela Qt Quick e o seu QML"
+          },
+          "name": "qt_gui.py  qml/",
+          "tree_name": "qt_gui.py qml/"
+        },
+        {
+          "desc": {
+            "en": "the words of the window in eight languages",
+            "es": "las palabras de la ventana en ocho idiomas",
+            "de": "die Wörter des Fensters in acht Sprachen",
+            "fr": "les mots de la fenêtre en huit langues",
+            "it": "le parole della finestra in otto lingue",
+            "ja": "8 言語のウィンドウの文言",
+            "zh": "八种语言的窗口文字",
+            "pt": "as palavras da janela em oito idiomas"
+          },
+          "name": "i18n.py"
+        },
+        {
+          "desc": {
+            "en": "the icon of the program",
+            "es": "el icono del programa",
+            "de": "das Icon des Programms",
+            "fr": "l'icône du programme",
+            "it": "l'icona del programma",
+            "ja": "プログラムのアイコン",
+            "zh": "程序图标",
+            "pt": "o ícone do programa"
+          },
+          "name": "assets/"
+        }
+      ],
+      "sub": {
+        "en": "the package: the registry, the dispatcher and the window",
+        "es": "el paquete: el registro, el despachador y la ventana",
+        "de": "das Paket: Registry, Dispatcher und Fenster",
+        "fr": "le paquet : le registre, le répartiteur et la fenêtre",
+        "it": "il pacchetto: il registro, il dispatcher e la finestra",
+        "ja": "パッケージ：レジストリ、ディスパッチャー、ウィンドウ",
+        "zh": "包：注册表、分派器和窗口",
+        "pt": "o pacote: o registo, o despachante e a janela"
+      }
+    },
+    {
+      "name": "tests/",
+      "span": 3,
+      "accent": "c",
+      "rows": [
+        {
+          "desc": {
+            "en": "the registry, status, install, update, versions, time limits and the window texts",
+            "es": "el registro, status, install, update, versions, límites de tiempo y textos de la ventana",
+            "de": "Registry, status, install, update, versions, Zeitlimits und Fenstertexte",
+            "fr": "le registre, status, install, update, versions, délais et textes de la fenêtre",
+            "it": "il registro, status, install, update, versions, limiti di tempo e testi della finestra",
+            "ja": "レジストリ、status、install、update、versions、時間制限、ウィンドウの文言",
+            "zh": "注册表、status、install、update、versions、超时和窗口文本",
+            "pt": "o registo, status, install, update, versions, limites de tempo e textos da janela"
+          },
+          "name": "test_main.py"
+        }
+      ],
+      "tree": {
+        "en": "the dispatching against a fake process runner",
+        "es": "el despacho contra un ejecutor de procesos simulado",
+        "de": "das Weiterreichen gegen einen simulierten Prozess-Runner",
+        "fr": "le routage contre un exécuteur de processus simulé",
+        "it": "il dispatching contro un esecutore di processi finto",
+        "ja": "偽のプロセス ランナーに対するディスパッチ",
+        "zh": "针对模拟进程运行器的分派",
+        "pt": "o despacho contra um executor de processos simulado"
+      }
+    },
+    {
+      "name": "docs/",
+      "span": 3,
+      "accent": "d",
+      "rows": [
+        {
+          "desc": {
+            "en": "the data of the Architecture picture",
+            "es": "los datos de la imagen de Arquitectura",
+            "de": "die Daten des Architekturbilds",
+            "fr": "les données de l'image d'Architecture",
+            "it": "i dati dell'immagine di Architettura",
+            "ja": "アーキテクチャ図のデータ",
+            "zh": "架构图的数据",
+            "pt": "os dados da imagem de Arquitetura"
+          },
+          "name": "architecture.json"
+        },
+        {
+          "desc": {
+            "en": "the data of the Repository Structure picture",
+            "es": "los datos de la imagen de Estructura",
+            "de": "die Daten des Strukturbilds",
+            "fr": "les données de l'image de Structure",
+            "it": "i dati dell'immagine di Struttura",
+            "ja": "構成図のデータ",
+            "zh": "结构图的数据",
+            "pt": "os dados da imagem de Estrutura"
+          },
+          "name": "structure.json"
+        }
+      ],
+      "tree": {
+        "en": "the data of the Architecture and Repository Structure pictures",
+        "es": "los datos de las imágenes de Arquitectura y Estructura",
+        "de": "die Daten der Bilder Architektur und Struktur",
+        "fr": "les données des images d'Architecture et de Structure",
+        "it": "i dati delle immagini di Architettura e Struttura",
+        "ja": "アーキテクチャ図と構成図のデータ",
+        "zh": "架构图和结构图的数据",
+        "pt": "os dados das imagens de Arquitetura e Estrutura"
+      }
+    },
+    {
+      "name": {
+        "en": "Other folders and the files at the root",
+        "es": "Otras carpetas y los archivos de la raíz",
+        "de": "Weitere Ordner und die Dateien im Wurzelverzeichnis",
+        "fr": "Autres dossiers et fichiers à la racine",
+        "it": "Altre cartelle e i file nella radice",
+        "ja": "その他のフォルダーとルートのファイル",
+        "zh": "其他文件夹和根目录文件",
+        "pt": "Outras pastas e os ficheiros da raiz"
+      },
+      "span": 3,
+      "accent": "a",
+      "kind": "group",
+      "rows": [
+        {
+          "desc": {
+            "en": "CI check, build check, README check, picture tools",
+            "es": "CI, construcción, README e imágenes",
+            "de": "CI-, Build-, README-Prüfung, Bilder",
+            "fr": "CI, construction, README et images",
+            "it": "CI, build, README e immagini",
+            "ja": "CI・ビルド・README のチェックと図",
+            "zh": "CI、构建、README 检查和绘图",
+            "pt": "CI, construção, README e imagens"
+          },
+          "name": "tools/"
+        },
+        {
+          "name": "images/",
+          "desc": {
+            "en": "banner and the Architecture and Repository Structure pictures",
+            "es": "banner y las imágenes de Arquitectura y Estructura del repositorio",
+            "de": "Banner und die Bilder von Architektur und Repository-Struktur",
+            "fr": "bannière et images d'Architecture et de Structure du dépôt",
+            "it": "banner e le immagini di Architettura e Struttura del repository",
+            "ja": "バナーとアーキテクチャ・リポジトリ構成の図",
+            "zh": "横幅图以及架构和仓库结构图片",
+            "pt": "banner e as imagens de Arquitetura e Estrutura do repositório"
+          }
+        },
+        {
+          "name": ".github/",
+          "desc": {
+            "en": "CI and release workflows, issue and pull-request templates",
+            "es": "flujos de CI y de publicación, plantillas de issues y pull requests",
+            "de": "CI- und Release-Workflows, Vorlagen für Issues und Pull Requests",
+            "fr": "workflows de CI et de publication, modèles d'issues et de pull requests",
+            "it": "workflow di CI e di rilascio, modelli di issue e pull request",
+            "ja": "CI とリリースのワークフロー、Issue と PR のテンプレート",
+            "zh": "CI 与发布工作流、Issue 和 PR 模板",
+            "pt": "fluxos de CI e de publicação, modelos de issues e pull requests"
+          }
+        },
+        {
+          "desc": {
+            "en": "venv, editable install and compile check in a live panel",
+            "es": "venv, instalación editable y comprobación con un panel en vivo",
+            "de": "venv, editierbare Installation und Prüfung in einem Live-Panel",
+            "fr": "venv, installation éditable et contrôle dans un panneau en direct",
+            "it": "venv, installazione modificabile e controllo in un pannello dal vivo",
+            "ja": "仮想環境、編集可能インストール、検査をライブ パネルで",
+            "zh": "在实时面板中创建虚拟环境、可编辑安装并检查",
+            "pt": "venv, instalação editável e verificação num painel em direto"
+          },
+          "name": "build.sh  build.bat",
+          "tree_name": "build.sh build.bat"
+        },
+        {
+          "desc": {
+            "en": "the same, then the real test suite",
+            "es": "lo mismo, y luego la suite real",
+            "de": "dasselbe, danach die echte Suite",
+            "fr": "pareil, puis la vraie suite de tests",
+            "it": "lo stesso, poi la suite di test reale",
+            "ja": "同じことをして、続けて実際のテスト スイート",
+            "zh": "同样的步骤，然后运行真实的测试",
+            "pt": "o mesmo, e depois a suite de testes real"
+          },
+          "name": "build-test.sh  build-test.bat",
+          "tree_name": "build-test.sh build-test.bat"
+        },
+        {
+          "desc": {
+            "en": "start the window, or the command line with arguments",
+            "es": "abre la ventana, o la línea de comandos con argumentos",
+            "de": "startet das Fenster, mit Argumenten die Kommandozeile",
+            "fr": "ouvre la fenêtre, ou la ligne de commande avec arguments",
+            "it": "apre la finestra, o la riga di comando con argomenti",
+            "ja": "ウィンドウを起動（引数があればコマンドライン）",
+            "zh": "启动窗口，带参数则为命令行",
+            "pt": "abre a janela, ou a linha de comandos com argumentos"
+          },
+          "name": "run.sh  run.bat",
+          "tree_name": "run.sh run.bat"
+        },
+        {
+          "desc": {
+            "en": "the scripts that raise the version",
+            "es": "los scripts que suben la versión",
+            "de": "die Skripte, die die Version erhöhen",
+            "fr": "les scripts qui montent la version",
+            "it": "gli script che alzano la versione",
+            "ja": "バージョンを上げるスクリプト",
+            "zh": "提升版本的脚本",
+            "pt": "os scripts que sobem a versão"
+          },
+          "name": "bump*.py"
+        },
+        {
+          "desc": {
+            "en": "the manifest: version, role and maturity",
+            "es": "el manifiesto: versión, papel y madurez",
+            "de": "das Manifest: Version, Rolle und Reifegrad",
+            "fr": "le manifeste : version, rôle et maturité",
+            "it": "il manifesto: versione, ruolo e maturità",
+            "ja": "マニフェスト：バージョン、役割、成熟度",
+            "zh": "清单：版本、角色和成熟度",
+            "pt": "o manifesto: versão, papel e maturidade"
+          },
+          "name": "electro-hobby-3d.project.json"
+        },
+        {
+          "desc": {
+            "en": "the package and the four pinned updaters",
+            "es": "el paquete y los cuatro actualizadores fijados",
+            "de": "das Paket und die vier festgelegten Updater",
+            "fr": "le paquet et les quatre outils épinglés",
+            "it": "il pacchetto e i quattro aggiornatori fissati",
+            "ja": "パッケージと固定された 4 つの更新ツール",
+            "zh": "包及四个固定版本的更新器",
+            "pt": "o pacote e os quatro atualizadores fixados"
+          },
+          "name": "pyproject.toml"
+        },
+        {
+          "name": "CHANGELOG.md",
+          "desc": {
+            "en": "what changed in each version",
+            "es": "qué cambió en cada versión",
+            "de": "was sich in jeder Version geändert hat",
+            "fr": "ce qui a changé dans chaque version",
+            "it": "cosa è cambiato in ogni versione",
+            "ja": "各バージョンの変更点",
+            "zh": "每个版本的变更",
+            "pt": "o que mudou em cada versão"
+          }
+        },
+        {
+          "name": "SECURITY.md  SUPPORT.md",
+          "tree_name": "SECURITY.md SUPPORT.md",
+          "desc": {
+            "en": "how to report a vulnerability and where to ask",
+            "es": "cómo informar de una vulnerabilidad y dónde preguntar",
+            "de": "Schwachstellen melden und Fragen stellen",
+            "fr": "signaler une vulnérabilité et poser des questions",
+            "it": "come segnalare una vulnerabilità e dove chiedere",
+            "ja": "脆弱性の報告方法と問い合わせ先",
+            "zh": "如何报告漏洞及在哪里提问",
+            "pt": "como comunicar uma vulnerabilidade e onde perguntar"
+          }
+        },
+        {
+          "name": "CONTRIBUTING.md  LICENSE",
+          "tree_name": "CONTRIBUTING.md CODE_OF_CONDUCT.md LICENSE",
+          "desc": {
+            "en": "how to contribute, the code of conduct and the licence",
+            "es": "cómo contribuir, el código de conducta y la licencia",
+            "de": "Mitwirken, Verhaltenskodex und Lizenz",
+            "fr": "contribuer, code de conduite et licence",
+            "it": "come contribuire, codice di condotta e licenza",
+            "ja": "貢献方法、行動規範、ライセンス",
+            "zh": "参与贡献、行为准则和许可证",
+            "pt": "como contribuir, o código de conduta e a licença"
+          }
+        }
+      ]
+    }
+  ]
+}

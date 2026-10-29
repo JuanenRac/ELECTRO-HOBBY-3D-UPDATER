@@ -37,3 +37,21 @@ jobs:
 
       - name: Compile every Python source and run the real test suite
         run: python tools/build_test.py
+
+  pictures:
+    name: Pictures of the README
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      # the pictures are drawn with Python 3.12 or newer (the sum of floats changed in 3.12), so this job does not use the 3.11 of the test job
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: The Architecture and Repository Structure pictures match their data
+        run: |
+          python -I tools/make_architecture.py --check
+          python -I tools/make_structure.py --check --readmes

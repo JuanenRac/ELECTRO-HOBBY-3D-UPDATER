@@ -12,7 +12,7 @@
   <img src="https://img.shields.io/badge/License-GPL%203.0--or--later-blue.svg" alt="GPL 3.0 or later">
   <img src="https://img.shields.io/badge/Stack-Python%203.10%2B-3776AB.svg" alt="Python">
   <img src="https://img.shields.io/badge/Languages-8-00E5FF.svg" alt="Languages">
-  <img src="https://img.shields.io/badge/Version-0.1.1-0f6cbd.svg" alt="Version">
+  <img src="https://img.shields.io/badge/Version-0.1.2-0f6cbd.svg" alt="Version">
   <img src="https://img.shields.io/badge/Maturity-functional-4CAF50.svg" alt="Maturity">
 </p>
 
@@ -28,7 +28,7 @@
 
 | | |
 |---|---|
-| Versão | `0.1.1` |
+| Versão | `0.1.2` |
 | Maturidade | Funcional |
 | Tecnologia | Python 3.10+ / hydra-umc-updater / urtc-updater / eh3d-updater / armor-updater |
 | Destino | O PC de quem o usa |

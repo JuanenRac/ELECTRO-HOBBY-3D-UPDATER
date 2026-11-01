@@ -273,3 +273,20 @@ def test_the_window_log_is_changed_only_on_the_window_thread():
     app.processEvents()
     assert bridge.log == "from the worker"  # ...it is delivered to the window's thread
     assert bridge.busy is True
+
+
+def test_the_runtime_version_matches_the_one_of_the_package():
+    from pathlib import Path
+
+    import electro_hobby_3d_updater
+
+    text = (Path(__file__).resolve().parents[1] / "pyproject.toml").read_text(encoding="utf-8")
+    declared = next(line.split('"')[1] for line in text.splitlines() if line.startswith("version"))
+    assert electro_hobby_3d_updater.__version__ == declared
+
+
+def test_the_default_workspace_of_a_source_checkout_is_its_parent_folder():
+    from pathlib import Path
+
+    repo = Path(__file__).resolve().parents[1]
+    assert default_workspace_root() == repo.parent

@@ -62,8 +62,14 @@ ECOSYSTEM_KEYS = tuple(ecosystem.key for ecosystem in ECOSYSTEMS)
 def default_workspace_root() -> Path:
     """This project's own parent directory - see this module's header
     comment for why forwarding it explicitly to every sub-updater call is
-    required, not optional."""
-    return Path(__file__).resolve().parents[3]
+    required, not optional.
+
+    Only a source checkout (src/electro_hobby_3d_updater/ inside a folder that holds this project's own manifest) has the sibling layout;
+    installed as a normal package the parents point into the Python installation, which must never be used as a workspace."""
+    here = Path(__file__).resolve()
+    if (here.parents[2] / "electro-hobby-3d.project.json").is_file():
+        return here.parents[3]
+    return Path.cwd()
 
 
 def build_parser() -> argparse.ArgumentParser:

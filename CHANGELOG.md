@@ -4,7 +4,10 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+## [0.1.3] - The EH3D updater it dispatches to is the latest and the version it reports is the real one
+
 - The default workspace is the parent folder only for a source checkout (otherwise the current folder), and the runtime version matches the package one.
+- The updater of the EH3D ecosystem it dispatches to is pinned to its latest version (it was still the first one), so a new installation brings the weekly manifest checks, the dependencies between repositories and the safer installation.
 
 ## [0.1.2] - The README in the universal layout, the live panel of the scripts and the check of the layout in the CI
 

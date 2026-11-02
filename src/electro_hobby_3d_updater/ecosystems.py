@@ -40,7 +40,7 @@ ECOSYSTEMS: tuple[Ecosystem, ...] = (
     Ecosystem("hydra-umc", "HYDRA-UMC", "hydra_umc_updater.main", "hydra-umc.project.json", "hydra-umc-updater", "HYDRA-UMC-UPDATER"),
     Ecosystem("urtc", "URTC", "urtc_updater.main", "urtc.project.json", "urtc-updater", "URTC-UPDATER"),
     Ecosystem("armor", "A.R.M.O.R.", "armor_updater.main", "armor.project.json", "armor-updater", "ARMOR-UPDATER"),
-    Ecosystem("eh3d", "EH3D", "eh3d_updater.main", "eh3d.project.json", "eh3d-updater", "EH3D-UPDATER", ("update",)),
+    Ecosystem("eh3d", "EH3D", "eh3d_updater.main", "eh3d.project.json", "eh3d-updater", "EH3D-UPDATER", ("install", "update")),
 )
 
 ECOSYSTEMS_BY_KEY: dict[str, Ecosystem] = {ecosystem.key: ecosystem for ecosystem in ECOSYSTEMS}

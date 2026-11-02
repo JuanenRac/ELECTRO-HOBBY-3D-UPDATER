@@ -12,13 +12,13 @@
   <img src="https://img.shields.io/badge/License-GPL%203.0--or--later-blue.svg" alt="GPL 3.0 or later">
   <img src="https://img.shields.io/badge/Stack-Python%203.10%2B-3776AB.svg" alt="Python">
   <img src="https://img.shields.io/badge/Languages-8-00E5FF.svg" alt="Languages">
-  <img src="https://img.shields.io/badge/Version-0.1.3-0f6cbd.svg" alt="Version">
+  <img src="https://img.shields.io/badge/Version-0.1.4-0f6cbd.svg" alt="Version">
   <img src="https://img.shields.io/badge/Maturity-functional-4CAF50.svg" alt="Maturity">
 </p>
 
 ---
 
-**Comprobación de honestidad - lo que se ejecuta hoy:** esto es un despachador delgado, no una quinta implementación del descubrimiento de ecosistemas: no tiene lógica propia de análisis de manifiestos, instalación ni actualización. Cada uno de los cuatro ecosistemas tiene su propio actualizador, que encuentra sus proyectos por el manifiesto `<ecosistema>.project.json` de cada repositorio; esta herramienta instala los cuatro como dependencias fijadas y ejecuta el que eliges como un proceso aparte (`status` para los cuatro a la vez). El despacho y los comandos que construye están probados (pasan 18 pruebas, con un ejecutor de procesos simulado). `status --ecosystem all` se ha ejecutado de verdad contra una copia real de tres de los ecosistemas e `install` una vez desde un entorno limpio (un proyecto clonado, construido, probado y promovido por el actualizador de A.R.M.O.R.); `update` no se ha ejecutado de verdad, y el traspaso al actualizador de EH3D se añadió a partir de las pruebas de ese actualizador y no se ha ejecutado a través de esta herramienta contra una copia real.
+**Comprobación de honestidad - lo que se ejecuta hoy:** esto es un despachador delgado, no una quinta implementación del descubrimiento de ecosistemas: no tiene lógica propia de análisis de manifiestos, instalación ni actualización. Cada uno de los cuatro ecosistemas tiene su propio actualizador, que encuentra sus proyectos por el manifiesto `<ecosistema>.project.json` de cada repositorio; esta herramienta instala los cuatro como dependencias fijadas y ejecuta el que eliges como un proceso aparte (`status` para los cuatro a la vez). El despacho y los comandos que construye están probados (pasan 31 pruebas, con un ejecutor de procesos simulado). `status --ecosystem all` se ha ejecutado de verdad contra una copia real de tres de los ecosistemas e `install` una vez desde un entorno limpio (un proyecto clonado, construido, probado y promovido por el actualizador de A.R.M.O.R.); `update` no se ha ejecutado de verdad, y el traspaso al actualizador de EH3D se añadió a partir de las pruebas de ese actualizador y no se ha ejecutado a través de esta herramienta contra una copia real.
 
 ---
 
@@ -28,7 +28,7 @@
 
 | | |
 |---|---|
-| Versión | `0.1.3` |
+| Versión | `0.1.4` |
 | Madurez | Funcional |
 | Tecnología | Python 3.10+ / hydra-umc-updater / urtc-updater / eh3d-updater / armor-updater |
 | Destino | El PC de quien lo usa |
@@ -45,7 +45,7 @@ Cada línea es una parte de este repositorio y la luz dice hasta dónde llega ho
 | Área | Estado | Qué significa aquí |
 |---|---|---|
 | Software | 🟡 | Un despachador delgado: no tiene lógica propia de descubrimiento, instalación ni actualización y pasa `--ecosystem hydra-umc\|urtc\|armor\|eh3d` al actualizador de cada ecosistema, que instala como dependencias fijadas. |
-| Pruebas | 🟢 | Pasan 18 pruebas (`pytest`) con un ejecutor de procesos simulado; otra se omite cuando PySide6 no está instalado. |
+| Pruebas | 🟢 | Pasan 31 pruebas (`pytest`) con un ejecutor de procesos simulado; otra se omite cuando PySide6 no está instalado. |
 | Uso real | 🟠 | `status` se ha ejecutado contra una copia real de tres de los ecosistemas e `install` una vez desde un entorno limpio; `update` no se ha ejecutado de verdad. |
 | Ventana | 🟡 | La ventana (una tarjeta por ecosistema, un registro, ocho idiomas) abre el actualizador propio de cada ecosistema; sus textos y sus reglas de hilos están probados, el resto solo a mano. |
 | Integración | 🟠 | El traspaso al actualizador de EH3D se añadió a partir de las pruebas de ese actualizador y no se ha ejecutado a través de este despachador contra una copia real. |
@@ -130,7 +130,7 @@ electro-hobby-3d-updater update  --ecosystem hydra-umc HYDRA-UMC-SERVER
 
 ## 🧪 Pruebas
 
-La suite tiene 18 pruebas que pasan (`pytest tests`), y otra que se omite cuando PySide6 no está instalado. Se ejecutan contra un ejecutor de procesos simulado, sin red ni subprocesos reales, y cubren: que el registro tiene exactamente los cuatro ecosistemas; que `status` ejecuta el módulo correcto y reenvía `--offline`; que `status --ecosystem all` ejecuta cada ecosistema una vez, los imprime en orden, los ejecuta a la vez y nunca se detiene en el primer fallo; que `install` y `update` necesitan un ecosistema y un proyecto y rechazan `all`; que un actualizador que falla pasa su propio código de salida; que el espacio de trabajo es por defecto la carpeta superior; que `versions` informa de las versiones instaladas, señala un actualizador que va por detrás y nunca contacta con GitHub con `--offline`; que un actualizador que se cuelga se detiene con un mensaje claro y un tiempo límite de cero significa sin límite; y que los textos de la ventana existen en los ocho idiomas. El CI ejecuta `python tools/ci_validate.py` (manifiesto, versión, registro de cambios y paridad de los README) y luego `python tools/build_test.py`, que compila cada fuente y ejecuta la suite.
+La suite tiene 31 pruebas que pasan (`pytest tests`), y otra que se omite cuando PySide6 no está instalado. Se ejecutan contra un ejecutor de procesos simulado, sin red ni subprocesos reales, y cubren: que el registro tiene exactamente los cuatro ecosistemas; que `status` ejecuta el módulo correcto y reenvía `--offline`; que `status --ecosystem all` ejecuta cada ecosistema una vez, los imprime en orden, los ejecuta a la vez y nunca se detiene en el primer fallo; que `install` y `update` necesitan un ecosistema y un proyecto y rechazan `all`; que un actualizador que falla pasa su propio código de salida; que el espacio de trabajo es por defecto la carpeta superior; que `versions` informa de las versiones instaladas, señala un actualizador que va por detrás y nunca contacta con GitHub con `--offline`; que un actualizador que se cuelga se detiene con un mensaje claro y un tiempo límite de cero significa sin límite; y que los textos de la ventana existen en los ocho idiomas. El CI ejecuta `python tools/ci_validate.py` (manifiesto, versión, registro de cambios y paridad de los README) y luego `python tools/build_test.py`, que compila cada fuente y ejecuta la suite.
 
 ## 🏗️ Compilación y publicación
 

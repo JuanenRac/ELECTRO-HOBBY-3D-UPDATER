@@ -12,13 +12,13 @@
   <img src="https://img.shields.io/badge/License-GPL%203.0--or--later-blue.svg" alt="GPL 3.0 or later">
   <img src="https://img.shields.io/badge/Stack-Python%203.10%2B-3776AB.svg" alt="Python">
   <img src="https://img.shields.io/badge/Languages-8-00E5FF.svg" alt="Languages">
-  <img src="https://img.shields.io/badge/Version-0.1.3-0f6cbd.svg" alt="Version">
+  <img src="https://img.shields.io/badge/Version-0.1.4-0f6cbd.svg" alt="Version">
   <img src="https://img.shields.io/badge/Maturity-functional-4CAF50.svg" alt="Maturity">
 </p>
 
 ---
 
-**Vérification d'honnêteté - ce qui tourne aujourd'hui :** ceci est un répartiteur mince, pas une cinquième implémentation de la découverte des écosystèmes : il n'a aucune logique propre d'analyse de manifestes, d'installation ou de mise à jour. Chacun des quatre écosystèmes a son propre outil de mise à jour, qui trouve ses projets par le manifeste `<écosystème>.project.json` de chaque dépôt ; cet outil installe les quatre comme dépendances épinglées et lance celui que tu choisis comme un processus séparé (`status` pour les quatre à la fois). Le routage et les commandes qu'il construit sont testés (18 tests réussissent, avec un exécuteur de processus simulé). `status --ecosystem all` a été exécuté pour de vrai sur une vraie copie de trois des écosystèmes et `install` une fois depuis un environnement propre (un projet cloné, construit, testé et promu par l'outil de mise à jour d'A.R.M.O.R.) ; `update` n'a pas été exécuté pour de vrai, et le passage à l'outil de mise à jour d'EH3D a été ajouté à partir des tests de celui-ci et n'a pas été exécuté par cet outil sur une vraie copie.
+**Vérification d'honnêteté - ce qui tourne aujourd'hui :** ceci est un répartiteur mince, pas une cinquième implémentation de la découverte des écosystèmes : il n'a aucune logique propre d'analyse de manifestes, d'installation ou de mise à jour. Chacun des quatre écosystèmes a son propre outil de mise à jour, qui trouve ses projets par le manifeste `<écosystème>.project.json` de chaque dépôt ; cet outil installe les quatre comme dépendances épinglées et lance celui que tu choisis comme un processus séparé (`status` pour les quatre à la fois). Le routage et les commandes qu'il construit sont testés (31 tests réussissent, avec un exécuteur de processus simulé). `status --ecosystem all` a été exécuté pour de vrai sur une vraie copie de trois des écosystèmes et `install` une fois depuis un environnement propre (un projet cloné, construit, testé et promu par l'outil de mise à jour d'A.R.M.O.R.) ; `update` n'a pas été exécuté pour de vrai, et le passage à l'outil de mise à jour d'EH3D a été ajouté à partir des tests de celui-ci et n'a pas été exécuté par cet outil sur une vraie copie.
 
 ---
 
@@ -28,7 +28,7 @@
 
 | | |
 |---|---|
-| Version | `0.1.3` |
+| Version | `0.1.4` |
 | Maturité | Fonctionnel |
 | Technologie | Python 3.10+ / hydra-umc-updater / urtc-updater / eh3d-updater / armor-updater |
 | Cible | Le PC de la personne qui l'utilise |
@@ -45,7 +45,7 @@ Chaque ligne est une partie de ce dépôt et le feu dit où elle en est aujourd'
 | Domaine | État | Ce que cela veut dire ici |
 |---|---|---|
 | Logiciel | 🟡 | Un répartiteur mince : il n'a aucune logique propre de découverte, d'installation ou de mise à jour et passe `--ecosystem hydra-umc\|urtc\|armor\|eh3d` à l'outil de mise à jour de chaque écosystème, qu'il installe comme dépendances épinglées. |
-| Tests | 🟢 | 18 tests réussissent (`pytest`) contre un exécuteur de processus simulé ; un autre est ignoré quand PySide6 n'est pas installé. |
+| Tests | 🟢 | 31 tests réussissent (`pytest`) contre un exécuteur de processus simulé ; un autre est ignoré quand PySide6 n'est pas installé. |
 | Usage réel | 🟠 | `status` a tourné sur une vraie copie de trois des écosystèmes et `install` une fois depuis un environnement propre ; `update` n'a pas été exécuté pour de vrai. |
 | Fenêtre | 🟡 | La fenêtre (une carte par écosystème, un journal, huit langues) ouvre l'outil de mise à jour propre à chaque écosystème ; ses textes et ses règles de threads sont testés, le reste seulement à la main. |
 | Intégration | 🟠 | Le passage à l'outil de mise à jour d'EH3D a été ajouté à partir des tests de celui-ci et n'a pas été exécuté par ce répartiteur sur une vraie copie. |
@@ -130,7 +130,7 @@ electro-hobby-3d-updater update  --ecosystem hydra-umc HYDRA-UMC-SERVER
 
 ## 🧪 Tests
 
-La suite compte 18 tests qui réussissent (`pytest tests`), et un autre qui est ignoré quand PySide6 n'est pas installé. Ils tournent contre un exécuteur de processus simulé, sans réseau ni vrai sous-processus, et couvrent : le registre a exactement les quatre écosystèmes ; `status` lance le bon module et transmet `--offline` ; `status --ecosystem all` lance chaque écosystème une fois, les imprime dans l'ordre, les lance en même temps et ne s'arrête jamais au premier échec ; `install` et `update` exigent un écosystème et un projet et rejettent `all` ; un outil qui échoue transmet son propre code de sortie ; l'espace de travail est par défaut le dossier parent ; `versions` indique les versions installées, signale un outil en retard et ne contacte jamais GitHub avec `--offline` ; un outil qui se bloque est arrêté avec un message clair et un délai de zéro veut dire sans limite ; et les textes de la fenêtre existent dans les huit langues. La CI exécute `python tools/ci_validate.py` (manifeste, version, journal des modifications et parité des README) puis `python tools/build_test.py`, qui compile chaque source et exécute la suite.
+La suite compte 31 tests qui réussissent (`pytest tests`), et un autre qui est ignoré quand PySide6 n'est pas installé. Ils tournent contre un exécuteur de processus simulé, sans réseau ni vrai sous-processus, et couvrent : le registre a exactement les quatre écosystèmes ; `status` lance le bon module et transmet `--offline` ; `status --ecosystem all` lance chaque écosystème une fois, les imprime dans l'ordre, les lance en même temps et ne s'arrête jamais au premier échec ; `install` et `update` exigent un écosystème et un projet et rejettent `all` ; un outil qui échoue transmet son propre code de sortie ; l'espace de travail est par défaut le dossier parent ; `versions` indique les versions installées, signale un outil en retard et ne contacte jamais GitHub avec `--offline` ; un outil qui se bloque est arrêté avec un message clair et un délai de zéro veut dire sans limite ; et les textes de la fenêtre existent dans les huit langues. La CI exécute `python tools/ci_validate.py` (manifeste, version, journal des modifications et parité des README) puis `python tools/build_test.py`, qui compile chaque source et exécute la suite.
 
 ## 🏗️ Compilation et publication
 

@@ -12,13 +12,13 @@
   <img src="https://img.shields.io/badge/License-GPL%203.0--or--later-blue.svg" alt="GPL 3.0 or later">
   <img src="https://img.shields.io/badge/Stack-Python%203.10%2B-3776AB.svg" alt="Python">
   <img src="https://img.shields.io/badge/Languages-8-00E5FF.svg" alt="Languages">
-  <img src="https://img.shields.io/badge/Version-0.1.3-0f6cbd.svg" alt="Version">
+  <img src="https://img.shields.io/badge/Version-0.1.4-0f6cbd.svg" alt="Version">
   <img src="https://img.shields.io/badge/Maturity-functional-4CAF50.svg" alt="Maturity">
 </p>
 
 ---
 
-**Honesty check - what actually runs today:** this is a thin dispatcher, not a fifth implementation of ecosystem discovery: it holds no manifest-parsing, install or update logic of its own. Each of the four ecosystems has its own updater that finds its projects through the `<ecosystem>.project.json` manifest of every repository; this tool installs the four as pinned dependencies and runs the one you pick as a separate process (`status` for all four at once). The dispatching and the commands it builds are tested (18 tests pass, with a fake process runner). `status --ecosystem all` has been run for real against a real checkout of three of the ecosystems and `install` once from a clean environment (one project cloned, built, tested and promoted by the A.R.M.O.R. updater); `update` has not been run for real, and the hand-over to the EH3D updater was added from that updater's own tests and has not been run through this tool against a real checkout.
+**Honesty check - what actually runs today:** this is a thin dispatcher, not a fifth implementation of ecosystem discovery: it holds no manifest-parsing, install or update logic of its own. Each of the four ecosystems has its own updater that finds its projects through the `<ecosystem>.project.json` manifest of every repository; this tool installs the four as pinned dependencies and runs the one you pick as a separate process (`status` for all four at once). The dispatching and the commands it builds are tested (31 tests pass, with a fake process runner). `status --ecosystem all` has been run for real against a real checkout of three of the ecosystems and `install` once from a clean environment (one project cloned, built, tested and promoted by the A.R.M.O.R. updater); `update` has not been run for real, and the hand-over to the EH3D updater was added from that updater's own tests and has not been run through this tool against a real checkout.
 
 ---
 
@@ -28,7 +28,7 @@
 
 | | |
 |---|---|
-| Version | `0.1.3` |
+| Version | `0.1.4` |
 | Maturity | Functional |
 | Stack | Python 3.10+ / hydra-umc-updater / urtc-updater / eh3d-updater / armor-updater |
 | Target | The PC of the person using it |
@@ -45,7 +45,7 @@ Each line is one part of this repository and the light says how far it is today.
 | Area | State | What it means here |
 |---|---|---|
 | Software | 🟡 | A thin dispatcher: it holds no discovery, install or update logic of its own and hands `--ecosystem hydra-umc\|urtc\|armor\|eh3d` over to the updater of each ecosystem, which it installs as pinned dependencies. |
-| Tests | 🟢 | 18 tests pass (`pytest`) against a fake process runner; one more is skipped when PySide6 is not installed. |
+| Tests | 🟢 | 31 tests pass (`pytest`) against a fake process runner; one more is skipped when PySide6 is not installed. |
 | Real use | 🟠 | `status` has run against a real checkout of three of the ecosystems and `install` has run once from a clean environment; `update` has not been run for real. |
 | Window | 🟡 | The window (a card per ecosystem, a log, eight languages) opens each ecosystem's own updater; its texts and its thread rules are tested, the rest only by hand. |
 | Integration | 🟠 | The hand-over to the EH3D updater was added from that updater's own tests and has not been run through this dispatcher against a real checkout. |
@@ -130,7 +130,7 @@ electro-hobby-3d-updater update  --ecosystem hydra-umc HYDRA-UMC-SERVER
 
 ## 🧪 Testing
 
-The suite has 18 tests that pass (`pytest tests`), and one more that is skipped when PySide6 is not installed. They run against a fake process runner, with no network and no real subprocess, and cover: the registry has exactly the four ecosystems; `status` runs the right module and forwards `--offline`; `status --ecosystem all` runs every ecosystem once, prints them in order, runs them at the same time and never stops at the first failure; `install` and `update` need one ecosystem and one project and reject `all`; a failing updater passes its own exit code on; the workspace defaults to the parent folder; `versions` reports the installed versions, flags an updater that is behind and never contacts GitHub with `--offline`; an updater that hangs is stopped with a clear message and a zero timeout means no limit; and the texts of the window exist in all eight languages. The CI runs `python tools/ci_validate.py` (manifest, version, changelog and README parity) and then `python tools/build_test.py`, which compiles every source and runs the suite.
+The suite has 31 tests that pass (`pytest tests`), and one more that is skipped when PySide6 is not installed. They run against a fake process runner, with no network and no real subprocess, and cover: the registry has exactly the four ecosystems; `status` runs the right module and forwards `--offline`; `status --ecosystem all` runs every ecosystem once, prints them in order, runs them at the same time and never stops at the first failure; `install` and `update` need one ecosystem and one project and reject `all`; a failing updater passes its own exit code on; the workspace defaults to the parent folder; `versions` reports the installed versions, flags an updater that is behind and never contacts GitHub with `--offline`; an updater that hangs is stopped with a clear message and a zero timeout means no limit; and the texts of the window exist in all eight languages. The CI runs `python tools/ci_validate.py` (manifest, version, changelog and README parity) and then `python tools/build_test.py`, which compiles every source and runs the suite.
 
 ## 🏗️ Build & Release
 

@@ -4,6 +4,9 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+## [0.1.4] - The EH3D updater it dispatches to is the latest one, with a preview of the install, and a warning for pins that are behind
+
+- **The pin to the EH3D updater is its latest release (0.0.4):** `install --preview` now reaches it too (the updater of that ecosystem has it from this version), and the tests counted in the README are the real ones (31).
 - **`--preview` and `--no-build` for `install` and `update`:** `--no-build` is passed to the four updaters; `--preview` is passed to the ones whose own command has it and is refused with exit code 64 for the others, without running anything.
 - **`pins` command and a CI warning:** compares the commits pinned in `pyproject.toml` with the latest tag of each updater's repository (exit code 2 when one is behind); the CI prints a warning for a late pin and never fails, and a repository that cannot be reached is skipped.
 

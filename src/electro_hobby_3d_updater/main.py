@@ -56,6 +56,10 @@ from pathlib import Path
 from . import __version__
 from .ecosystems import ECOSYSTEMS, ECOSYSTEMS_BY_KEY
 
+#: Exit codes of the suite's command-line tools: 2 = done with warnings, 64 = wrong use.
+EXIT_WARNINGS = 2
+EXIT_USAGE = 64
+
 ECOSYSTEM_KEYS = tuple(ecosystem.key for ecosystem in ECOSYSTEMS)
 
 
@@ -105,9 +109,14 @@ def build_parser() -> argparse.ArgumentParser:
         action_parser.add_argument("project", help="the exact project/repository name, as that ecosystem's own manifest declares it")
         action_parser.add_argument("--workspace", help="Workspace root (default: this tool's own parent directory).")
         action_parser.add_argument("--timeout-seconds", type=float, default=1800.0, help="stop an updater that has not finished after this long (0 = no limit; default 1800)")
+        action_parser.add_argument("--no-build", action="store_true", help="clone or pull only: skip the project's own build check (every ecosystem's updater accepts it)")
+        action_parser.add_argument("--preview", action="store_true", help="show what would be done and change nothing (only for the ecosystems whose updater has it; others are refused with exit code 64)")
 
     versions = subparsers.add_parser("versions", help="installed version of each ecosystem's updater, and whether it is behind GitHub")
     versions.add_argument("--offline", action="store_true", help="only show the installed versions, no GitHub check")
+
+    pins = subparsers.add_parser("pins", help="compare the commits pinned in pyproject.toml with the latest tag of each updater (only informs)")
+    pins.add_argument("--pyproject", help="the pyproject.toml to read (default: the one of this project's checkout)")
 
     return parser
 
@@ -120,6 +129,10 @@ def _command_for(ecosystem_key: str, args: argparse.Namespace) -> list[str]:
             command.append("--offline")
     else:
         command.append(args.project)
+        if getattr(args, "no_build", False):
+            command.append("--no-build")
+        if getattr(args, "preview", False):
+            command.append("--preview")
     workspace = getattr(args, "workspace", None) or str(default_workspace_root())
     return command + ["--workspace", workspace]
 
@@ -220,7 +233,21 @@ def show_versions(args: argparse.Namespace, *, installed=installed_version, late
                     line += "  <- BEHIND the main branch: this tool pins each updater to a reviewed commit in pyproject.toml; update the pin there, then reinstall"
                     behind += 1
         print(line)
-    return 0 if behind == 0 else 2
+    return 0 if behind == 0 else EXIT_WARNINGS
+
+
+def show_pins(args: argparse.Namespace, *, latest=None) -> int:
+    """The pins of pyproject.toml against the latest tag of each repository. 0 when all are current or unknown, 2 (done with warnings) when one is behind."""
+    from .pins import check_pins, describe, latest_tag
+
+    pyproject = Path(args.pyproject) if getattr(args, "pyproject", None) else Path(__file__).resolve().parents[2] / "pyproject.toml"
+    if not pyproject.is_file():
+        print(f"no pyproject.toml at {pyproject}", file=sys.stderr)
+        return EXIT_USAGE
+    reports = check_pins(pyproject, latest=latest or latest_tag)
+    for report in reports:
+        print(describe(report) + ("  <- BEHIND" if report.behind else ""))
+    return EXIT_WARNINGS if any(report.behind for report in reports) else 0
 
 
 def dispatch(args: argparse.Namespace, *, runner=subprocess.run) -> int:
@@ -231,6 +258,13 @@ def dispatch(args: argparse.Namespace, *, runner=subprocess.run) -> int:
     out in tests for a fake that never actually spawns a process."""
     if args.action == "versions":
         return show_versions(args)
+    if args.action == "pins":
+        return show_pins(args)
+    if getattr(args, "preview", False) and args.action in ("install", "update"):
+        ecosystem = ECOSYSTEMS_BY_KEY[args.ecosystem]
+        if args.action not in ecosystem.preview_actions:
+            print(f"{ecosystem.display_name}: its updater has no --preview for {args.action}; nothing was run", file=sys.stderr)
+            return EXIT_USAGE
     if args.action == "status" and args.ecosystem == "all":
         return _status_all(args, runner=runner)
     return _run_one(args.ecosystem, args, runner=runner)

@@ -4,6 +4,9 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **`--preview` and `--no-build` for `install` and `update`:** `--no-build` is passed to the four updaters; `--preview` is passed to the ones whose own command has it and is refused with exit code 64 for the others, without running anything.
+- **`pins` command and a CI warning:** compares the commits pinned in `pyproject.toml` with the latest tag of each updater's repository (exit code 2 when one is behind); the CI prints a warning for a late pin and never fails, and a repository that cannot be reached is skipped.
+
 ## [0.1.3] - The EH3D updater it dispatches to is the latest and the version it reports is the real one
 
 - The default workspace is the parent folder only for a source checkout (otherwise the current folder), and the runtime version matches the package one.

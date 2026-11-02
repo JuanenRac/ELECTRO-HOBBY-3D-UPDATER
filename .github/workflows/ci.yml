@@ -38,6 +38,23 @@ jobs:
       - name: Compile every Python source and run the real test suite
         run: python tools/build_test.py
 
+  pins:
+    name: Pinned updaters against their latest tags (warning only)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      # only informs: a late pin is a warning in the log, and a repository that cannot be reached is skipped; this step never fails the run
+      - name: Warn about a pin that is behind the latest tag of its repository
+        continue-on-error: true
+        run: python tools/check_pins.py
+
   pictures:
     name: Pictures of the README
     runs-on: ubuntu-latest

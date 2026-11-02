@@ -32,13 +32,15 @@ class Ecosystem:
     #: latest version from that repository's own pyproject.toml).
     distribution: str
     repository: str
+    #: The actions (`install`, `update`) whose own CLI accepts `--preview`, which shows what would be done and changes nothing. Every updater accepts `--no-build`.
+    preview_actions: tuple[str, ...] = ()
 
 
 ECOSYSTEMS: tuple[Ecosystem, ...] = (
     Ecosystem("hydra-umc", "HYDRA-UMC", "hydra_umc_updater.main", "hydra-umc.project.json", "hydra-umc-updater", "HYDRA-UMC-UPDATER"),
     Ecosystem("urtc", "URTC", "urtc_updater.main", "urtc.project.json", "urtc-updater", "URTC-UPDATER"),
     Ecosystem("armor", "A.R.M.O.R.", "armor_updater.main", "armor.project.json", "armor-updater", "ARMOR-UPDATER"),
-    Ecosystem("eh3d", "EH3D", "eh3d_updater.main", "eh3d.project.json", "eh3d-updater", "EH3D-UPDATER"),
+    Ecosystem("eh3d", "EH3D", "eh3d_updater.main", "eh3d.project.json", "eh3d-updater", "EH3D-UPDATER", ("update",)),
 )
 
 ECOSYSTEMS_BY_KEY: dict[str, Ecosystem] = {ecosystem.key: ecosystem for ecosystem in ECOSYSTEMS}

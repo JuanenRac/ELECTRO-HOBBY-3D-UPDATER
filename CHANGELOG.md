@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **Tested on the oldest and the newest Python it promises:** the CI runs the suite on Python 3.10 and 3.13, and `tools/test_python_minimum.py` reads every source with the grammar of the oldest version named in `pyproject.toml`, looks for standard-library modules newer than it and checks that the matrix of the workflow names it.
+
 ## [0.1.4] - The EH3D updater it dispatches to is the latest one, with a preview of the install, and a warning for pins that are behind
 
 - **The pin to the EH3D updater is its latest release (0.0.4):** `install --preview` now reaches it too (the updater of that ecosystem has it from this version), and the tests counted in the README are the real ones (31).

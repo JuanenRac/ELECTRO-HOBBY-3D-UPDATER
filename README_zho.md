@@ -130,7 +130,7 @@ electro-hobby-3d-updater update  --ecosystem hydra-umc HYDRA-UMC-SERVER
 
 ## 🧪 测试
 
-测试共 31 个通过（`pytest tests`），另有 1 个在未安装 PySide6 时被跳过。它们使用模拟的进程运行器，不联网也不启动真实子进程，覆盖：注册表恰好包含四个生态系统；`status` 运行正确的模块并转发 `--offline`；`status --ecosystem all` 把每个生态系统各运行一次、同时运行、按顺序打印并且不会在第一个失败处停止；`install` 和 `update` 需要一个生态系统和一个项目并拒绝 `all`；失败的更新器会传递它自己的退出码；工作区默认是上级文件夹；`versions` 报告已安装的版本、标出落后的更新器，并且在 `--offline` 时从不联系 GitHub；卡住的更新器会被停止并给出明确消息，超时为 0 表示不限；以及窗口文本在八种语言中都存在。CI 运行 `python tools/ci_validate.py`（清单、版本、变更日志和 README 一致性），然后运行 `python tools/build_test.py`，它会编译每个源文件并运行测试。
+测试共 31 个通过（`pytest tests`），另有 1 个在未安装 PySide6 时被跳过。它们使用模拟的进程运行器，不联网也不启动真实子进程，覆盖：注册表恰好包含四个生态系统；`status` 运行正确的模块并转发 `--offline`；`status --ecosystem all` 把每个生态系统各运行一次、同时运行、按顺序打印并且不会在第一个失败处停止；`install` 和 `update` 需要一个生态系统和一个项目并拒绝 `all`；失败的更新器会传递它自己的退出码；工作区默认是上级文件夹；`versions` 报告已安装的版本、标出落后的更新器，并且在 `--offline` 时从不联系 GitHub；卡住的更新器会被停止并给出明确消息，超时为 0 表示不限；以及窗口文本在八种语言中都存在。CI 运行 `python tools/ci_validate.py`（清单、版本、变更日志和 README 一致性），然后运行 `python tools/build_test.py`，它会编译每个源文件并运行测试。CI 还会在软件包承诺支持的最旧和最新的 Python 3.10 和 3.13 上运行测试，`tools/` 中的一个测试检查代码仍可被最旧版本的语法读取。
 
 ## 🏗️ 构建与发布
 

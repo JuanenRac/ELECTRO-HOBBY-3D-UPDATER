@@ -10,6 +10,7 @@ All notable changes to this project are documented here.
 - **A line for every change:** a pull request that changes code must add a line under `[Unreleased]` of this file (`tools/changelog_pr_check.py`; the label `no-changelog` skips it).
 - **Tested on the oldest and the newest Python it promises:** the CI runs the suite on Python 3.10 and 3.13, and `tools/test_python_minimum.py` reads every source with the grammar of the oldest version named in `pyproject.toml`, looks for standard-library modules newer than it and checks that the matrix of the workflow names it.
 - **The workflows are hardened:** every action is pinned by its commit with its version in a comment, and the checkouts keep no credentials.
+- **More tests:** the words of the window in every language (no empty text, the same markers in all), the versions and the tags, and the pins that are odd.
 
 ## [0.1.4] - The EH3D updater it dispatches to is the latest one, with a preview of the install, and a warning for pins that are behind
 

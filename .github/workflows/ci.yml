@@ -96,6 +96,11 @@ jobs:
         continue-on-error: true
         run: python tools/check_pins.py
 
+      # a run started by hand is the check before a release: there a pin that is behind fails
+      - name: Fail on a pin that is behind the latest tag when the run is started by hand
+        if: github.event_name == 'workflow_dispatch'
+        run: python tools/check_pins.py --strict
+
   pictures:
     name: Pictures of the README
     runs-on: ubuntu-latest

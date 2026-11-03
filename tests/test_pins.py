@@ -117,3 +117,17 @@ def test_without_the_flags_the_command_is_unchanged():
     args = build_parser().parse_args(["update", "--ecosystem", "eh3d", "P", "--workspace", "/ws"])
     dispatch(args, runner=runner)
     assert "--preview" not in runner.calls[0] and "--no-build" not in runner.calls[0]
+
+
+def test_the_ci_script_fails_on_a_late_pin_only_with_strict(monkeypatch, capsys):
+    import importlib.util
+
+    root = Path(__file__).resolve().parents[1]
+    spec = importlib.util.spec_from_file_location("check_pins_tool", root / "tools" / "check_pins.py")
+    tool = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(tool)
+    late = pins.PinReport(pins.Pin("ALPHA", "https://github.com/Owner/ALPHA", "abcdef1", "0.1.0"), "9.9.9")
+    monkeypatch.setattr(tool, "check_pins", lambda _path: [late])
+    assert tool.main([]) == 0
+    assert tool.main(["--strict"]) == 1
+    assert "behind" in capsys.readouterr().out

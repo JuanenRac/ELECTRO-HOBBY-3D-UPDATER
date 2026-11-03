@@ -110,7 +110,7 @@ Nothing has to be configured; the options of the command line are the whole conf
 | `--timeout-seconds` | 900 for `status`, 1800 for `install` and `update` | a number of seconds; 0 or less means no limit | stop an updater that has not finished |
 | the pins | four commits in `pyproject.toml` | a reviewed commit of each updater | which updater code is installed; changed only after reviewing a newer one |
 
-The pins of this release are HYDRA-UMC-UPDATER 0.5.5, URTC-UPDATER 0.2.6, ARMOR-UPDATER 0.1.8 and EH3D-UPDATER 0.0.6.
+The pins of this release are HYDRA-UMC-UPDATER 0.5.5, URTC-UPDATER 0.2.6, ARMOR-UPDATER 0.1.8 and EH3D-UPDATER 0.0.7.
 
 ## 🚀 Quick start
 

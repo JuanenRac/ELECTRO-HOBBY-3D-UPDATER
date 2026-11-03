@@ -110,7 +110,7 @@ ELECTRO-HOBBY-3D-UPDATER 是 Electro Hobby 3D 更新器家族的第五个成员�
 | `--timeout-seconds` | `status` 为 900，`install` 和 `update` 为 1800 | 秒数；0 或更小表示不限 | 停止没有完成的更新器 |
 | 固定版本（pin） | `pyproject.toml` 中的四个提交 | 每个更新器经过审阅的提交 | 安装哪份更新器代码；只有审阅过更新的版本后才会更改 |
 
-本版本的固定为 HYDRA-UMC-UPDATER 0.5.5、URTC-UPDATER 0.2.6、ARMOR-UPDATER 0.1.8 和 EH3D-UPDATER 0.0.6。
+本版本的固定为 HYDRA-UMC-UPDATER 0.5.5、URTC-UPDATER 0.2.6、ARMOR-UPDATER 0.1.8 和 EH3D-UPDATER 0.0.7。
 
 ## 🚀 快速开始
 

@@ -110,7 +110,7 @@ ELECTRO-HOBBY-3D-UPDATER は Electro Hobby 3D の更新ツール ファミリー
 | `--timeout-seconds` | `status` は 900、`install` と `update` は 1800 | 秒数。0 以下は無制限 | 終わらない更新ツールを止める |
 | 固定（ピン） | `pyproject.toml` の 4 つのコミット | 各更新ツールのレビュー済みコミット | インストールされる更新ツールのコード。新しいものをレビューしてからのみ変更 |
 
-このリリースの固定は、HYDRA-UMC-UPDATER 0.5.5、URTC-UPDATER 0.2.6、ARMOR-UPDATER 0.1.8、EH3D-UPDATER 0.0.6 です。
+このリリースの固定は、HYDRA-UMC-UPDATER 0.5.5、URTC-UPDATER 0.2.6、ARMOR-UPDATER 0.1.8、EH3D-UPDATER 0.0.7 です。
 
 ## 🚀 クイックスタート
 

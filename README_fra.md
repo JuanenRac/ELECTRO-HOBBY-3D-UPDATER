@@ -110,7 +110,7 @@ Rien n'est à configurer ; les options de la ligne de commande sont toute la con
 | `--timeout-seconds` | 900 pour `status`, 1800 pour `install` et `update` | un nombre de secondes ; 0 ou moins veut dire sans limite | arrêter un outil qui n'a pas fini |
 | les épinglages | quatre commits dans `pyproject.toml` | un commit relu de chaque outil | quel code d'outil est installé ; changé seulement après relecture d'un plus récent |
 
-Les épinglages de cette version sont HYDRA-UMC-UPDATER 0.5.5, URTC-UPDATER 0.2.6, ARMOR-UPDATER 0.1.8 et EH3D-UPDATER 0.0.6.
+Les épinglages de cette version sont HYDRA-UMC-UPDATER 0.5.5, URTC-UPDATER 0.2.6, ARMOR-UPDATER 0.1.8 et EH3D-UPDATER 0.0.7.
 
 ## 🚀 Démarrage rapide
 

@@ -3,6 +3,7 @@
 All notable changes to this project are documented here.
 
 ## [Unreleased]
+- **Shared checks updated:** the validator also compares the badge and the Version row of the README with the manifest, fails when one of its checks cannot run, and the CHANGELOG step of the workflow reads the base branch from the environment.
 
 - **A sub-updater that runs out of time is stopped with everything it started:** `--timeout-seconds` ends the whole tree of processes, not only the first one.
 - **`bump.py` raises the version in one step:** the native version, the manifest and the changelog heading, like the other updaters (`--dry-run` writes nothing).

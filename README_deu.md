@@ -110,7 +110,7 @@ Nichts muss konfiguriert werden; die Optionen der Kommandozeile sind die gesamte
 | `--timeout-seconds` | 900 für `status`, 1800 für `install` und `update` | eine Zahl von Sekunden; 0 oder weniger heißt kein Limit | einen Updater stoppen, der nicht fertig geworden ist |
 | die Festlegungen | vier Commits in `pyproject.toml` | ein geprüfter Commit jedes Updaters | welcher Updater-Code installiert wird; nur nach Prüfung eines neueren geändert |
 
-Die Festlegungen dieser Version sind HYDRA-UMC-UPDATER 0.4.8, URTC-UPDATER 0.1.7, ARMOR-UPDATER 0.1.4 und EH3D-UPDATER 0.0.1.
+Die Festlegungen dieser Version sind HYDRA-UMC-UPDATER 0.5.5, URTC-UPDATER 0.2.6, ARMOR-UPDATER 0.1.8 und EH3D-UPDATER 0.0.6.
 
 ## 🚀 Schnellstart
 

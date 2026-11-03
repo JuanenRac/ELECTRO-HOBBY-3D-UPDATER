@@ -45,6 +45,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import re
 import subprocess
 import sys
@@ -251,7 +252,39 @@ def show_pins(args: argparse.Namespace, *, latest=None) -> int:
     return EXIT_WARNINGS if any(report.behind for report in reports) else 0
 
 
-def dispatch(args: argparse.Namespace, *, runner=subprocess.run) -> int:
+def run_with_tree_timeout(command, *, timeout=None, capture_output=False, text=False, **kwargs):
+    """`subprocess.run` that, when the time runs out, stops the whole tree of the sub-updater and not only its first process
+    (the build scripts it starts would otherwise stay alive). It only ever touches the process it started."""
+    if capture_output:
+        kwargs["stdout"] = kwargs["stderr"] = subprocess.PIPE
+    if os.name == "nt":
+        kwargs["creationflags"] = kwargs.get("creationflags", 0) | subprocess.CREATE_NEW_PROCESS_GROUP
+    else:
+        kwargs["start_new_session"] = True
+    with subprocess.Popen(command, text=text, **kwargs) as process:
+        try:
+            out, err = process.communicate(timeout=timeout)
+        except subprocess.TimeoutExpired:
+            _stop_tree(process)
+            process.communicate()
+            raise subprocess.TimeoutExpired(command, timeout) from None
+        return subprocess.CompletedProcess(command, process.returncode, out, err)
+
+
+def _stop_tree(process: subprocess.Popen) -> None:
+    """Ends the process this module started and everything it started."""
+    if os.name == "nt":
+        subprocess.run(["taskkill", "/F", "/T", "/PID", str(process.pid)], capture_output=True, check=False)
+    else:
+        import signal
+
+        try:
+            os.killpg(process.pid, signal.SIGKILL)
+        except OSError:
+            process.kill()
+
+
+def dispatch(args: argparse.Namespace, *, runner=run_with_tree_timeout) -> int:
     """Runs the real sub-updater(s) this call resolves to. `runner` takes
     a command list (plus subprocess.run keyword arguments) and returns an
     object with `.returncode` (and, when output is captured, `.stdout`/

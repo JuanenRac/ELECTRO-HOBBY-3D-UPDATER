@@ -29,7 +29,7 @@ dependencies = [
     "hydra-umc-updater @ git+https://github.com/JuanenRac/HYDRA-UMC-UPDATER.git@08403a70510d3c5dabfbe871e5de4155f7d6574a",  # v0.4.8
     "urtc-updater @ git+https://github.com/JuanenRac/URTC-UPDATER.git@30c523a23f012af5d8b0e77cce058714428046ac",  # v0.1.7
     "armor-updater @ git+https://github.com/JuanenRac/ARMOR-UPDATER.git@22196a0684327a2e8ff094cf3502dd208f3efc31",  # v0.1.4
-    "eh3d-updater @ git+https://github.com/JuanenRac/EH3D-UPDATER.git@007354941f0427d26d516848e4ecf2fdf2504c94",  # v0.0.4
+    "eh3d-updater @ git+https://github.com/JuanenRac/EH3D-UPDATER.git@84007f27ce3550cfb27292c51f00f2160c8c9b9e",  # v0.0.6
 ]
 
 [project.optional-dependencies]

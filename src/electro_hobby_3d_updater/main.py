@@ -55,6 +55,7 @@ from pathlib import Path
 
 from . import __version__
 from .ecosystems import ECOSYSTEMS, ECOSYSTEMS_BY_KEY
+from .pins import version_tuple
 
 #: Exit codes of the suite's command-line tools: 2 = done with warnings, 64 = wrong use.
 EXIT_WARNINGS = 2
@@ -229,7 +230,7 @@ def show_versions(args: argparse.Namespace, *, installed=installed_version, late
                 line += "  (GitHub not reachable)"
             else:
                 line += f"  latest {newest}"
-                if have is None or _version_tuple(have) < _version_tuple(newest):
+                if have is None or version_tuple(have) < version_tuple(newest):
                     line += "  <- BEHIND the main branch: this tool pins each updater to a reviewed commit in pyproject.toml; update the pin there, then reinstall"
                     behind += 1
         print(line)

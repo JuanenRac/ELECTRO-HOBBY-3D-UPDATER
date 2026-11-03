@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **The pin to the EH3D updater is its latest release (0.0.6):** a new installation brings the fixes of the last two versions.
+- **`versions` compares versions of different length correctly:** `0.8.0` is the same as `0.8.0.0`, so it is no longer reported as behind.
 - **Monthly dependency updates:** Dependabot opens one grouped pull request a month for the GitHub Actions and the Python dependencies.
 - **A line for every change:** a pull request that changes code must add a line under `[Unreleased]` of this file (`tools/changelog_pr_check.py`; the label `no-changelog` skips it).
 - **Tested on the oldest and the newest Python it promises:** the CI runs the suite on Python 3.10 and 3.13, and `tools/test_python_minimum.py` reads every source with the grammar of the oldest version named in `pyproject.toml`, looks for standard-library modules newer than it and checks that the matrix of the workflow names it.

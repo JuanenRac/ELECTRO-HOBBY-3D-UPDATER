@@ -3,6 +3,7 @@
 All notable changes to this project are documented here.
 
 ## [Unreleased]
+- **The window carries the new icon:** the icon files inside the package are the icon of the program, so the title bar and the task bar show it.
 - **A pin that is behind fails the check before a release:** `tools/check_pins.py --strict` exits 1 when a pinned updater is behind its latest release, and the workflow runs it when it is started by hand; the normal runs still only warn.
 - **Brand:** Add the application icon and the logos of the program.
 - **Shared checks updated:** the validator also compares the badge and the Version row of the README with the manifest, fails when one of its checks cannot run, and the CHANGELOG step of the workflow reads the base branch from the environment.

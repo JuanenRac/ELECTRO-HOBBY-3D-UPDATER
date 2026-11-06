@@ -11,7 +11,7 @@ All notable changes to this project are documented here.
 
 - **A sub-updater that runs out of time is stopped with everything it started:** `--timeout-seconds` ends the whole tree of processes, not only the first one.
 - **`bump.py` raises the version in one step:** the native version, the manifest and the changelog heading, like the other updaters (`--dry-run` writes nothing).
-- **The pins of the four updaters are their latest releases** (HYDRA-UMC 0.5.5, URTC 0.2.6, A.R.M.O.R. 0.1.8, EH3D 0.0.7): their command lines were checked to accept the options this tool passes, and a new installation brings their fixes.
+- **The pins of the four updaters are their latest releases** (HYDRA-UMC 0.5.6, URTC 0.2.7, A.R.M.O.R. 0.2.0, EH3D 0.0.8): their command lines were checked to accept the options this tool passes, and a new installation brings their fixes.
 - **`versions` compares versions of different length correctly:** `0.8.0` is the same as `0.8.0.0`, so it is no longer reported as behind.
 - **Monthly dependency updates:** Dependabot opens one grouped pull request a month for the GitHub Actions and the Python dependencies.
 - **A line for every change:** a pull request that changes code must add a line under `[Unreleased]` of this file (`tools/changelog_pr_check.py`; the label `no-changelog` skips it).

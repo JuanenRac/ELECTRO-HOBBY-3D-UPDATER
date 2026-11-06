@@ -3,6 +3,9 @@
 All notable changes to this project are documented here.
 
 ## [Unreleased]
+
+## [0.1.5] - The pins of the four updaters are their latest releases, a pin that is behind fails the check before a release, and the window carries the new icon
+
 - **The test count of the README files is the one of the CI:** 60 tests pass and one more is skipped when PySide6 is not installed.
 - **The window carries the new icon:** the icon files inside the package are the icon of the program, so the title bar and the task bar show it.
 - **A pin that is behind fails the check before a release:** `tools/check_pins.py --strict` exits 1 when a pinned updater is behind its latest release, and the workflow runs it when it is started by hand; the normal runs still only warn.

@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **The validation of the manifest, versions and documents is the shared one of the suite:** the CI calls the reusable validation workflow (pinned by commit) instead of carrying its own copy of the steps; the checks of this repository stay as they were.
+
 - **The pins of the four updaters are their latest releases** (HYDRA-UMC 0.5.8, URTC 0.2.9, A.R.M.O.R. 0.2.2, EH3D 0.0.9), so a new installation brings the repositories and versions published since.
 
 ## [0.1.5] - The pins of the four updaters are their latest releases, a pin that is behind fails the check before a release, and the window carries the new icon

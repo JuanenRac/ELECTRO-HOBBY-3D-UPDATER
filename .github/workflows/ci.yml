@@ -18,8 +18,18 @@ permissions:
   contents: read
 
 jobs:
+  validate:
+    # the validation every repository of the suite shares, kept once in EH3D-DOCS; this validator is of an older
+    # generation (it needs its own folder on the path, so not isolated) and runs on the Python of the test job
+    uses: JuanenRac/EH3D-DOCS/.github/workflows/validate.yml@a265d9577af7594686400f387d24f36dabaa11a5
+    with:
+      python-version: "3.11"
+      isolated: false
+      check-pictures: false
+
   baseline:
-    name: Validate manifest, docs and run the real test suite
+    name: Install and run the real test suite
+    needs: validate
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -33,9 +43,6 @@ jobs:
         uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: "3.11"
-
-      - name: Validate manifest, version, changelog and README parity
-        run: python tools/ci_validate.py
 
       # Installs this project plus its four real dependencies - hydra-umc-
       # updater, urtc-updater, armor-updater and eh3d-updater - straight from GitHub, the

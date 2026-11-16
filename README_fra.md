@@ -50,7 +50,7 @@ Chaque ligne est une partie de ce dépôt et le feu dit où elle en est aujourd'
 | Fenêtre | 🟡 | La fenêtre (une carte par écosystème, un journal, huit langues) ouvre l'outil de mise à jour propre à chaque écosystème ; ses textes et ses règles de threads sont testés, le reste seulement à la main. |
 | Intégration | 🟠 | Le passage à l'outil de mise à jour d'EH3D a été ajouté à partir des tests de celui-ci et n'a pas été exécuté par ce répartiteur sur une vraie copie. |
 | Sécurité | 🟡 | Chaque sous-outil est épinglé sur un commit relu, jamais sur une branche mobile ; chaque exécution est son propre processus avec une limite de temps ; les révisions non signées sont installées avec un avertissement et il n'y a pas eu de revue indépendante. |
-| Matériel réel | 🟢 | Sans objet : il tourne sur le PC de la personne qui l'utilise. |
+| Matériel réel | 🟡 | Sans objet : il tourne sur le PC de la personne qui l'utilise. |
 | Documentation | 🟢 | README en huit langues, vérifié à chaque changement contre le manifeste et le journal des modifications. |
 
 ## 🎯 Présentation

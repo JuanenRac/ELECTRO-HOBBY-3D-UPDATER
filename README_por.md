@@ -50,7 +50,7 @@ Cada linha é uma parte deste repositório e a luz diz até onde chega hoje. É 
 | Janela | 🟡 | A janela (um cartão por ecossistema, um registo, oito idiomas) abre o atualizador próprio de cada ecossistema; os seus textos e as suas regras de threads estão testados, o resto só à mão. |
 | Integração | 🟠 | A passagem ao atualizador do EH3D foi acrescentada a partir dos testes desse atualizador e não foi executada por este despachante contra uma cópia real. |
 | Segurança | 🟡 | Cada sub-atualizador está fixado a um commit revisto, nunca a um ramo que se move; cada execução é um processo à parte com limite de tempo; as revisões sem assinatura são instaladas com um aviso e não houve revisão independente. |
-| Hardware real | 🟢 | Não se aplica: corre no PC da pessoa que o usa. |
+| Hardware real | 🟡 | Não se aplica: corre no PC da pessoa que o usa. |
 | Documentação | 🟢 | README em oito idiomas, verificado em cada alteração contra o manifesto e o registo de alterações. |
 
 ## 🎯 Visão geral

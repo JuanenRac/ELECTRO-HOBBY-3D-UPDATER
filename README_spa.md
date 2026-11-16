@@ -50,7 +50,7 @@ Cada línea es una parte de este repositorio y la luz dice hasta dónde llega ho
 | Ventana | 🟡 | La ventana (una tarjeta por ecosistema, un registro, ocho idiomas) abre el actualizador propio de cada ecosistema; sus textos y sus reglas de hilos están probados, el resto solo a mano. |
 | Integración | 🟠 | El traspaso al actualizador de EH3D se añadió a partir de las pruebas de ese actualizador y no se ha ejecutado a través de este despachador contra una copia real. |
 | Seguridad | 🟡 | Cada sub-actualizador está fijado a un commit revisado, nunca a una rama que se mueve; cada ejecución es su propio proceso con límite de tiempo; las revisiones sin firmar se instalan con un aviso y no ha habido revisión independiente. |
-| Hardware real | 🟢 | No aplica: se ejecuta en el PC de la persona que lo usa. |
+| Hardware real | 🟡 | No aplica: se ejecuta en el PC de la persona que lo usa. |
 | Documentación | 🟢 | README en ocho idiomas, comprobado contra el manifiesto y el registro de cambios en cada cambio. |
 
 ## 🎯 Resumen

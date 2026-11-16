@@ -50,7 +50,7 @@ Jede Zeile ist ein Teil dieses Repositorys, und die Ampel sagt, wie weit er heut
 | Fenster | 🟡 | Das Fenster (eine Karte je Ökosystem, ein Protokoll, acht Sprachen) öffnet den eigenen Updater jedes Ökosystems; seine Texte und seine Thread-Regeln sind getestet, der Rest nur von Hand. |
 | Integration | 🟠 | Die Übergabe an den EH3D-Updater wurde anhand von dessen eigenen Tests ergänzt und über diesen Dispatcher noch nicht gegen einen echten Checkout ausgeführt. |
 | Sicherheit | 🟡 | Jeder Unter-Updater ist auf einen geprüften Commit festgelegt, nie auf einen beweglichen Branch; jeder Lauf ist ein eigener Prozess mit Zeitlimit; unsignierte Revisionen werden mit Warnung installiert, und es gab keine unabhängige Prüfung. |
-| Echte Hardware | 🟢 | Nicht zutreffend: Es läuft auf dem PC der Person, die es nutzt. |
+| Echte Hardware | 🟡 | Nicht zutreffend: Es läuft auf dem PC der Person, die es nutzt. |
 | Dokumentation | 🟢 | README in acht Sprachen, bei jeder Änderung gegen Manifest und Änderungsprotokoll geprüft. |
 
 ## 🎯 Überblick

@@ -131,3 +131,24 @@ def test_the_ci_script_fails_on_a_late_pin_only_with_strict(monkeypatch, capsys)
     assert tool.main([]) == 0
     assert tool.main(["--strict"]) == 1
     assert "behind" in capsys.readouterr().out
+
+
+def test_an_abbreviated_commit_is_not_a_full_pin_and_is_said():
+    text = '"short-updater @ git+https://github.com/Owner/SHORT.git@08403a7",  # v0.1.0'
+    (pin,) = pins.read_pins(text)
+    assert not pin.full
+    assert "abbreviated" in pins.describe_abbreviated(pins.PinReport(pin, "0.1.0"))
+    assert all(p.full for p in pins.read_pins(PYPROJECT))
+
+
+def test_check_pins_strict_fails_for_an_abbreviated_commit(tmp_path, monkeypatch):
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("check_pins_tool", Path(__file__).resolve().parents[1] / "tools" / "check_pins.py")
+    tool = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(tool)
+    project = tmp_path / "pyproject.toml"
+    project.write_text('"short-updater @ git+https://github.com/Owner/SHORT.git@08403a7",  # v0.1.0', encoding="utf-8")
+    monkeypatch.setattr(tool, "ROOT", tmp_path)
+    monkeypatch.setattr(tool, "check_pins", lambda path: pins.check_pins(path, latest=lambda _url: "0.1.0"))
+    assert tool.main(["--strict"]) == 1
+    assert tool.main([]) == 0

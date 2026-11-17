@@ -18,13 +18,16 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 
-from electro_hobby_3d_updater.pins import check_pins, describe  # noqa: E402
+from electro_hobby_3d_updater.pins import check_pins, describe, describe_abbreviated  # noqa: E402
 
 
 def main(argv: list[str] | None = None) -> int:
     strict = "--strict" in (sys.argv[1:] if argv is None else argv)
     behind = False
     for report in check_pins(ROOT / "pyproject.toml"):
+        if not report.pin.full:
+            behind = True
+            print(f"::warning title=Pinned updater is not a whole commit::{describe_abbreviated(report)}")
         if report.behind:
             behind = True
             print(f"::warning title=Pinned updater is behind::{describe(report)}")

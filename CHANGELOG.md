@@ -4,6 +4,9 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **A project name that starts with a hyphen or has odd characters is refused before anything runs:** `install` and `update` stop with exit code 64 instead of passing it to the sub-updater, where it could be read as an option.
+- **A pin by an abbreviated commit id is reported, and fails the check before a release:** `tools/check_pins.py --strict` needs the whole 40-character commit.
+- **The version read from the repository is limited in size** (one mebibyte) like the other network reads.
 - **The Real hardware row of Project status is no longer green:** it said "not applicable" with a green light, the only hardware row in green; it uses the light the family uses for a row that does not apply (in the eight languages).
 - **The validation of the manifest, versions and documents is the shared one of the suite:** the CI calls the reusable validation workflow (pinned by commit) instead of carrying its own copy of the steps; the checks of this repository stay as they were.
 

@@ -61,6 +61,8 @@ from .pins import version_tuple
 #: Exit codes of the suite's command-line tools: 2 = done with warnings, 64 = wrong use.
 EXIT_WARNINGS = 2
 EXIT_USAGE = 64
+#: What a project name may look like; one that starts with a hyphen would be read as an option by the sub-updater.
+_PROJECT_NAME_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
 
 ECOSYSTEM_KEYS = tuple(ecosystem.key for ecosystem in ECOSYSTEMS)
 
@@ -206,7 +208,7 @@ def latest_version_on_github(repository: str) -> str | None:
     try:
         request = urllib.request.Request(url, headers={"User-Agent": "electro-hobby-3d-updater"})
         with urllib.request.urlopen(request, timeout=15) as response:
-            text = response.read().decode("utf-8", errors="replace")
+            text = response.read(1 << 20).decode("utf-8", errors="replace")
     except OSError:
         return None
     match = re.search(r'^version\s*=\s*"([^"]+)"', text, re.M)
@@ -294,6 +296,9 @@ def dispatch(args: argparse.Namespace, *, runner=run_with_tree_timeout) -> int:
         return show_versions(args)
     if args.action == "pins":
         return show_pins(args)
+    if args.action in ("install", "update") and not _PROJECT_NAME_RE.match(args.project):
+        print(f"{args.project!r} is not the name of a project (letters, digits, dots, hyphens and underscores, not starting with a hyphen); nothing was run", file=sys.stderr)
+        return EXIT_USAGE
     if getattr(args, "preview", False) and args.action in ("install", "update"):
         ecosystem = ECOSYSTEMS_BY_KEY[args.ecosystem]
         if args.action not in ecosystem.preview_actions:

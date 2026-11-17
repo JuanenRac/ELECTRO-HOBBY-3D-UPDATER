@@ -290,3 +290,20 @@ def test_the_default_workspace_of_a_source_checkout_is_its_parent_folder():
 
     repo = Path(__file__).resolve().parents[1]
     assert default_workspace_root() == repo.parent
+
+
+def test_a_project_name_that_looks_like_an_option_is_refused_and_nothing_runs(capsys):
+    runner = _FakeRunner()
+    for name in ("--no-build", "-x", "a b", "a/b", ""):
+        args = build_parser().parse_args(["install", "--ecosystem", "eh3d", "--workspace", "/ws", "--", name])
+        assert dispatch(args, runner=runner) == 64
+    assert runner.calls == []
+    assert "not the name of a project" in capsys.readouterr().err
+
+
+def test_the_names_of_real_repositories_are_accepted():
+    runner = _FakeRunner()
+    for name in ("EH3D-SERVER", "HYDRA-UMC-OS", "repo.name_1"):
+        args = build_parser().parse_args(["update", "--ecosystem", "eh3d", name, "--workspace", "/ws"])
+        dispatch(args, runner=runner)
+    assert len(runner.calls) == 3

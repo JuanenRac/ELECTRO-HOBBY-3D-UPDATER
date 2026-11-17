@@ -36,6 +36,11 @@ class Pin:
     sha: str
     version: str
 
+    @property
+    def full(self) -> bool:
+        """True when the pin is a whole 40-character commit id (an abbreviated one could name another commit later)."""
+        return len(self.sha) == 40
+
 
 @dataclass(frozen=True)
 class PinReport:
@@ -80,6 +85,11 @@ def latest_tag(url: str, *, runner: Callable[..., subprocess.CompletedProcess] =
 
 def check_pins(pyproject: Path, *, latest: Callable[[str], str | None] = latest_tag) -> list[PinReport]:
     return [PinReport(pin, latest(pin.url)) for pin in read_pins(pyproject.read_text(encoding="utf-8"))]
+
+
+def describe_abbreviated(report: PinReport) -> str:
+    pin = report.pin
+    return f"{pin.name}: pinned v{pin.version} by the abbreviated commit {pin.sha}, which is not a whole commit id"
 
 
 def describe(report: PinReport) -> str:

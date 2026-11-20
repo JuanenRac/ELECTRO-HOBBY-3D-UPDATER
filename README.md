@@ -50,7 +50,7 @@ Each line is one part of this repository and the light says how far it is today.
 | Window | 🟡 | The window (a card per ecosystem, a log, eight languages) opens each ecosystem's own updater; its texts and its thread rules are tested, the rest only by hand. |
 | Integration | 🟠 | The hand-over to the EH3D updater was added from that updater's own tests and has not been run through this dispatcher against a real checkout. |
 | Security | 🟡 | Each sub-updater is pinned to a reviewed commit, never to a moving branch; every run is its own process with a time limit; unsigned revisions are installed with a warning and there has been no independent review. |
-| Real hardware | 🟡 | Not applicable: it runs on the PC of the person using it. |
+| Real hardware | 🟡 | Run by the maintainer on his own computer against his real repositories. |
 | Documentation | 🟢 | README in eight languages, checked against the manifest and the changelog on every change. |
 
 ## 🎯 Overview

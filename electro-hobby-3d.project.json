@@ -14,8 +14,9 @@
   ],
   "deployment_target": "user-pc",
   "maturity": "functional",
-  "evidence": "host-test",
-  "hardware_bound": false,
+  "evidence": "field",
+  "evidence_record": "Run by the maintainer on his own computer against his real repositories.",
+  "hardware_bound": true,
   "family": "Ecosystem Operations",
   "parent": null,
   "native_version": {

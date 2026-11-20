@@ -50,7 +50,7 @@ Ogni riga è una parte di questo repository e il semaforo dice a che punto è og
 | Finestra | 🟡 | La finestra (una scheda per ecosistema, un registro, otto lingue) apre l'aggiornatore proprio di ogni ecosistema; i suoi testi e le sue regole sui thread sono provati, il resto solo a mano. |
 | Integrazione | 🟠 | Il passaggio all'aggiornatore di EH3D è stato aggiunto dai test di quell'aggiornatore e non è stato eseguito tramite questo dispatcher su una copia reale. |
 | Sicurezza | 🟡 | Ogni sotto-aggiornatore è fissato a un commit rivisto, mai a un ramo che si muove; ogni esecuzione è un processo a sé con un limite di tempo; le revisioni non firmate sono installate con un avviso e non c'è stata una revisione indipendente. |
-| Hardware reale | 🟡 | Non applicabile: gira sul PC della persona che lo usa. |
+| Hardware reale | 🟡 | Il manutentore lo usa sul proprio computer con i suoi repository reali. |
 | Documentazione | 🟢 | README in otto lingue, verificato a ogni modifica contro il manifesto e il registro delle modifiche. |
 
 ## 🎯 Panoramica

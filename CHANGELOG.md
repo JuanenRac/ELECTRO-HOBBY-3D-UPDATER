@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **The dashboard notifier reads the repository, ref and commit from environment variables:** the workflow no longer expands them inside the shell script, so the step has nothing to inject into and passes the workflow security scan.
+
 - **A project name that starts with a hyphen or has odd characters is refused before anything runs:** `install` and `update` stop with exit code 64 instead of passing it to the sub-updater, where it could be read as an option.
 - **A pin by an abbreviated commit id is reported, and fails the check before a release:** `tools/check_pins.py --strict` needs the whole 40-character commit.
 - **The version read from the repository is limited in size** (one mebibyte) like the other network reads.

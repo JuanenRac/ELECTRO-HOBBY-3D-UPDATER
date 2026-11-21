@@ -18,7 +18,7 @@
 
 ---
 
-**Honesty check - what actually runs today:** this is a thin dispatcher, not a fifth implementation of ecosystem discovery: it holds no manifest-parsing, install or update logic of its own. Each of the four ecosystems has its own updater that finds its projects through the `<ecosystem>.project.json` manifest of every repository; this tool installs the four as pinned dependencies and runs the one you pick as a separate process (`status` for all four at once). The dispatching and the commands it builds are tested (60 tests pass, with a fake process runner). `status --ecosystem all` has been run for real against a real checkout of three of the ecosystems and `install` once from a clean environment (one project cloned, built, tested and promoted by the A.R.M.O.R. updater); `update` has not been run for real, and the hand-over to the EH3D updater was added from that updater's own tests and has not been run through this tool against a real checkout.
+**Honesty check - what actually runs today:** this is a thin dispatcher, not a fifth implementation of ecosystem discovery: it holds no manifest-parsing, install or update logic of its own. Each of the four ecosystems has its own updater that finds its projects through the `<ecosystem>.project.json` manifest of every repository; this tool installs the four as pinned dependencies and runs the one you pick as a separate process (`status` for all four at once). The dispatching and the commands it builds are tested (73 tests pass, with a fake process runner). `status --ecosystem all` has been run for real against a real checkout of three of the ecosystems and `install` once from a clean environment (one project cloned, built, tested and promoted by the A.R.M.O.R. updater); `update` has not been run for real, and the hand-over to the EH3D updater was added from that updater's own tests and has not been run through this tool against a real checkout.
 
 ---
 
@@ -45,7 +45,7 @@ Each line is one part of this repository and the light says how far it is today.
 | Area | State | What it means here |
 |---|---|---|
 | Software | 🟡 | A thin dispatcher: it holds no discovery, install or update logic of its own and hands `--ecosystem hydra-umc\|urtc\|armor\|eh3d` over to the updater of each ecosystem, which it installs as pinned dependencies. |
-| Tests | 🟢 | 60 tests pass (`pytest`) against a fake process runner; one more is skipped when PySide6 is not installed. |
+| Tests | 🟢 | 73 tests pass (`pytest`) against a fake process runner; one more is skipped when PySide6 is not installed. |
 | Real use | 🟠 | `status` has run against a real checkout of three of the ecosystems and `install` has run once from a clean environment; `update` has not been run for real. |
 | Window | 🟡 | The window (a card per ecosystem, a log, eight languages) opens each ecosystem's own updater; its texts and its thread rules are tested, the rest only by hand. |
 | Integration | 🟠 | The hand-over to the EH3D updater was added from that updater's own tests and has not been run through this dispatcher against a real checkout. |
@@ -130,7 +130,7 @@ electro-hobby-3d-updater update  --ecosystem hydra-umc HYDRA-UMC-SERVER
 
 ## 🧪 Testing
 
-The suite has 60 tests that pass (`pytest tests`), and one more that is skipped when PySide6 is not installed. They run against a fake process runner, with no network and no real subprocess, and cover: the registry has exactly the four ecosystems; `status` runs the right module and forwards `--offline`; `status --ecosystem all` runs every ecosystem once, prints them in order, runs them at the same time and never stops at the first failure; `install` and `update` need one ecosystem and one project and reject `all`; a failing updater passes its own exit code on; the workspace defaults to the parent folder; `versions` reports the installed versions, flags an updater that is behind and never contacts GitHub with `--offline`; an updater that hangs is stopped with a clear message and a zero timeout means no limit; and the texts of the window exist in all eight languages. The CI runs `python tools/ci_validate.py` (manifest, version, changelog and README parity) and then `python tools/build_test.py`, which compiles every source and runs the suite. The CI also runs the suite on Python 3.10 and 3.13, the oldest and the newest the package promises, and a test in `tools/` checks that the code is still read by the grammar of the oldest one.
+The suite has 73 tests that pass (`pytest tests`), and one more that is skipped when PySide6 is not installed. They run against a fake process runner, with no network and no real subprocess, and cover: the registry has exactly the four ecosystems; `status` runs the right module and forwards `--offline`; `status --ecosystem all` runs every ecosystem once, prints them in order, runs them at the same time and never stops at the first failure; `install` and `update` need one ecosystem and one project and reject `all`; a failing updater passes its own exit code on; the workspace defaults to the parent folder; `versions` reports the installed versions, flags an updater that is behind and never contacts GitHub with `--offline`; an updater that hangs is stopped with a clear message and a zero timeout means no limit; and the texts of the window exist in all eight languages. The CI runs `python tools/ci_validate.py` (manifest, version, changelog and README parity) and then `python tools/build_test.py`, which compiles every source and runs the suite. The CI also runs the suite on Python 3.10 and 3.13, the oldest and the newest the package promises, and a test in `tools/` checks that the code is still read by the grammar of the oldest one.
 
 ## 🏗️ Build & Release
 
@@ -175,6 +175,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 ├── electro-hobby-3d.project.json                the manifest: version, role and maturity
 ├── pyproject.toml                               the package and the four pinned updaters
 ├── CHANGELOG.md                                 what changed in each version
+├── AGENTS.md                                    the rules for anyone who changes the repository
 ├── SECURITY.md SUPPORT.md                       how to report a vulnerability and where to ask
 └── CONTRIBUTING.md CODE_OF_CONDUCT.md LICENSE   how to contribute, the code of conduct and the licence
 ```
@@ -214,6 +215,11 @@ This tool is the fifth piece of the updater family of JuanenRac (Electro Hobby 3
 ## 📚 Documentation
 
 * [Changelog](CHANGELOG.md): every version, what changed and what was found.
+* [Scope](docs/SCOPE.md): what the program is for, what it will not do and what it never decides.
+* [Requirements](docs/REQUIREMENTS.md): the register of capabilities, the state of each and the test that shows it.
+* [Status](docs/STATUS.md): what exists, what is missing and what is still open.
+* [Not yet](docs/NOT_YET.md): good ideas that are left out of this version.
+* [Rules for changing the repository](AGENTS.md): the rules for anyone who changes the repository.
 * [Contributing](CONTRIBUTING.md), [Security policy](SECURITY.md) and [Support](SUPPORT.md).
 * The documentation of each ecosystem's own updater lives in its repository (see Related Projects).
 

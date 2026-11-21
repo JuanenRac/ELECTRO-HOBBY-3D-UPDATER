@@ -26,10 +26,10 @@ keywords = ["hydra-umc", "urtc", "armor", "eh3d", "updater", "installer", "fleet
 # project's version (`electro-hobby-3d-updater versions` shows which ones
 # are behind GitHub).
 dependencies = [
-    "hydra-umc-updater @ git+https://github.com/JuanenRac/HYDRA-UMC-UPDATER.git@81c3b337d59d624670299e56a879575af0b37123",  # v0.5.8
-    "urtc-updater @ git+https://github.com/JuanenRac/URTC-UPDATER.git@2ceb180e74b1011129c88a8e00af1305eddeacdf",  # v0.2.9
-    "armor-updater @ git+https://github.com/JuanenRac/ARMOR-UPDATER.git@2e72ce3d18b85d3d21d06b9b4b15b3ecc382a224",  # v0.2.2
-    "eh3d-updater @ git+https://github.com/JuanenRac/EH3D-UPDATER.git@a699b99499fe6455141152f8626a0fb827bf198c",  # v0.0.9
+    "hydra-umc-updater @ git+https://github.com/JuanenRac/HYDRA-UMC-UPDATER.git@ace7bd8b598ad9ec9aebc03eb40db007688a171b",  # v0.5.9
+    "urtc-updater @ git+https://github.com/JuanenRac/URTC-UPDATER.git@679f6bf850a997482686158072cb28f9649bdf8f",  # v0.3.2
+    "armor-updater @ git+https://github.com/JuanenRac/ARMOR-UPDATER.git@9b9a535359d5afaaade9442af62288dd575e5fb4",  # v0.2.4
+    "eh3d-updater @ git+https://github.com/JuanenRac/EH3D-UPDATER.git@f99822d7dbb8915efd224babe76a541b412881b6",  # v0.1.1
 ]
 
 [project.optional-dependencies]

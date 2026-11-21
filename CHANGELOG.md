@@ -12,7 +12,7 @@ All notable changes to this project are documented here.
 - **The Real hardware row of Project status is no longer green:** it said "not applicable" with a green light, the only hardware row in green; it uses the light the family uses for a row that does not apply (in the eight languages).
 - **The validation of the manifest, versions and documents is the shared one of the suite:** the CI calls the reusable validation workflow (pinned by commit) instead of carrying its own copy of the steps; the checks of this repository stay as they were.
 
-- **The pins of the four updaters are their latest releases** (HYDRA-UMC 0.5.8, URTC 0.2.9, A.R.M.O.R. 0.2.2, EH3D 0.0.9), so a new installation brings the repositories and versions published since.
+- **The pins of the four updaters are their latest releases** (HYDRA-UMC 0.5.9, URTC 0.3.2, A.R.M.O.R. 0.2.4, EH3D 0.1.1), so a new installation brings the repositories and versions published since.
 
 ## [0.1.5] - The pins of the four updaters are their latest releases, a pin that is behind fails the check before a release, and the window carries the new icon
 

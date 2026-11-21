@@ -18,7 +18,7 @@
 
 ---
 
-**Verificação de honestidade - o que funciona hoje:** isto é um despachante fino, não uma quinta implementação da descoberta de ecossistemas: não tem lógica própria de análise de manifestos, instalação ou atualização. Cada um dos quatro ecossistemas tem o seu próprio atualizador, que encontra os seus projetos pelo manifesto `<ecossistema>.project.json` de cada repositório; esta ferramenta instala os quatro como dependências fixadas e executa o que escolhes como um processo à parte (`status` para os quatro ao mesmo tempo). O despacho e os comandos que constrói estão testados (passam 60 testes, com um executor de processos simulado). `status --ecosystem all` foi executado a sério contra uma cópia real de três dos ecossistemas e `install` uma vez a partir de um ambiente limpo (um projeto clonado, construído, testado e promovido pelo atualizador do A.R.M.O.R.); `update` não foi executado a sério, e a passagem ao atualizador do EH3D foi acrescentada a partir dos testes desse atualizador e não foi executada por esta ferramenta contra uma cópia real.
+**Verificação de honestidade - o que funciona hoje:** isto é um despachante fino, não uma quinta implementação da descoberta de ecossistemas: não tem lógica própria de análise de manifestos, instalação ou atualização. Cada um dos quatro ecossistemas tem o seu próprio atualizador, que encontra os seus projetos pelo manifesto `<ecossistema>.project.json` de cada repositório; esta ferramenta instala os quatro como dependências fixadas e executa o que escolhes como um processo à parte (`status` para os quatro ao mesmo tempo). O despacho e os comandos que constrói estão testados (passam 73 testes, com um executor de processos simulado). `status --ecosystem all` foi executado a sério contra uma cópia real de três dos ecossistemas e `install` uma vez a partir de um ambiente limpo (um projeto clonado, construído, testado e promovido pelo atualizador do A.R.M.O.R.); `update` não foi executado a sério, e a passagem ao atualizador do EH3D foi acrescentada a partir dos testes desse atualizador e não foi executada por esta ferramenta contra uma cópia real.
 
 ---
 
@@ -45,7 +45,7 @@ Cada linha é uma parte deste repositório e a luz diz até onde chega hoje. É 
 | Área | Estado | O que significa aqui |
 |---|---|---|
 | Software | 🟡 | Um despachante fino: não tem lógica própria de descoberta, instalação ou atualização e passa `--ecosystem hydra-umc\|urtc\|armor\|eh3d` ao atualizador de cada ecossistema, que instala como dependências fixadas. |
-| Testes | 🟢 | Passam 60 testes (`pytest`) contra um executor de processos simulado; outro é ignorado quando o PySide6 não está instalado. |
+| Testes | 🟢 | Passam 73 testes (`pytest`) contra um executor de processos simulado; outro é ignorado quando o PySide6 não está instalado. |
 | Uso real | 🟠 | `status` foi executado contra uma cópia real de três dos ecossistemas e `install` uma vez a partir de um ambiente limpo; `update` não foi executado a sério. |
 | Janela | 🟡 | A janela (um cartão por ecossistema, um registo, oito idiomas) abre o atualizador próprio de cada ecossistema; os seus textos e as suas regras de threads estão testados, o resto só à mão. |
 | Integração | 🟠 | A passagem ao atualizador do EH3D foi acrescentada a partir dos testes desse atualizador e não foi executada por este despachante contra uma cópia real. |
@@ -130,7 +130,7 @@ electro-hobby-3d-updater update  --ecosystem hydra-umc HYDRA-UMC-SERVER
 
 ## 🧪 Testes
 
-A suite tem 60 testes que passam (`pytest tests`), e mais um que é ignorado quando o PySide6 não está instalado. Correm contra um executor de processos simulado, sem rede nem subprocessos reais, e cobrem: o registo tem exatamente os quatro ecossistemas; `status` executa o módulo certo e reenvia `--offline`; `status --ecosystem all` executa cada ecossistema uma vez, imprime-os por ordem, executa-os ao mesmo tempo e nunca pára na primeira falha; `install` e `update` precisam de um ecossistema e de um projeto e recusam `all`; um atualizador que falha passa o seu próprio código de saída; a área de trabalho é por omissão a pasta-mãe; `versions` informa as versões instaladas, assinala um atualizador atrasado e nunca contacta o GitHub com `--offline`; um atualizador que bloqueia é parado com uma mensagem clara e um limite de tempo de zero significa sem limite; e os textos da janela existem nos oito idiomas. A CI executa `python tools/ci_validate.py` (manifesto, versão, registo de alterações e paridade dos README) e depois `python tools/build_test.py`, que compila cada fonte e executa a suite. A CI executa também a suite em Python 3.10 e 3.13, a mais antiga e a mais recente que o pacote promete, e um teste em `tools/` verifica que o código continua a ser lido pela gramática da mais antiga.
+A suite tem 73 testes que passam (`pytest tests`), e mais um que é ignorado quando o PySide6 não está instalado. Correm contra um executor de processos simulado, sem rede nem subprocessos reais, e cobrem: o registo tem exatamente os quatro ecossistemas; `status` executa o módulo certo e reenvia `--offline`; `status --ecosystem all` executa cada ecossistema uma vez, imprime-os por ordem, executa-os ao mesmo tempo e nunca pára na primeira falha; `install` e `update` precisam de um ecossistema e de um projeto e recusam `all`; um atualizador que falha passa o seu próprio código de saída; a área de trabalho é por omissão a pasta-mãe; `versions` informa as versões instaladas, assinala um atualizador atrasado e nunca contacta o GitHub com `--offline`; um atualizador que bloqueia é parado com uma mensagem clara e um limite de tempo de zero significa sem limite; e os textos da janela existem nos oito idiomas. A CI executa `python tools/ci_validate.py` (manifesto, versão, registo de alterações e paridade dos README) e depois `python tools/build_test.py`, que compila cada fonte e executa a suite. A CI executa também a suite em Python 3.10 e 3.13, a mais antiga e a mais recente que o pacote promete, e um teste em `tools/` verifica que o código continua a ser lido pela gramática da mais antiga.
 
 ## 🏗️ Compilação e publicação
 
@@ -175,6 +175,7 @@ ELECTRO-HOBBY-3D-UPDATER/
 ├── electro-hobby-3d.project.json                o manifesto: versão, papel e maturidade
 ├── pyproject.toml                               o pacote e os quatro atualizadores fixados
 ├── CHANGELOG.md                                 o que mudou em cada versão
+├── AGENTS.md                                    as regras para quem altera o repositório
 ├── SECURITY.md SUPPORT.md                       como comunicar uma vulnerabilidade e onde perguntar
 └── CONTRIBUTING.md CODE_OF_CONDUCT.md LICENSE   como contribuir, o código de conduta e a licença
 ```
@@ -214,6 +215,11 @@ Esta ferramenta é a quinta peça da família de atualizadores de JuanenRac (Ele
 ## 📚 Documentação
 
 * [Registo de alterações](CHANGELOG.md): cada versão, o que mudou e o que foi encontrado.
+* [Âmbito](docs/SCOPE.md): para que serve o programa, o que não fará e o que nunca decide.
+* [Requisitos](docs/REQUIREMENTS.md): o registo das capacidades, o estado de cada uma e o teste que a mostra.
+* [Estado](docs/STATUS.md): o que existe, o que falta e o que continua em aberto.
+* [Ainda não](docs/NOT_YET.md): boas ideias que ficam fora desta versão.
+* [Regras para alterar o repositório](AGENTS.md): as regras para quem altera o repositório.
 * [Contribuir](CONTRIBUTING.md), [Política de segurança](SECURITY.md) e [Suporte](SUPPORT.md).
 * A documentação do atualizador próprio de cada ecossistema vive no seu repositório (ver Projetos relacionados).
 

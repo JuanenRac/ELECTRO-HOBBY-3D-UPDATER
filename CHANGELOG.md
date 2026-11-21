@@ -13,6 +13,7 @@ All notable changes to this project are documented here.
 - **The validation of the manifest, versions and documents is the shared one of the suite:** the CI calls the reusable validation workflow (pinned by commit) instead of carrying its own copy of the steps; the checks of this repository stay as they were.
 
 - **The pins of the four updaters are their latest releases** (HYDRA-UMC 0.5.9, URTC 0.3.2, A.R.M.O.R. 0.2.4, EH3D 0.1.1), so a new installation brings the repositories and versions published since.
+- **Requirements with identifiers and tests that name them:** `docs/REQUIREMENTS.md` is the register of what the program must do, one row for each capability with an identifier (`EHUP-001` on), its state (planned, prototype, implemented or validated), how far it is (done, partial, pending or blocked), its evidence and the test that shows it; a capability that is not written names the test that will show it. `tests/test_requirements.py` reads the table and fails when a test does not exist, when a state does not agree with the progress or the evidence, when `docs/STATUS.md` does not say the same numbers, when a README does not link the documents or when a document holds a date or a private reference. The five documents of the family (`docs/SCOPE.md`, `docs/REQUIREMENTS.md`, `docs/STATUS.md`, `docs/NOT_YET.md` and `AGENTS.md`) are in the repository and are linked from the eight READMEs.
 
 ## [0.1.5] - The pins of the four updaters are their latest releases, a pin that is behind fails the check before a release, and the window carries the new icon
 

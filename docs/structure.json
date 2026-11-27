@@ -50,6 +50,19 @@
         },
         {
           "desc": {
+            "en": "how the text of the updaters is written and read",
+            "es": "cómo se escribe y se lee el texto de los actualizadores",
+            "de": "wie der Text der Updater geschrieben und gelesen wird",
+            "fr": "comment le texte des programmes de mise à jour est écrit et lu",
+            "it": "come si scrive e si legge il testo degli aggiornatori",
+            "ja": "各アップデーターの出力の書き方と読み方",
+            "zh": "更新器的文本如何写出和读取",
+            "pt": "como o texto dos atualizadores é escrito e lido"
+          },
+          "name": "children.py"
+        },
+        {
+          "desc": {
             "en": "the Qt Quick window and its QML",
             "es": "la ventana Qt Quick y su QML",
             "de": "das Qt-Quick-Fenster und sein QML",

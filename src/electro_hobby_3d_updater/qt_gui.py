@@ -26,6 +26,7 @@ from PySide6.QtQml import QQmlApplicationEngine
 from PySide6.QtQuickControls2 import QQuickStyle
 
 from . import __version__
+from .children import CAPTURED_TEXT, child_environment
 from .ecosystems import ECOSYSTEMS, ECOSYSTEMS_BY_KEY
 from .i18n import LANGUAGES, text
 
@@ -124,7 +125,11 @@ class Bridge(QObject):
         # environment variable, URTC-UPDATER the current folder): started from this environment without a
         # workspace it would look for the projects inside this tool's own virtual environment.
         workspace_env = {**os.environ, "HYDRA_UMC_WORKSPACE": self._workspace, "ARMOR_WORKSPACE": self._workspace}
-        subprocess.Popen([sys.executable, "-m", ecosystem.module], close_fds=True, cwd=self._workspace, env=workspace_env)   # noqa: S603  (its window remembers its own folder)
+        try:
+            subprocess.Popen([sys.executable, "-m", ecosystem.module], close_fds=True, cwd=self._workspace, env=workspace_env)   # noqa: S603  (its window remembers its own folder)
+        except OSError as error:   # the chosen folder is gone, or the system cannot start another process
+            self._add(f"{ecosystem.display_name}: {text(self._language, 'failed')}: {error}")
+            return
         self._add(f"{ecosystem.display_name}: {text(self._language, 'open')}")
 
     @Slot(str, bool)
@@ -147,7 +152,7 @@ class Bridge(QObject):
                     continue
                 command = [sys.executable, "-m", ecosystem.module, "--cli", "status", *(["--offline"] if offline else []), "--workspace", self._workspace]
                 try:
-                    done = subprocess.run(command, capture_output=True, text=True, timeout=300, check=False)   # noqa: S603
+                    done = subprocess.run(command, capture_output=True, timeout=300, check=False, env=child_environment(captured=True), **CAPTURED_TEXT)   # noqa: S603
                 except (OSError, subprocess.TimeoutExpired) as error:
                     self._add(f"{text(self._language, 'failed')}: {error}")
                     continue

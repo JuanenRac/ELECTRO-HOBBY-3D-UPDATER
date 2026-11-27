@@ -45,6 +45,7 @@
 from __future__ import annotations
 
 import argparse
+import http.client
 import os
 import re
 import subprocess
@@ -55,6 +56,7 @@ from importlib import metadata
 from pathlib import Path
 
 from . import __version__
+from .children import CAPTURED_TEXT, child_environment, print_whatever_the_console_holds
 from .ecosystems import ECOSYSTEMS, ECOSYSTEMS_BY_KEY
 from .pins import version_tuple
 
@@ -152,7 +154,7 @@ def _run_one(ecosystem_key: str, args: argparse.Namespace, *, runner) -> int:
     name = ECOSYSTEMS_BY_KEY[ecosystem_key].display_name
     print(f"=== {name} ===", file=sys.stderr)
     try:
-        return runner(_command_for(ecosystem_key, args), timeout=_timeout(args)).returncode
+        return runner(_command_for(ecosystem_key, args), timeout=_timeout(args), env=child_environment(captured=False)).returncode
     except subprocess.TimeoutExpired:
         print(f"{name}: did not finish within {_timeout(args):.0f} seconds and was stopped (change it with --timeout-seconds)", file=sys.stderr)
         return 1
@@ -175,7 +177,7 @@ def _status_all(args: argparse.Namespace, *, runner) -> int:
     the fixed ECOSYSTEMS order, so the report reads the same as before."""
     def run(ecosystem):
         try:
-            return runner(_command_for(ecosystem.key, args), capture_output=True, text=True, timeout=_timeout(args))
+            return runner(_command_for(ecosystem.key, args), capture_output=True, text=True, timeout=_timeout(args), env=child_environment(captured=True), **CAPTURED_TEXT)
         except subprocess.TimeoutExpired:
             return _TimedOut(f"{ecosystem.display_name}: did not finish within {_timeout(args):.0f} seconds and was stopped (change it with --timeout-seconds)")
 
@@ -209,7 +211,7 @@ def latest_version_on_github(repository: str) -> str | None:
         request = urllib.request.Request(url, headers={"User-Agent": "electro-hobby-3d-updater"})
         with urllib.request.urlopen(request, timeout=15) as response:
             text = response.read(1 << 20).decode("utf-8", errors="replace")
-    except OSError:
+    except (OSError, http.client.HTTPException):   # HTTPException: the answer was cut in the middle or was not HTTP
         return None
     match = re.search(r'^version\s*=\s*"([^"]+)"', text, re.M)
     return match.group(1) if match else None
@@ -248,7 +250,14 @@ def show_pins(args: argparse.Namespace, *, latest=None) -> int:
     if not pyproject.is_file():
         print(f"no pyproject.toml at {pyproject}", file=sys.stderr)
         return EXIT_USAGE
-    reports = check_pins(pyproject, latest=latest or latest_tag)
+    try:
+        reports = check_pins(pyproject, latest=latest or latest_tag)
+    except (OSError, UnicodeDecodeError) as error:
+        print(f"{pyproject} cannot be read as UTF-8 text: {error}", file=sys.stderr)
+        return EXIT_USAGE
+    if not reports:
+        print(f"{pyproject} holds no pinned updater (damaged or not the file of this project)", file=sys.stderr)
+        return EXIT_USAGE
     for report in reports:
         print(describe(report) + ("  <- BEHIND" if report.behind else ""))
     return EXIT_WARNINGS if any(report.behind for report in reports) else 0
@@ -321,6 +330,7 @@ def launch_window() -> int:
 
 
 def main() -> int:
+    print_whatever_the_console_holds(sys.stdout, sys.stderr)
     # Without arguments (a double click) the window opens; with arguments this is the command line, exactly as before.
     if len(sys.argv) == 1:
         return launch_window()

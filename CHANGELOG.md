@@ -4,6 +4,10 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **Names outside ASCII no longer break the report of an updater on Windows:** each updater is asked to write UTF-8 when its output is captured and to replace what the console cannot hold otherwise, and what comes back (and what `git` writes) is read without failing on a character that cannot be decoded.
+- **A download cut in the middle is an unknown version, not an error:** `versions` says that GitHub could not be reached.
+- **A damaged or differently encoded `pyproject.toml` is reported by `pins`:** it ends with a message and exit code 64 instead of an error or an empty all-clear; a byte-order mark is accepted. The window says so when an updater cannot be started.
+
 ## [0.1.6] - The pins of the four updaters are their latest releases, the project documents and a register of requirements with their tests, and safer names and workflows
 
 - **The dashboard notifier reads the repository, ref and commit from environment variables:** the workflow no longer expands them inside the shell script, so the step has nothing to inject into and passes the workflow security scan.

@@ -68,7 +68,7 @@ def latest_tag(url: str, *, runner: Callable[..., subprocess.CompletedProcess] =
     try:
         result = runner(
             ["git", "ls-remote", "--tags", "--refs", url + ".git"],
-            capture_output=True, text=True, timeout=timeout, check=False,
+            capture_output=True, encoding="utf-8", errors="replace", timeout=timeout, check=False,
         )
     except (OSError, subprocess.SubprocessError):
         return None
@@ -84,7 +84,7 @@ def latest_tag(url: str, *, runner: Callable[..., subprocess.CompletedProcess] =
 
 
 def check_pins(pyproject: Path, *, latest: Callable[[str], str | None] = latest_tag) -> list[PinReport]:
-    return [PinReport(pin, latest(pin.url)) for pin in read_pins(pyproject.read_text(encoding="utf-8"))]
+    return [PinReport(pin, latest(pin.url)) for pin in read_pins(pyproject.read_text(encoding="utf-8-sig"))]
 
 
 def describe_abbreviated(report: PinReport) -> str:

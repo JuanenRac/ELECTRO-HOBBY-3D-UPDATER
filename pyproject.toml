@@ -27,9 +27,9 @@ keywords = ["hydra-umc", "urtc", "armor", "eh3d", "updater", "installer", "fleet
 # are behind GitHub).
 dependencies = [
     "hydra-umc-updater @ git+https://github.com/JuanenRac/HYDRA-UMC-UPDATER.git@ace7bd8b598ad9ec9aebc03eb40db007688a171b",  # v0.5.9
-    "urtc-updater @ git+https://github.com/JuanenRac/URTC-UPDATER.git@679f6bf850a997482686158072cb28f9649bdf8f",  # v0.3.2
-    "armor-updater @ git+https://github.com/JuanenRac/ARMOR-UPDATER.git@9b9a535359d5afaaade9442af62288dd575e5fb4",  # v0.2.4
-    "eh3d-updater @ git+https://github.com/JuanenRac/EH3D-UPDATER.git@f99822d7dbb8915efd224babe76a541b412881b6",  # v0.1.1
+    "urtc-updater @ git+https://github.com/JuanenRac/URTC-UPDATER.git@a346a6fc4be6c10634602ccdb95e0c3226781d98",  # v0.3.4
+    "armor-updater @ git+https://github.com/JuanenRac/ARMOR-UPDATER.git@adaf6b317fd79fdf661672ec36691b0870f9628c",  # v0.2.5
+    "eh3d-updater @ git+https://github.com/JuanenRac/EH3D-UPDATER.git@60855dfc18112c49e3c6586c5014bbc4f5b53df0",  # v0.1.2
 ]
 
 [project.optional-dependencies]

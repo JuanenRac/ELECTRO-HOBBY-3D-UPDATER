@@ -134,7 +134,7 @@ Die Suite hat 85 Tests, die bestehen (`pytest tests`), und zwei weitere, die üb
 
 ## 🏗️ Build und Veröffentlichung
 
-Die Version steht in `pyproject.toml`, in `electro-hobby-3d.project.json` und im Paket, und jede Version hat ihren Eintrag in [CHANGELOG.md](CHANGELOG.md). `build.sh` / `build.bat` legen eine virtuelle Umgebung an, installieren dieses Werkzeug mit seinen vier festgelegten Updatern und prüfen es per Kompilierung; `build-test.sh` / `build-test.bat` tun dasselbe und führen danach die Suite aus; `test.sh` / `test.bat` führen nur die Tests aus, jeweils in einem Live-Panel, und keines ändert die Version. Releases werden auf GitHub veröffentlicht (das neueste ist 0.1.1); das Werkzeug wird aus diesem Repository installiert und liegt nicht auf PyPI.
+Die Version steht in `pyproject.toml`, in `electro-hobby-3d.project.json` und im Paket, und jede Version hat ihren Eintrag in [CHANGELOG.md](CHANGELOG.md). `build.sh` / `build.bat` legen eine virtuelle Umgebung an, installieren dieses Werkzeug mit seinen vier festgelegten Updatern und prüfen es per Kompilierung; `build-test.sh` / `build-test.bat` tun dasselbe und führen danach die Suite aus; `test.sh` / `test.bat` führen nur die Tests aus, jeweils in einem Live-Panel, und keines ändert die Version. Releases werden auf GitHub veröffentlicht; das Werkzeug wird aus diesem Repository installiert und liegt nicht auf PyPI.
 
 ## 🩺 Fehlerbehebung
 

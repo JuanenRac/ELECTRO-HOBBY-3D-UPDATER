@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **The README no longer names an old release as the latest one**, in its eight languages.
+
 - **The pins of the URTC, A.R.M.O.R. and EH3D updaters are their latest releases (0.3.4, 0.2.5 and 0.1.2):** they refuse or report damaged and cut answers, read files in another encoding and keep local files with any name across an update on Windows.
 - **Names outside ASCII no longer break the report of an updater on Windows:** each updater is asked to write UTF-8 when its output is captured and to replace what the console cannot hold otherwise, and what comes back (and what `git` writes) is read without failing on a character that cannot be decoded.
 - **A download cut in the middle is an unknown version, not an error:** `versions` says that GitHub could not be reached.

@@ -134,7 +134,7 @@ electro-hobby-3d-updater update  --ecosystem hydra-umc HYDRA-UMC-SERVER
 
 ## 🏗️ ビルドとリリース
 
-バージョンは `pyproject.toml`、`electro-hobby-3d.project.json`、パッケージにあり、各バージョンには [CHANGELOG.md](CHANGELOG.md) の項目があります。`build.sh` / `build.bat` は仮想環境を作り、固定された 4 つの更新ツールとともにこのツールをインストールしてコンパイル検査します。`build-test.sh` / `build-test.bat` は同じことをしてからテストを実行し、`test.sh` / `test.bat` はテストだけを実行します。いずれもライブ パネルで動き、バージョンは変えません。リリースは GitHub で公開されます（最新は 0.1.1）。ツールはこのリポジトリからインストールし、PyPI にはありません。
+バージョンは `pyproject.toml`、`electro-hobby-3d.project.json`、パッケージにあり、各バージョンには [CHANGELOG.md](CHANGELOG.md) の項目があります。`build.sh` / `build.bat` は仮想環境を作り、固定された 4 つの更新ツールとともにこのツールをインストールしてコンパイル検査します。`build-test.sh` / `build-test.bat` は同じことをしてからテストを実行し、`test.sh` / `test.bat` はテストだけを実行します。いずれもライブ パネルで動き、バージョンは変えません。リリースは GitHub で公開されます。ツールはこのリポジトリからインストールし、PyPI にはありません。
 
 ## 🩺 トラブルシューティング
 

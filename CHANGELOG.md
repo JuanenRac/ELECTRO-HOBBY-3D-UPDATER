@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- **The README says that URTC-UPDATER does not install an unsigned revision by default,** unlike the other updaters it runs.
+
 - **The README no longer names an old release as the latest one**, in its eight languages.
 
 - **The pins of the URTC, A.R.M.O.R. and EH3D updaters are their latest releases (0.3.4, 0.2.5 and 0.1.2):** they refuse or report damaged and cut answers, read files in another encoding and keep local files with any name across an update on Windows.

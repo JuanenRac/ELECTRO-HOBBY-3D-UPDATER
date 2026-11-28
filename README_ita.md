@@ -22,7 +22,7 @@
 
 ---
 
-> **Stato di sicurezza funzionale e informatica:** sostituisce file sulla tua macchina tramite gli aggiornatori che esegue, quindi fa solo ciò che fa ciascuno di essi, un progetto alla volta e dopo la conferma che quell'aggiornatore chiede. Non esegue nulla da solo, non aggiorna mai «tutto attraverso gli ecosistemi» e non controlla alcuna macchina. Ogni aggiornatore è fissato a un commit rivisto, mai a un ramo che si muove; le revisioni non firmate vengono installate con un avviso a meno che quell'aggiornatore sia impostato per richiedere le firme.
+> **Stato di sicurezza funzionale e informatica:** sostituisce file sulla tua macchina tramite gli aggiornatori che esegue, quindi fa solo ciò che fa ciascuno di essi, un progetto alla volta e dopo la conferma che quell'aggiornatore chiede. Non esegue nulla da solo, non aggiorna mai «tutto attraverso gli ecosistemi» e non controlla alcuna macchina. Ogni aggiornatore è fissato a un commit rivisto, mai a un ramo che si muove; le revisioni non firmate (tranne in URTC-UPDATER, che le rifiuta per impostazione predefinita) vengono installate con un avviso a meno che quell'aggiornatore sia impostato per richiedere le firme.
 
 ## 📋 In breve
 
@@ -49,7 +49,7 @@ Ogni riga è una parte di questo repository e il semaforo dice a che punto è og
 | Uso reale | 🟠 | `status` è stato eseguito su una copia reale di tre degli ecosistemi e `install` una volta da un ambiente pulito; `update` non è stato eseguito davvero. |
 | Finestra | 🟡 | La finestra (una scheda per ecosistema, un registro, otto lingue) apre l'aggiornatore proprio di ogni ecosistema; i suoi testi e le sue regole sui thread sono provati, il resto solo a mano. |
 | Integrazione | 🟠 | Il passaggio all'aggiornatore di EH3D è stato aggiunto dai test di quell'aggiornatore e non è stato eseguito tramite questo dispatcher su una copia reale. |
-| Sicurezza | 🟡 | Ogni sotto-aggiornatore è fissato a un commit rivisto, mai a un ramo che si muove; ogni esecuzione è un processo a sé con un limite di tempo; le revisioni non firmate sono installate con un avviso e non c'è stata una revisione indipendente. |
+| Sicurezza | 🟡 | Ogni sotto-aggiornatore è fissato a un commit rivisto, mai a un ramo che si muove; ogni esecuzione è un processo a sé con un limite di tempo; le revisioni non firmate (tranne in URTC-UPDATER, che le rifiuta per impostazione predefinita) sono installate con un avviso e non c'è stata una revisione indipendente. |
 | Hardware reale | 🟡 | Il manutentore lo usa sul proprio computer con i suoi repository reali. |
 | Documentazione | 🟢 | README in otto lingue, verificato a ogni modifica contro il manifesto e il registro delle modifiche. |
 
@@ -84,7 +84,7 @@ Come si incastrano le parti di questo repository: chi lo usa, che cosa contiene 
 | Un aggiornatore che si blocca (una richiesta di credenziali di git, una rete morta) | un limite di tempo a ogni esecuzione: 900 s per `status` e 1800 s per `install` e `update`, modificabile con `--timeout-seconds` (0 significa nessun limite) |
 | Una modifica di massa indesiderata | `install` e `update` prendono esattamente un ecosistema e un nome di progetto e rifiutano `--ecosystem all`; ogni aggiornatore chiede la propria conferma |
 | Guardare la cartella sbagliata | l'area di lavoro viene sempre inoltrata esplicitamente (per impostazione predefinita la cartella madre di questo strumento), perché altrimenti un aggiornatore installato cercherebbe sotto l'ambiente virtuale di questo e non troverebbe nulla in silenzio |
-| Un commit di origine ignota | lasciato a ogni aggiornatore: le revisioni non firmate sono installate con un avviso a meno che a quell'aggiornatore si dica di richiedere le firme (EH3D-UPDATER e URTC-UPDATER hanno questa opzione) |
+| Un commit di origine ignota | lasciato a ogni aggiornatore: le revisioni non firmate (tranne in URTC-UPDATER, che le rifiuta per impostazione predefinita) sono installate con un avviso a meno che a quell'aggiornatore si dica di richiedere le firme (EH3D-UPDATER e URTC-UPDATER hanno questa opzione) |
 | Il fallimento di un ecosistema che nasconde gli altri | `status --ecosystem all` esegue tutti e quattro, stampa ogni rapporto e nomina quelli falliti |
 
 **Ciò che non è difeso:** questo strumento esegue ciò che fa ogni aggiornatore, con i tuoi diritti, compreso lo script di build del progetto che installi; l'aggiornatore di A.R.M.O.R. rompe ancora la propria installazione quando aggiorna se stesso, quindi aggiorna ARMOR-UPDATER a mano; e lo strumento non ha avuto una revisione indipendente. Segnala una vulnerabilità in privato (vedi [SECURITY.md](SECURITY.md)).

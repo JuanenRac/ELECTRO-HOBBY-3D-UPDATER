@@ -22,7 +22,7 @@
 
 ---
 
-> **Safety and security status:** it replaces files on your machine through the updaters it runs, so it does only what each of them does, one project at a time and after the confirmation that updater asks for. It does not run anything by itself, never updates "everything across the ecosystems", and controls no machine. Each updater is pinned to a reviewed commit, never to a moving branch; unsigned revisions are installed with a warning unless that updater is set to require signatures.
+> **Safety and security status:** it replaces files on your machine through the updaters it runs, so it does only what each of them does, one project at a time and after the confirmation that updater asks for. It does not run anything by itself, never updates "everything across the ecosystems", and controls no machine. Each updater is pinned to a reviewed commit, never to a moving branch; unsigned revisions (except in URTC-UPDATER, which by default does not install one without a signature) are installed with a warning unless that updater is set to require signatures.
 
 ## 📋 At a glance
 
@@ -49,7 +49,7 @@ Each line is one part of this repository and the light says how far it is today.
 | Real use | 🟠 | `status` has run against a real checkout of three of the ecosystems and `install` has run once from a clean environment; `update` has not been run for real. |
 | Window | 🟡 | The window (a card per ecosystem, a log, eight languages) opens each ecosystem's own updater; its texts and its thread rules are tested, the rest only by hand. |
 | Integration | 🟠 | The hand-over to the EH3D updater was added from that updater's own tests and has not been run through this dispatcher against a real checkout. |
-| Security | 🟡 | Each sub-updater is pinned to a reviewed commit, never to a moving branch; every run is its own process with a time limit; unsigned revisions are installed with a warning and there has been no independent review. |
+| Security | 🟡 | Each sub-updater is pinned to a reviewed commit, never to a moving branch; every run is its own process with a time limit; unsigned revisions (except in URTC-UPDATER, which by default does not install one without a signature) are installed with a warning and there has been no independent review. |
 | Real hardware | 🟡 | Run by the maintainer on his own computer against his real repositories. |
 | Documentation | 🟢 | README in eight languages, checked against the manifest and the changelog on every change. |
 
@@ -84,7 +84,7 @@ How the parts of this repository fit together: who uses it, what it holds and wh
 | An updater that hangs (a git prompt waiting for a credential, a dead network) | a time limit on every run: 900 s for `status` and 1800 s for `install` and `update`, changeable with `--timeout-seconds` (0 means no limit) |
 | An unwanted bulk change | `install` and `update` take exactly one ecosystem and one project name and refuse `--ecosystem all`; each updater asks for its own confirmation |
 | Looking at the wrong folder | the workspace is always forwarded explicitly (by default the parent of this tool), because an installed updater would otherwise search under this tool's virtual environment and silently find nothing |
-| A commit of unknown origin | left to each updater: unsigned revisions are installed with a warning unless that updater is told to require signatures (EH3D-UPDATER and URTC-UPDATER have that option) |
+| A commit of unknown origin | left to each updater: unsigned revisions (except in URTC-UPDATER, which by default does not install one without a signature) are installed with a warning unless that updater is told to require signatures (EH3D-UPDATER and URTC-UPDATER have that option) |
 | Failure of one ecosystem hiding the others | `status --ecosystem all` runs all four, prints every report and names the ones that failed |
 
 **What is not defended:** this tool runs whatever each updater does, with your rights, including the build script of the project you install; the updater of A.R.M.O.R. still breaks its own installation when it updates itself, so update ARMOR-UPDATER by hand; and the tool has had no independent review. Report a vulnerability privately (see [SECURITY.md](SECURITY.md)).

@@ -22,7 +22,7 @@
 
 ---
 
-> **Estado de segurança (safety) e de segurança informática:** substitui ficheiros na tua máquina através dos atualizadores que executa, por isso só faz o que cada um deles faz, um projeto de cada vez e após a confirmação que esse atualizador pede. Não executa nada sozinho, nunca atualiza «tudo através dos ecossistemas» e não controla nenhuma máquina. Cada atualizador está fixado a um commit revisto, nunca a um ramo que se move; as revisões sem assinatura são instaladas com um aviso, a menos que esse atualizador esteja configurado para exigir assinaturas.
+> **Estado de segurança (safety) e de segurança informática:** substitui ficheiros na tua máquina através dos atualizadores que executa, por isso só faz o que cada um deles faz, um projeto de cada vez e após a confirmação que esse atualizador pede. Não executa nada sozinho, nunca atualiza «tudo através dos ecossistemas» e não controla nenhuma máquina. Cada atualizador está fixado a um commit revisto, nunca a um ramo que se move; as revisões sem assinatura (exceto no URTC-UPDATER, que as recusa por omissão) são instaladas com um aviso, a menos que esse atualizador esteja configurado para exigir assinaturas.
 
 ## 📋 Num relance
 
@@ -49,7 +49,7 @@ Cada linha é uma parte deste repositório e a luz diz até onde chega hoje. É 
 | Uso real | 🟠 | `status` foi executado contra uma cópia real de três dos ecossistemas e `install` uma vez a partir de um ambiente limpo; `update` não foi executado a sério. |
 | Janela | 🟡 | A janela (um cartão por ecossistema, um registo, oito idiomas) abre o atualizador próprio de cada ecossistema; os seus textos e as suas regras de threads estão testados, o resto só à mão. |
 | Integração | 🟠 | A passagem ao atualizador do EH3D foi acrescentada a partir dos testes desse atualizador e não foi executada por este despachante contra uma cópia real. |
-| Segurança | 🟡 | Cada sub-atualizador está fixado a um commit revisto, nunca a um ramo que se move; cada execução é um processo à parte com limite de tempo; as revisões sem assinatura são instaladas com um aviso e não houve revisão independente. |
+| Segurança | 🟡 | Cada sub-atualizador está fixado a um commit revisto, nunca a um ramo que se move; cada execução é um processo à parte com limite de tempo; as revisões sem assinatura (exceto no URTC-UPDATER, que as recusa por omissão) são instaladas com um aviso e não houve revisão independente. |
 | Hardware real | 🟡 | O responsável por manutenção usa-o no seu próprio computador com os seus repositórios reais. |
 | Documentação | 🟢 | README em oito idiomas, verificado em cada alteração contra o manifesto e o registo de alterações. |
 
@@ -84,7 +84,7 @@ Como as partes deste repositório se encaixam: quem o usa, o que contém e de qu
 | Um atualizador que bloqueia (um pedido de credenciais do git, uma rede morta) | um limite de tempo em cada execução: 900 s para `status` e 1800 s para `install` e `update`, alterável com `--timeout-seconds` (0 significa sem limite) |
 | Uma alteração em massa indesejada | `install` e `update` recebem exatamente um ecossistema e um nome de projeto e recusam `--ecosystem all`; cada atualizador pede a sua própria confirmação |
 | Olhar para a pasta errada | a área de trabalho é sempre reenviada de forma explícita (por omissão a pasta-mãe desta ferramenta), porque de outro modo um atualizador instalado procuraria no ambiente virtual desta e não encontraria nada em silêncio |
-| Um commit de origem desconhecida | fica a cargo de cada atualizador: as revisões sem assinatura são instaladas com um aviso a menos que se diga a esse atualizador para exigir assinaturas (o EH3D-UPDATER e o URTC-UPDATER têm essa opção) |
+| Um commit de origem desconhecida | fica a cargo de cada atualizador: as revisões sem assinatura (exceto no URTC-UPDATER, que as recusa por omissão) são instaladas com um aviso a menos que se diga a esse atualizador para exigir assinaturas (o EH3D-UPDATER e o URTC-UPDATER têm essa opção) |
 | A falha de um ecossistema a esconder os outros | `status --ecosystem all` executa os quatro, imprime cada relatório e nomeia os que falharam |
 
 **O que não é defendido:** esta ferramenta executa o que cada atualizador faz, com os teus direitos, incluindo o script de compilação do projeto que instalas; o atualizador do A.R.M.O.R. ainda estraga a sua própria instalação quando se atualiza a si mesmo, por isso atualiza o ARMOR-UPDATER à mão; e a ferramenta não teve revisão independente. Comunica uma vulnerabilidade em privado (ver [SECURITY.md](SECURITY.md)).

@@ -22,7 +22,7 @@
 
 ---
 
-> **État de la sûreté et de la sécurité :** il remplace des fichiers sur ta machine par les outils de mise à jour qu'il lance, donc il ne fait que ce que fait chacun d'eux, un projet à la fois et après la confirmation que cet outil demande. Il ne lance rien tout seul, ne met jamais à jour « tout à travers les écosystèmes » et ne pilote aucune machine. Chaque outil de mise à jour est épinglé sur un commit relu, jamais sur une branche mobile ; les révisions non signées sont installées avec un avertissement, sauf si cet outil est réglé pour exiger des signatures.
+> **État de la sûreté et de la sécurité :** il remplace des fichiers sur ta machine par les outils de mise à jour qu'il lance, donc il ne fait que ce que fait chacun d'eux, un projet à la fois et après la confirmation que cet outil demande. Il ne lance rien tout seul, ne met jamais à jour « tout à travers les écosystèmes » et ne pilote aucune machine. Chaque outil de mise à jour est épinglé sur un commit relu, jamais sur une branche mobile ; les révisions non signées (sauf dans URTC-UPDATER, qui les refuse par défaut) sont installées avec un avertissement, sauf si cet outil est réglé pour exiger des signatures.
 
 ## 📋 En un coup d'œil
 
@@ -49,7 +49,7 @@ Chaque ligne est une partie de ce dépôt et le feu dit où elle en est aujourd'
 | Usage réel | 🟠 | `status` a tourné sur une vraie copie de trois des écosystèmes et `install` une fois depuis un environnement propre ; `update` n'a pas été exécuté pour de vrai. |
 | Fenêtre | 🟡 | La fenêtre (une carte par écosystème, un journal, huit langues) ouvre l'outil de mise à jour propre à chaque écosystème ; ses textes et ses règles de threads sont testés, le reste seulement à la main. |
 | Intégration | 🟠 | Le passage à l'outil de mise à jour d'EH3D a été ajouté à partir des tests de celui-ci et n'a pas été exécuté par ce répartiteur sur une vraie copie. |
-| Sécurité | 🟡 | Chaque sous-outil est épinglé sur un commit relu, jamais sur une branche mobile ; chaque exécution est son propre processus avec une limite de temps ; les révisions non signées sont installées avec un avertissement et il n'y a pas eu de revue indépendante. |
+| Sécurité | 🟡 | Chaque sous-outil est épinglé sur un commit relu, jamais sur une branche mobile ; chaque exécution est son propre processus avec une limite de temps ; les révisions non signées (sauf dans URTC-UPDATER, qui les refuse par défaut) sont installées avec un avertissement et il n'y a pas eu de revue indépendante. |
 | Matériel réel | 🟡 | Le mainteneur l'utilise sur son propre ordinateur avec ses vrais dépôts. |
 | Documentation | 🟢 | README en huit langues, vérifié à chaque changement contre le manifeste et le journal des modifications. |
 
@@ -84,7 +84,7 @@ Comment les parties de ce dépôt s'articulent : qui l'utilise, ce qu'il contien
 | Un outil qui se bloque (une invite git qui attend un identifiant, un réseau mort) | une limite de temps à chaque exécution : 900 s pour `status` et 1800 s pour `install` et `update`, modifiable avec `--timeout-seconds` (0 veut dire sans limite) |
 | Un changement de masse non désiré | `install` et `update` prennent exactement un écosystème et un nom de projet et refusent `--ecosystem all` ; chaque outil demande sa propre confirmation |
 | Regarder le mauvais dossier | l'espace de travail est toujours transmis explicitement (par défaut le dossier parent de cet outil), car sinon un outil installé chercherait sous l'environnement virtuel de celui-ci et ne trouverait rien en silence |
-| Un commit d'origine inconnue | laissé à chaque outil : les révisions non signées sont installées avec un avertissement sauf si on dit à cet outil d'exiger des signatures (EH3D-UPDATER et URTC-UPDATER ont cette option) |
+| Un commit d'origine inconnue | laissé à chaque outil : les révisions non signées (sauf dans URTC-UPDATER, qui les refuse par défaut) sont installées avec un avertissement sauf si on dit à cet outil d'exiger des signatures (EH3D-UPDATER et URTC-UPDATER ont cette option) |
 | L'échec d'un écosystème qui cache les autres | `status --ecosystem all` lance les quatre, imprime chaque rapport et nomme ceux qui ont échoué |
 
 **Ce qui n'est pas défendu :** cet outil exécute ce que fait chaque outil de mise à jour, avec tes droits, y compris le script de construction du projet que tu installes ; l'outil d'A.R.M.O.R. casse encore sa propre installation quand il se met à jour lui-même, mets donc ARMOR-UPDATER à jour à la main ; et l'outil n'a pas eu de revue indépendante. Signale une vulnérabilité en privé (voir [SECURITY.md](SECURITY.md)).

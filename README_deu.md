@@ -22,7 +22,7 @@
 
 ---
 
-> **Stand von Sicherheit und IT-Sicherheit:** es ersetzt Dateien auf deinem Rechner über die Updater, die es ausführt, und tut daher nur, was jeder von ihnen tut, ein Projekt nach dem anderen und nach der Bestätigung, die dieser Updater verlangt. Es führt nichts von selbst aus, aktualisiert nie „alles über die Ökosysteme hinweg“ und steuert keine Maschine. Jeder Updater ist auf einen geprüften Commit festgelegt, nie auf einen beweglichen Branch; unsignierte Revisionen werden mit einer Warnung installiert, außer dieser Updater verlangt Signaturen.
+> **Stand von Sicherheit und IT-Sicherheit:** es ersetzt Dateien auf deinem Rechner über die Updater, die es ausführt, und tut daher nur, was jeder von ihnen tut, ein Projekt nach dem anderen und nach der Bestätigung, die dieser Updater verlangt. Es führt nichts von selbst aus, aktualisiert nie „alles über die Ökosysteme hinweg“ und steuert keine Maschine. Jeder Updater ist auf einen geprüften Commit festgelegt, nie auf einen beweglichen Branch; unsignierte Revisionen (außer im URTC-UPDATER, der sie standardmäßig ablehnt) werden mit einer Warnung installiert, außer dieser Updater verlangt Signaturen.
 
 ## 📋 Auf einen Blick
 
@@ -49,7 +49,7 @@ Jede Zeile ist ein Teil dieses Repositorys, und die Ampel sagt, wie weit er heut
 | Echter Einsatz | 🟠 | `status` lief gegen einen echten Checkout von drei der Ökosysteme und `install` einmal aus einer sauberen Umgebung; `update` wurde nicht echt ausgeführt. |
 | Fenster | 🟡 | Das Fenster (eine Karte je Ökosystem, ein Protokoll, acht Sprachen) öffnet den eigenen Updater jedes Ökosystems; seine Texte und seine Thread-Regeln sind getestet, der Rest nur von Hand. |
 | Integration | 🟠 | Die Übergabe an den EH3D-Updater wurde anhand von dessen eigenen Tests ergänzt und über diesen Dispatcher noch nicht gegen einen echten Checkout ausgeführt. |
-| Sicherheit | 🟡 | Jeder Unter-Updater ist auf einen geprüften Commit festgelegt, nie auf einen beweglichen Branch; jeder Lauf ist ein eigener Prozess mit Zeitlimit; unsignierte Revisionen werden mit Warnung installiert, und es gab keine unabhängige Prüfung. |
+| Sicherheit | 🟡 | Jeder Unter-Updater ist auf einen geprüften Commit festgelegt, nie auf einen beweglichen Branch; jeder Lauf ist ein eigener Prozess mit Zeitlimit; unsignierte Revisionen (außer im URTC-UPDATER, der sie standardmäßig ablehnt) werden mit Warnung installiert, und es gab keine unabhängige Prüfung. |
 | Echte Hardware | 🟡 | Der Betreuer setzt es auf seinem eigenen Rechner mit seinen echten Repositories ein. |
 | Dokumentation | 🟢 | README in acht Sprachen, bei jeder Änderung gegen Manifest und Änderungsprotokoll geprüft. |
 
@@ -84,7 +84,7 @@ Wie die Teile dieses Repositorys zusammenpassen: wer es nutzt, was es enthält u
 | Ein Updater, der hängt (eine Git-Abfrage nach Zugangsdaten, ein totes Netz) | ein Zeitlimit bei jedem Lauf: 900 s für `status` und 1800 s für `install` und `update`, änderbar mit `--timeout-seconds` (0 heißt kein Limit) |
 | Eine unerwünschte Massenänderung | `install` und `update` nehmen genau ein Ökosystem und einen Projektnamen und lehnen `--ecosystem all` ab; jeder Updater fragt nach seiner eigenen Bestätigung |
 | Den falschen Ordner ansehen | Der Arbeitsbereich wird immer ausdrücklich weitergegeben (standardmäßig der übergeordnete Ordner dieses Werkzeugs), weil ein installierter Updater sonst unter der virtuellen Umgebung dieses Werkzeugs suchen und stillschweigend nichts finden würde |
-| Ein Commit unbekannter Herkunft | Sache jedes Updaters: Unsignierte Revisionen werden mit Warnung installiert, außer dem Updater wird gesagt, Signaturen zu verlangen (EH3D-UPDATER und URTC-UPDATER haben diese Option) |
+| Ein Commit unbekannter Herkunft | Sache jedes Updaters: Unsignierte Revisionen (außer im URTC-UPDATER, der sie standardmäßig ablehnt) werden mit Warnung installiert, außer dem Updater wird gesagt, Signaturen zu verlangen (EH3D-UPDATER und URTC-UPDATER haben diese Option) |
 | Der Ausfall eines Ökosystems verdeckt die anderen | `status --ecosystem all` führt alle vier aus, gibt jeden Bericht aus und nennt die fehlgeschlagenen |
 
 **Was nicht abgewehrt wird:** Dieses Werkzeug führt aus, was jeder Updater tut, mit deinen Rechten, einschließlich des Build-Skripts des Projekts, das du installierst; der Updater von A.R.M.O.R. zerstört noch seine eigene Installation, wenn er sich selbst aktualisiert, aktualisiere ARMOR-UPDATER also von Hand; und das Werkzeug wurde nicht unabhängig geprüft. Melde eine Schwachstelle privat (siehe [SECURITY.md](SECURITY.md)).
